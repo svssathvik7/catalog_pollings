@@ -8,7 +8,6 @@ import toaster from "./toaster";
 export default async function registrar(username:string){
     try {
         const regStartResponse = (await api.post(`/auth/register/start/${username}`)).data;
-        console.log(regStartResponse)
         const attResponse = await startRegistration({optionsJSON: regStartResponse.publicKey});
         const regFinishResponse = (await api.post(`/auth/register/finish/${username}`,attResponse)).data;
         toaster("success","User registration successfull!");
