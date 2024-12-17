@@ -22,7 +22,7 @@ export default function Navbar(){
         <div className="w-full p-4 flex items-center justify-around absolute">
             <Link href={"/"}>Catalog Pollings</Link>
             {navItems.map((navItem,i)=>(
-                <Link className="hover:bg-brand-1 hover:text-brand-2 px-2 py-1 rounded-lg" href={navItem.href}>{navItem.label}</Link>
+                <Link key={i} className="hover:bg-brand-1 hover:text-brand-2 px-2 py-1 rounded-lg" href={navItem.href}>{navItem.label}</Link>
             ))}
             <LogButton/>
         </div>

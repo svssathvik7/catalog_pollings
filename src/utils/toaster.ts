@@ -1,27 +1,24 @@
 import toast from 'react-hot-toast';
-// promise object has promise, loading, success, fail texts
-const Toast = ({type,message,promise_obj}:{type:string,message:string,promise_obj:any}) =>{
-    if(type == "success"){
+
+const toaster = (type: string, message: string, promise_obj?: any) => {
+    if (type === "success") {
         toast.success(message);
-    }
-    else if(type == "error"){
+    } else if (type === "error") {
         toast.error(message);
-    }
-    else if(type == "custom"){
+    } else if (type === "custom") {
         toast.custom(message);
-    }
-    else if(type == "promise"){
+    } else if (type === "promise" && promise_obj) {
         toast.promise(
             promise_obj.promise,
             {
-                loading : promise_obj?.loading??"Loading",
-                success : promise_obj?.success??"Success",
-                error : promise_obj?.error??"Error"
+                loading: promise_obj?.loading ?? "Loading",
+                success: promise_obj?.success ?? "Success",
+                error: promise_obj?.error ?? "Error"
             }
-        )
-    }
-    else{
+        );
+    } else {
         toast(message);
     }
 };
-export default Toast;
+
+export default toaster;
