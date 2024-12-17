@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+/* enforse fallable montserrat to all the text */
+*{
+    font-family: 'Montserrat', sans-serif!important;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,4 +25,5 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-y: hidden;
 }
