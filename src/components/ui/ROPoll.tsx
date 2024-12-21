@@ -1,11 +1,11 @@
-type ROPollType = {
+export type ROPollType = {
     _id: any,
     id: string,
     title: string,
     options: ROOptionType[],
     is_open: boolean,
     total_votes: number,
-    owner_username: string
+    owner_username: string,
 }
 
 type ROOptionType = {
