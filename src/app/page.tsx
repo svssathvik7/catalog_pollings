@@ -59,7 +59,7 @@ export default function Home() {
           <button
             className="bg-brand-3 text-black w-20 rounded-lg disabled:opacity-40"
             onClick={()=>{setLivePollPagination({page:livePollPagination.page+1,per_page:livePollPagination.per_page})}}
-            disabled={livePollPagination.page===livePollTotalPages}
+            disabled={livePollPagination.page>=livePollTotalPages}
           >
             Next
           </button>
@@ -89,7 +89,7 @@ export default function Home() {
           <button
             className="bg-brand-3 text-black w-20 rounded-lg disabled:opacity-40"
             onClick={()=>{setClosedPollPagination({page:closedPollPagination.page+1,per_page:closedPollPagination.per_page})}}
-            disabled={closedPollPagination.page===closedPollTotalPages}
+            disabled={closedPollPagination.page>=closedPollTotalPages}
           >
             Next
           </button>
