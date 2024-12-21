@@ -49,7 +49,6 @@ export default function NewPoll() {
             ownername: username
         };
         console.log("Poll Data:", pollData);
-        // Submit pollData to the server
         const isPollCreated = await createPoll(pollData,logout);
         if(isPollCreated){
             setTitle("");

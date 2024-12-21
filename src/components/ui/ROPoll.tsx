@@ -19,12 +19,12 @@ export default function ROPoll(pollData: ROPollType) {
     console.log("data:", pollData);
 
     return pollData && (
-        <div className="bg-white flex flex-col items-center justify-start text-black p-4 shadow-md rounded-lg w-96">
+        <div className="bg-white flex flex-col items-center justify-start text-black p-4 shadow-md rounded-lg w-72 h-48 overflow-y-scroll">
             <h2 className="text-xl font-semibold mb-4">{pollData.title}</h2>
             {pollData.options?.length ? (
                 <ul className="w-full">
-                    {pollData.options.map((option) => (
-                        <li key={option._id} className="flex justify-between border-b py-2">
+                    {pollData.options.map((option,i) => (
+                        <li key={option._id + i} className="flex justify-between border-b py-2">
                             <span>{option.text}</span>
                             <strong>{option.votes_count} votes</strong>
                         </li>
