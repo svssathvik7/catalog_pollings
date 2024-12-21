@@ -7,9 +7,9 @@ export default async function Home() {
   const readOnlyCloedPolls = readOnlyPolls?.closedReadOnlyPolls.polls || [];
 
   return (
-    <div className="flex items-center justify-around absolute left-0 right-0 top-0 bottom-0 m-auto">
+    <div className="flex items-center justify-around absolute left-0 right-0 top-0 bottom-0 m-auto h-fit">
       {/* Live Polls Section */}
-      <div className="flex flex-col items-center justify-start">
+      <div className="flex flex-col items-center justify-start gap-2">
         <h2 className="text-lg font-semibold mb-2">Live Polls</h2>
         {readOnlyLivePolls.length > 0 ? (
           readOnlyLivePolls.map((pollData: any, i: number) => (
