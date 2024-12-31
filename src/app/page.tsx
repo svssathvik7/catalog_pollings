@@ -35,7 +35,7 @@ export default function Home() {
   }, [closedPollPagination]);
 
   return (
-    <div className="flex items-center justify-around absolute left-0 right-0 top-0 bottom-0 m-auto h-fit w-screen">
+    <div className="flex-grow flex items-center justify-around h-screen">
       {/* Live Polls Section */}
       <div className="flex flex-col items-center justify-start gap-2 w-4/5">
         <h2 className="text-lg font-semibold mb-2">Live Polls</h2>
