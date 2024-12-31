@@ -8,11 +8,11 @@ export default function Poll({ pollId }: { pollId: string }) {
   const [pollData, setPollData] = useState<any>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const logout = useAuthStore((state) => state.logout);
-
+  const username = useAuthStore((state)=>state.username);
   useEffect(() => {
     const fetchPoll = async () => {
       try {
-        const data = await getPoll(pollId, logout);
+        const data = await getPoll(pollId, logout, username ? username : "No Auth");
         console.log(data)
         setPollData(data);
       } catch (error) {

@@ -1,9 +1,11 @@
 import api from "./axios";
 import toaster from "./toaster";
 
-export default async function getPoll(id:string,logout: ()=>void){
+export default async function getPoll(id:string,logout: ()=>void,username: string){
     try {
-        const pollData = (await api.get(`/polls/${id}`)).data;
+        const pollData = (await api.post(`/polls/${id}`,{
+            username
+        })).data;
         if(pollData.isAuthenticated === false){
             logout();
             toaster("error","login to view poll!");
