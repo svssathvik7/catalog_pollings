@@ -36,7 +36,7 @@ export default function RootLayout({
             <div className="p-4 md:hidden z-50">
               <AppSidebar />
             </div>
-            <main className="container mx-auto p-4">{children}</main>
+            <main className="container mx-auto p-4 flex-grow h-screen flex items-center justify-center">{children}</main>
             <Toaster />
           </div>
         </div>
