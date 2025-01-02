@@ -39,7 +39,7 @@ export default function Home() {
       {/* Live Polls Section */}
       <div className="flex flex-col items-center justify-start gap-2 w-4/5">
         <h2 className="text-lg font-semibold mb-2">Live Polls</h2>
-        <div className="flex items-center justify-center flex-wrap w-full gap-1">
+        <div className="flex items-center justify-center flex-wrap w-full gap-2 space-x-2">
           {roLivePolls.length > 0 ? (
             roLivePolls.map((pollData: ROPollType, i: number) => (
               <ROPoll key={i} {...pollData} />

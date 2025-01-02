@@ -2,6 +2,8 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./card";
 import { PollData, PollOption } from "@/types/poll";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { VoteIcon } from "lucide-react";
 
 export type ROPollType = {
     _id: any,
@@ -24,8 +26,12 @@ type ROOptionType = {
 
 export default function ROPoll(pollData: PollData) {
   return (
-    <Link href={`/polls/${pollData.id}`}>
+    <Link href={`/polls/${pollData.id}`} className="relative">
     <Card className="w-60 h-60 overflow-y-scroll">
+      <Badge variant={"outline"} className="absolute -top-2 -right-2 z-20 bg-brand-3">
+        <p>{pollData.total_votes}</p>
+        <VoteIcon size={24} />
+      </Badge>
       <CardHeader>
         <CardTitle className="text-center text-xl">{pollData.title}</CardTitle>
       </CardHeader>
@@ -52,11 +58,6 @@ export default function ROPoll(pollData: PollData) {
           )}
         </ScrollArea>
       </CardContent>
-      <CardFooter>
-        <p className="text-sm text-muted-foreground w-full text-center">
-          Total Votes: {pollData.total_votes}
-        </p>
-      </CardFooter>
     </Card>
     </Link>
   );
