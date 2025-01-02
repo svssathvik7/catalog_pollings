@@ -1,48 +1,38 @@
 "use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search, X } from "lucide-react";
+import { Home, Vote, Calendar, CircleUser } from "lucide-react"; // Import the necessary icons
 import Link from "next/link";
-import { Button } from "./ui/button";
-import { Calendar, CircleUser, Home, Search, Vote } from "lucide-react";
-import { cn } from "@/lib/utils";
+import toaster from "@/utils/toaster"; // Assuming this is where you handle notifications
 import { useAuthStore } from "@/store/authStore";
 import api from "@/utils/axios";
-import toaster from "@/utils/toaster";
 
 export default function DesktopSidebar() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const logout = useAuthStore((state) => state.logout);
+  const [pollId, setPollId] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
+  const router = useRouter();
+
+  const handlePollSearch = (e: any) => {
+    e.preventDefault();
+    router.push(`/polls/${pollId}`);
+    setPollId("");
+  };
+
   const items = [
-    {
-      title: "Home",
-      url: "/",
-      icon: Home,
-    },
-    {
-      title: "Polls",
-      url: "/polls",
-      icon: Vote,
-    },
-    {
-      title: "Calendar",
-      url: "/calendar",
-      icon: Calendar,
-    },
-    {
-      title: "Search",
-      url: "/search",
-      icon: Search,
-    },
-    {
-      title: "About",
-      url: "/about",
-      icon: CircleUser,
-    },
+    { title: "Home", url: "/", icon: Home },
+    { title: "Polls", url: "/polls", icon: Vote }
   ];
 
   const handleLogout = async () => {
     try {
       await api.get("/auth/logout");
       logout();
-      toaster("success", "user logged out!");
+      toaster("success", "User logged out!");
       return;
     } catch (error) {
       console.error("Logout failed:", error);
@@ -55,25 +45,55 @@ export default function DesktopSidebar() {
         <div className="px-4 py-2">
           <h2 className="text-lg font-semibold">Catalog Pollings</h2>
         </div>
+
+        {/* Render Sidebar Items */}
         {items.map((item) => (
           <Link
             key={item.title}
             href={item.url}
-            className={cn(
-              "flex items-center gap-2 px-4 py-2 text-sm rounded-md hover:bg-accent",
-              "transition-colors duration-200"
-            )}
+            className="flex items-center gap-2 px-4 py-2 text-sm rounded-md hover:bg-accent transition-colors duration-200"
           >
             <item.icon className="h-4 w-4" />
             {item.title}
           </Link>
         ))}
 
+{showSearch ? (
+          <form className="flex items-center justify-center gap-2 rounded-lg" onSubmit={handlePollSearch}>
+            <Input
+              type="text"
+              placeholder="Type Poll ID"
+              className="w-64"
+              value={pollId}
+              onChange={(event) => setPollId(event.target.value)}
+            />
+            {pollId.length ==0 ? 
+            <Button onClick={()=>{setShowSearch(false)}} className="w-10 h-10 flex items-center justify-center text-white rounded-lg transition-all">
+              <X size={18} />
+            </Button> : <Button
+              type="submit"
+              className="w-10 h-10 flex items-center justify-center text-white rounded-lg transition-all"
+            >
+              <Search size={18} />
+            </Button>}
+          </form>
+        ) : (
+          // Render the Search Link
+          <Link
+            href="#"
+            onClick={() => setShowSearch(true)}
+            className="flex items-center gap-2 px-4 py-2 text-sm rounded-md hover:bg-accent transition-colors duration-200"
+          >
+            <Search className="h-4 w-4" />
+            Search
+          </Link>
+        )}
+
         {isAuthenticated ? (
-          <Button onClick={handleLogout} className="w-full">logout</Button>
+          <Button onClick={handleLogout} className="w-full">Logout</Button>
         ) : (
           <Link href="/auth/login">
-            <Button className="w-full">login</Button>
+            <Button className="w-full">Login</Button>
           </Link>
         )}
       </nav>
