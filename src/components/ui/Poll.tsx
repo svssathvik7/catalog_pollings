@@ -13,6 +13,17 @@ import { PollData, PollOption } from "@/types/poll";
 import { useRouter } from "next/navigation";
 import toaster from "@/utils/toaster";
 import api from "@/utils/axios";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./alert-dialog";
 
 export default function Poll({ pollId }: { pollId: string }) {
   const [pollData, setPollData] = useState<PollData | null>(null);
@@ -161,11 +172,26 @@ export default function Poll({ pollId }: { pollId: string }) {
         {!hasVoted && pollData.is_open && (
           <Button
             className="w-full mt-4"
-            onClick={handleVote}
             disabled={!selectedOption}
             variant={selectedOption ? "default" : "secondary"}
           >
-            Cast Vote
+            <AlertDialog>
+              <AlertDialogTrigger>Vote</AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Are you sure to vote?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Once the vote is cast, it cannot be changed.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleVote}>Cast</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </Button>
         )}
       </CardContent>
