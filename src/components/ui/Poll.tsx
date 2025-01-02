@@ -1,6 +1,3 @@
-
-
-// Interactive Poll Component
 "use client";
 
 import { useEffect, useState } from "react";
@@ -12,41 +9,42 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PollData, PollOption } from "@/types/poll";
+import { useRouter } from "next/navigation";
 
 export default function Poll({ pollId }: { pollId: string }) {
   const [pollData, setPollData] = useState<PollData | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true); // Added loading state
   const logout = useAuthStore((state) => state.logout);
+  const [hasVoted,setHasVoted] = useState(false);
   const username = useAuthStore((state) => state.username);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchPoll = async () => {
+      // Wait until username is available before making the API call
+      if (!username) return;
+
       try {
-        const data = await getPoll(pollId, logout, username ?? "No Auth");
-        setPollData(data);
+        const data = await getPoll(pollId, logout, username);
+        if (data === false) {
+          router.push("/auth/login");
+          return;
+        }
+        setPollData(data.poll);
+        setHasVoted(data.hasVoted);
       } catch (error) {
         console.error("Error fetching poll data:", error);
+      } finally {
+        setLoading(false); // Update loading state
       }
     };
+
     fetchPoll();
-  }, [pollId, logout, username]);
+  }, [pollId, logout, username, router]);
 
-  const handleVote = async () => {
-    if (!selectedOption) {
-      alert("Please select an option to vote.");
-      return;
-    }
-
-    try {
-      // Add your vote handling logic here
-      alert("Vote cast successfully!");
-    } catch (error) {
-      console.error("Error casting vote:", error);
-      alert("Failed to cast vote. Please try again.");
-    }
-  };
-
-  if (!pollData) {
+  if (loading) {
     return (
       <Card className="w-80">
         <CardHeader>
@@ -63,6 +61,34 @@ export default function Poll({ pollId }: { pollId: string }) {
     );
   }
 
+  if (!pollData) {
+    return (
+      <Card className="w-80">
+        <CardHeader>
+          <CardTitle>Error</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p>Failed to load poll. Please try again later.</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const handleVote = async () => {
+    if (!selectedOption) {
+      alert("Please select an option to vote.");
+      return;
+    }
+
+    try {
+      // Add your vote handling logic here
+      alert("Vote cast successfully!");
+    } catch (error) {
+      console.error("Error casting vote:", error);
+      alert("Failed to cast vote. Please try again.");
+    }
+  };
+
   return (
     <Card className="w-80">
       <CardHeader>
@@ -75,15 +101,15 @@ export default function Poll({ pollId }: { pollId: string }) {
             value={selectedOption ?? undefined}
             className="space-y-2"
           >
-            {pollData.options.map((option) => (
+            {pollData.options.map((option:PollOption,i) => (
               <div
-                key={option._id}
-                className="flex items-center space-x-2 rounded-md border p-3 hover:bg-accent"
+                key={i}
+                className="flex items-center space-x-2 rounded-md border hover:bg-accent"
               >
-                <RadioGroupItem value={option._id} id={option._id} />
+                <RadioGroupItem value={option._id.$oid} id={option._id.$oid} className="ml-2"/>
                 <Label
-                  htmlFor={option._id}
-                  className="flex flex-1 justify-between cursor-pointer"
+                  htmlFor={option._id.$oid}
+                  className="flex flex-1 justify-between cursor-pointer p-3"
                 >
                   <span>{option.text}</span>
                   <span className="text-sm text-muted-foreground">
@@ -94,14 +120,14 @@ export default function Poll({ pollId }: { pollId: string }) {
             ))}
           </RadioGroup>
         </ScrollArea>
-        <Button
+        {!hasVoted && <Button
           className="w-full mt-4"
           onClick={handleVote}
           disabled={!selectedOption}
           variant={selectedOption ? "default" : "secondary"}
         >
           Cast Vote
-        </Button>
+        </Button>}
       </CardContent>
     </Card>
   );

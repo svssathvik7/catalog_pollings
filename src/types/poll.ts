@@ -1,5 +1,7 @@
 export type PollOption = {
-  _id: string;
+  _id: {
+    $oid: string;
+  };
   text: string;
   votes_count: number;
 };

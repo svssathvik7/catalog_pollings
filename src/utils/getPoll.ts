@@ -6,16 +6,14 @@ export default async function getPoll(id:string,logout: ()=>void,username: strin
         const pollData = (await api.post(`/polls/${id}`,{
             username
         })).data;
-        if(pollData.isAuthenticated === false){
-            logout();
-            toaster("error","login to view poll!");
-            return;
-        }
+        console.log(pollData);
         return pollData;
     } catch (error:any) {
         console.log(error);
-        const errorText = error.response.data;
-        toaster("error",(errorText||"error fetching poll!"));
-        return;
+        if(error.response.data.isAuthenticated === false){
+            logout();
+            toaster("error","login to view poll!");
+        }
+        return false;
     }
 }
