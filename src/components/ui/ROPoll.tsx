@@ -1,3 +1,7 @@
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./card";
+import { PollData, PollOption } from "@/types/poll";
+
 export type ROPollType = {
     _id: any,
     id: string,
@@ -15,25 +19,42 @@ type ROOptionType = {
     voters: any
 }
 
-export default function ROPoll(pollData: ROPollType) {
-    console.log("data:", pollData);
 
-    return pollData && (
-        <div className="bg-white flex flex-col items-center justify-start text-black p-4 shadow-md rounded-lg w-72 h-48 overflow-y-scroll">
-            <h2 className="text-xl font-semibold mb-4">{pollData.title}</h2>
-            {pollData.options?.length ? (
-                <ul className="w-full">
-                    {pollData.options.map((option,i) => (
-                        <li key={option._id + i} className="flex justify-between border-b py-2">
-                            <span>{option.text}</span>
-                            <strong>{option.votes_count} votes</strong>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No options available for this poll.</p>
-            )}
-            <p className="mt-4 text-gray-600">Total Votes: {pollData.total_votes}</p>
-        </div>
-    );
+
+export default function ROPoll(pollData: PollData) {
+  return (
+    <Card className="w-60 h-60 overflow-y-scroll">
+      <CardHeader>
+        <CardTitle className="text-center text-xl">{pollData.title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ScrollArea className="h-48 overflow-y-scroll">
+          {pollData.options?.length ? (
+            <div className="space-y-2">
+              {pollData.options.map((option: PollOption, i:number) => (
+                <div
+                  key={option._id + i}
+                  className="flex justify-between items-center py-2 border-b last:border-0"
+                >
+                  <span className="text-sm">{option.text}</span>
+                  <span className="text-sm font-medium">
+                    {option.votes_count} votes
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-muted-foreground">
+              No options available for this poll.
+            </p>
+          )}
+        </ScrollArea>
+      </CardContent>
+      <CardFooter>
+        <p className="text-sm text-muted-foreground w-full text-center">
+          Total Votes: {pollData.total_votes}
+        </p>
+      </CardFooter>
+    </Card>
+  );
 }
