@@ -11,13 +11,15 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PollData, PollOption } from "@/types/poll";
 import { useRouter } from "next/navigation";
+import toaster from "@/utils/toaster";
+import api from "@/utils/axios";
 
 export default function Poll({ pollId }: { pollId: string }) {
   const [pollData, setPollData] = useState<PollData | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [loading, setLoading] = useState(true); // Added loading state
   const logout = useAuthStore((state) => state.logout);
-  const [hasVoted,setHasVoted] = useState(false);
+  const [hasVoted, setHasVoted] = useState(true);
   const username = useAuthStore((state) => state.username);
   const router = useRouter();
 
@@ -28,12 +30,12 @@ export default function Poll({ pollId }: { pollId: string }) {
 
       try {
         const data = await getPoll(pollId, logout, username);
-        if (data === false) {
+        if (data === "noauth") {
           router.push("/auth/login");
           return;
         }
         setPollData(data.poll);
-        setHasVoted(data.hasVoted);
+        setHasVoted(data.has_voted);
       } catch (error) {
         console.error("Error fetching poll data:", error);
       } finally {
@@ -75,59 +77,97 @@ export default function Poll({ pollId }: { pollId: string }) {
   }
 
   const handleVote = async () => {
-    if (!selectedOption) {
-      alert("Please select an option to vote.");
+    if (!selectedOption || !username) {
+      toaster("error", "Please select an option to vote.");
       return;
     }
 
+    const voteData = {
+      optionId: selectedOption,
+      pollId,
+      username,
+    };
+    console.log("Voting for option:", voteData);
+
     try {
       // Add your vote handling logic here
-      alert("Vote cast successfully!");
-    } catch (error) {
+      const response = (await api.post(`/polls/${pollId}/vote`, voteData)).data;
+      setHasVoted(true);
+      toaster("success", "Vote cast successfully!");
+      return;
+    } catch (error:any) {
       console.error("Error casting vote:", error);
-      alert("Failed to cast vote. Please try again.");
+      toaster("error", "Failed to cast vote. Please try again later.");
+      if (error?.response?.data?.isAuthenticated === false) {
+        logout();
+        toaster("error", "login to view poll!");
+      }
+      return;
     }
   };
 
   return (
-    <Card className="w-80">
+    <Card className="w-80 h-fit">
       <CardHeader>
         <CardTitle className="text-center">{pollData.title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-72 pr-4">
-          <RadioGroup
-            onValueChange={(value) => setSelectedOption(value)}
-            value={selectedOption ?? undefined}
-            className="space-y-2"
-          >
-            {pollData.options.map((option:PollOption,i) => (
-              <div
-                key={i}
-                className="flex items-center space-x-2 rounded-md border hover:bg-accent"
-              >
-                <RadioGroupItem value={option._id.$oid} id={option._id.$oid} className="ml-2"/>
-                <Label
-                  htmlFor={option._id.$oid}
-                  className="flex flex-1 justify-between cursor-pointer p-3"
+        <ScrollArea className="h-fit max-h-72 pr-4">
+          {hasVoted ? (
+            <div className="space-y-2">
+              {pollData.options.map((option: PollOption, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-between p-3 rounded-md border bg-muted/50"
                 >
-                  <span>{option.text}</span>
+                  <span className="font-bold">{i + 1}.</span>
+                  <span className="flex-1 ml-2">{option.text}</span>
                   <span className="text-sm text-muted-foreground">
                     ({option.votes_count} votes)
                   </span>
-                </Label>
-              </div>
-            ))}
-          </RadioGroup>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <RadioGroup
+              onValueChange={(value) => setSelectedOption(value)}
+              value={selectedOption ?? undefined}
+              className="space-y-2"
+            >
+              {pollData.options.map((option: PollOption, i) => (
+                <div
+                  key={i}
+                  className="flex items-center space-x-2 rounded-md border hover:bg-accent"
+                >
+                  <RadioGroupItem
+                    value={option._id.$oid}
+                    id={option._id.$oid}
+                    className="ml-2"
+                  />
+                  <Label
+                    htmlFor={option._id.$oid}
+                    className="flex flex-1 justify-between cursor-pointer p-3"
+                  >
+                    <span>{option.text}</span>
+                    <span className="text-sm text-muted-foreground">
+                      ({option.votes_count} votes)
+                    </span>
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          )}
         </ScrollArea>
-        {!hasVoted && <Button
-          className="w-full mt-4"
-          onClick={handleVote}
-          disabled={!selectedOption}
-          variant={selectedOption ? "default" : "secondary"}
-        >
-          Cast Vote
-        </Button>}
+        {!hasVoted && pollData.is_open && (
+          <Button
+            className="w-full mt-4"
+            onClick={handleVote}
+            disabled={!selectedOption}
+            variant={selectedOption ? "default" : "secondary"}
+          >
+            Cast Vote
+          </Button>
+        )}
       </CardContent>
     </Card>
   );

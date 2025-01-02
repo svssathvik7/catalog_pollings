@@ -10,9 +10,10 @@ export default async function getPoll(id:string,logout: ()=>void,username: strin
         return pollData;
     } catch (error:any) {
         console.log(error);
-        if(error.response.data.isAuthenticated === false){
+        if(error?.response?.data?.isAuthenticated === false){
             logout();
             toaster("error","login to view poll!");
+            return "noauth";
         }
         return false;
     }
