@@ -1,6 +1,7 @@
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./card";
 import { PollData, PollOption } from "@/types/poll";
+import Link from "next/link";
 
 export type ROPollType = {
     _id: any,
@@ -23,6 +24,7 @@ type ROOptionType = {
 
 export default function ROPoll(pollData: PollData) {
   return (
+    <Link href={`/polls/${pollData.id}`}>
     <Card className="w-60 h-60 overflow-y-scroll">
       <CardHeader>
         <CardTitle className="text-center text-xl">{pollData.title}</CardTitle>
@@ -33,7 +35,7 @@ export default function ROPoll(pollData: PollData) {
             <div className="space-y-2">
               {pollData.options.map((option: PollOption, i:number) => (
                 <div
-                  key={option._id + i}
+                  key={option._id.$oid + i}
                   className="flex justify-between items-center py-2 border-b last:border-0"
                 >
                   <span className="text-sm">{option.text}</span>
@@ -56,5 +58,6 @@ export default function ROPoll(pollData: PollData) {
         </p>
       </CardFooter>
     </Card>
+    </Link>
   );
 }
