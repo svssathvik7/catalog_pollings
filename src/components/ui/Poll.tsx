@@ -24,6 +24,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./alert-dialog";
+import { VoteIcon } from "lucide-react";
+import { Badge } from "./badge";
 
 export default function Poll({ pollId }: { pollId: string }) {
   const [pollData, setPollData] = useState<PollData | null>(null);
@@ -118,7 +120,11 @@ export default function Poll({ pollId }: { pollId: string }) {
   };
 
   return (
-    <Card className="w-80 h-fit">
+    <Card className="w-80 h-fit relative">
+      <Badge variant={"outline"} className="absolute -top-2 -right-2 z-20 bg-brand-3">
+        <p className="text-lg">{pollData?.voters?.length??0}</p>
+        <VoteIcon size={24} />
+      </Badge>
       <CardHeader>
         <CardTitle className="text-center">{pollData.title}</CardTitle>
       </CardHeader>

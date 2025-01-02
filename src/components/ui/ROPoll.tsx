@@ -4,6 +4,7 @@ import { PollData, PollOption } from "@/types/poll";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { VoteIcon } from "lucide-react";
+import { Button } from "./button";
 
 export type ROPollType = {
     _id: any,
@@ -36,7 +37,7 @@ export default function ROPoll(pollData: PollData) {
         <CardTitle className="text-center text-xl">{pollData.title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-48 overflow-y-scroll">
+        <ScrollArea className="h-fit overflow-y-scroll">
           {pollData.options?.length ? (
             <div className="space-y-2">
               {pollData.options.map((option: PollOption, i:number) => (
@@ -58,6 +59,11 @@ export default function ROPoll(pollData: PollData) {
           )}
         </ScrollArea>
       </CardContent>
+      <CardFooter>
+        <Link href={`/polls/results/${pollData.id}`}>
+          <Button>Results</Button>
+        </Link>
+      </CardFooter>
     </Card>
     </Link>
   );
