@@ -1,3 +1,4 @@
+import ClosedPollContainer from "@/components/polls/ClosedPollContainer";
 import LivePollContainer from "@/components/polls/LivePollContainer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -11,7 +12,9 @@ export default function Home() {
       <TabsContent value="live-polls" className="h-96">
         <LivePollContainer/>
       </TabsContent>
-      <TabsContent value="closed-polls" className="h-96">Change your password here.</TabsContent>
+      <TabsContent value="closed-polls" className="h-96">
+        <ClosedPollContainer/>
+      </TabsContent>
     </Tabs>
   );
 }

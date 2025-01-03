@@ -1,13 +1,13 @@
 "use client";
 import { PollData } from "@/types/poll";
-import { getROLivePolls } from "@/utils/getROPolls";
+import { getROClosedPolls } from "@/utils/getROPolls";
 import { useCallback, useEffect, useState } from "react";
 import ROPoll from "./ROPoll";
 import { Button } from "../ui/button";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 
-export default function LivePollContainer() {
+export default function ClosedPollContainer() {
     const [pagination, setPagination] = useState({ page: 1, per_page: 3 });
     const [polls, setPolls] = useState<PollData[]>([]);
     const [totalPages, setTotalPages] = useState(0);
@@ -17,7 +17,7 @@ export default function LivePollContainer() {
     const fetchData = useCallback(async ({ page, per_page }: { page: number; per_page: number }) => {
         try {
             setLoading(true); // Start loading
-            const response = await getROLivePolls({ page, per_page });
+            const response = await getROClosedPolls({ page, per_page });
             const totalPages = response.total_pages;
             const newPolls = response.polls;
             if (!newPolls) return;
@@ -57,7 +57,7 @@ export default function LivePollContainer() {
                     ))}
                 </div>
             ) : polls.length === 0 ? (
-                <p>No live polls available.</p>
+                <p>No closed polls available.</p>
             ) : (
                 <div className="w-full flex items-center justify-around p-2">
                     {polls.slice(-3).map((poll, index) => (
@@ -65,7 +65,7 @@ export default function LivePollContainer() {
                     ))}
                 </div>
             )}
-            <div className="w-full items-center flex justify-around m-2">
+            {polls.length > 0 && <div className="w-full items-center flex justify-around m-2">
                 <Button
                     disabled={pagination.page <= 1}
                     onClick={() => setPagination((curr) => ({ ...curr, page: curr.page - 1 }))}
@@ -86,7 +86,7 @@ export default function LivePollContainer() {
                     Next
                     <ArrowBigRight className="ml-2" />
                 </Button>
-            </div>
+            </div>}
         </div>
     );
 }
