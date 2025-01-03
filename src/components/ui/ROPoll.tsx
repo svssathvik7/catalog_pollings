@@ -46,9 +46,6 @@ export default function ROPoll(pollData: PollData) {
                   className="flex justify-between items-center py-2 border-b last:border-0"
                 >
                   <span className="text-sm">{option.text}</span>
-                  <span className="text-sm font-medium">
-                    {option.votes_count} votes
-                  </span>
                 </div>
               ))}
             </div>
