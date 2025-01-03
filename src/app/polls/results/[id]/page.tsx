@@ -5,14 +5,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useAuthStore } from "@/store/authStore";
 import { PollData } from "@/types/poll";
 import getPoll from "@/utils/getPoll";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function PollResults() {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const [isLoading, setIsLoading] = useState(true); // New state to track loading status
+  const [isLoading, setIsLoading] = useState(true); // State to track loading status
   const [pollData, setPollData] = useState<PollData>({
     _id: "",
     id: "",
@@ -23,24 +22,6 @@ export default function PollResults() {
     voters: [],
     owner_username: "",
   });
-  const [authLoaded, setAuthLoaded] = useState(false); // State to track if auth has been checked
-  const logout = useAuthStore((state) => state.logout);
-  const username = useAuthStore((state) => state.username);
-  const router = useRouter();
-
-  // Wait for authentication status to load
-  useEffect(() => {
-    if (isAuthenticated !== undefined) {
-      setAuthLoaded(true); // Authentication status is loaded
-      setIsLoading(false); // Set loading to false once auth status is determined
-    }
-  }, [isAuthenticated]);
-
-  useEffect(() => {
-    if (authLoaded && !isAuthenticated) {
-      router.push("/auth/login");
-    }
-  }, [authLoaded, isAuthenticated, router]);
 
   useEffect(() => {
     const es = new EventSource(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/sse/create-client`);
@@ -65,14 +46,21 @@ export default function PollResults() {
     };
   }, [pollData.id]);
 
+  const logout = useAuthStore((state) => state.logout);
+  const username = useAuthStore((state) => state.username);
+
   useEffect(() => {
-    if (!id || !username) return; // Ensure `id` and `username` are valid
+    if (!id) return;
+    if(!username){
+      return;
+    }
     const fetchPollData = async () => {
-      const data = await getPoll(id, logout, username);
+      const data = await getPoll(id,logout,username);
       setPollData(data.poll);
+      setIsLoading(false);
     };
     fetchPollData();
-  }, [id, logout, username]);
+  }, [id,username,logout]);
 
   if (isLoading) {
     return (

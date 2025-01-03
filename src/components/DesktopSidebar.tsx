@@ -1,21 +1,29 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, X } from "lucide-react";
-import { Home, Vote, Calendar, CircleUser } from "lucide-react"; // Import the necessary icons
+import { PlusIcon, Search, X } from "lucide-react";
+import { Home, Vote } from "lucide-react"; // Import the necessary icons
 import Link from "next/link";
 import toaster from "@/utils/toaster"; // Assuming this is where you handle notifications
 import { useAuthStore } from "@/store/authStore";
 import api from "@/utils/axios";
+import LogButton from "./auth/LoginButton";
 
 export default function DesktopSidebar() {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isLoading = useAuthStore((state) => state.isLoading);
+  const isAuthenticated = useAuthStore((state)=>state.isAuthenticated);
   const logout = useAuthStore((state) => state.logout);
   const [pollId, setPollId] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const router = useRouter();
+  const location = usePathname();
+  useEffect(() => {
+      if (!isLoading && !isAuthenticated && location !== "/auth/login" && location !== "/") {
+        router.push("/auth/login"); // Redirect unauthenticated users
+      }
+  }, [isLoading, location]);
 
   const handlePollSearch = (e: any) => {
     e.preventDefault();
@@ -25,19 +33,9 @@ export default function DesktopSidebar() {
 
   const items = [
     { title: "Home", url: "/", icon: Home },
-    { title: "Polls", url: "/polls", icon: Vote }
+    { title: "Polls", url: "/polls", icon: Vote },
+    { title: "Create Poll", url: "/polls/new", icon: PlusIcon },
   ];
-
-  const handleLogout = async () => {
-    try {
-      await api.get("/auth/logout");
-      logout();
-      toaster("success", "User logged out!");
-      return;
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
 
   return (
     <div className="hidden md:flex h-screen w-64 border-r bg-background">
@@ -58,7 +56,7 @@ export default function DesktopSidebar() {
           </Link>
         ))}
 
-{showSearch ? (
+        {showSearch ? (
           <form className="flex items-center justify-center gap-2 rounded-lg" onSubmit={handlePollSearch}>
             <Input
               type="text"
@@ -67,18 +65,17 @@ export default function DesktopSidebar() {
               value={pollId}
               onChange={(event) => setPollId(event.target.value)}
             />
-            {pollId.length ==0 ? 
-            <Button onClick={()=>{setShowSearch(false)}} className="w-10 h-10 flex items-center justify-center text-white rounded-lg transition-all">
-              <X size={18} />
-            </Button> : <Button
-              type="submit"
-              className="w-10 h-10 flex items-center justify-center text-white rounded-lg transition-all"
-            >
-              <Search size={18} />
-            </Button>}
+            {pollId.length === 0 ? (
+              <Button onClick={() => setShowSearch(false)} className="w-10 h-10 flex items-center justify-center text-white rounded-lg transition-all">
+                <X size={18} />
+              </Button>
+            ) : (
+              <Button type="submit" className="w-10 h-10 flex items-center justify-center text-white rounded-lg transition-all">
+                <Search size={18} />
+              </Button>
+            )}
           </form>
         ) : (
-          // Render the Search Link
           <Link
             href="#"
             onClick={() => setShowSearch(true)}
@@ -89,13 +86,7 @@ export default function DesktopSidebar() {
           </Link>
         )}
 
-        {isAuthenticated ? (
-          <Button onClick={handleLogout} className="w-full">Logout</Button>
-        ) : (
-          <Link href="/auth/login">
-            <Button className="w-full">Login</Button>
-          </Link>
-        )}
+        <LogButton />
       </nav>
     </div>
   );

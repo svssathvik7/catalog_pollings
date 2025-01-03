@@ -9,8 +9,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { Input } from "./ui/input";
 import { useAuthStore } from "@/store/authStore";
 import toaster from "@/utils/toaster";
@@ -21,11 +21,26 @@ export default function AppSidebar() {
   const logout = useAuthStore((state) => state.logout);
   const [pollId, setPollId] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+  const location = usePathname();
+
+  useEffect(() => {
+    if (isAuthenticated === undefined) {
+      setIsLoading(true); // Authentication state still loading
+    } else {
+      setIsLoading(false); // Authentication state resolved
+      if (!isAuthenticated && location !== "/auth/login" && location !== "/") {
+        router.push("/auth/login"); // Redirect unauthenticated users
+      }
+    }
+  }, [isAuthenticated, location]);
+
   const items = [
     { title: "Home", url: "/", icon: Home },
     { title: "Polls", url: "/polls", icon: Vote },
   ];
-  const router = useRouter();
+
   const handlePollSearch = (e: any) => {
     e.preventDefault();
     router.push(`/polls/${pollId}`);
@@ -37,11 +52,14 @@ export default function AppSidebar() {
       await api.get("/auth/logout");
       logout();
       toaster("success", "User logged out!");
-      return;
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Show a loading state while checking authentication
+  }
 
   return (
     <Sheet>
@@ -78,11 +96,9 @@ export default function AppSidebar() {
               value={pollId}
               onChange={(event) => setPollId(event.target.value)}
             />
-            {pollId.length == 0 ? (
+            {pollId.length === 0 ? (
               <Button
-                onClick={() => {
-                  setShowSearch(false);
-                }}
+                onClick={() => setShowSearch(false)}
                 className="w-10 h-10 flex items-center justify-center text-white rounded-lg transition-all"
               >
                 <X size={18} />
@@ -97,7 +113,6 @@ export default function AppSidebar() {
             )}
           </form>
         ) : (
-          // Render the Search Link
           <Link
             href="#"
             onClick={() => setShowSearch(true)}
@@ -108,7 +123,9 @@ export default function AppSidebar() {
           </Link>
         )}
         {isAuthenticated ? (
-          <Button onClick={handleLogout} className="w-full">Logout</Button>
+          <Button onClick={handleLogout} className="w-full">
+            Logout
+          </Button>
         ) : (
           <Link href="/auth/login">
             <Button className="w-full">Login</Button>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
 import api from "@/utils/axios";
 import toaster from "@/utils/toaster";
+import { Button } from "../ui/button";
 
 export default function LogButton() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -20,18 +21,19 @@ export default function LogButton() {
   };
 
   return isAuthenticated ? (
-    <button
+    <Button
       onClick={handleLogout}
-      className="px-2 py-1 rounded-lg font-bold bg-brand-3 text-black"
+      className="w-full"
     >
       Logout
-    </button>
+    </Button>
   ) : (
     <Link
       href={"/auth/login"}
-      className="px-2 py-1 rounded-lg font-bold bg-brand-3 text-black"
     >
-      Login
+      <Button className="w-full">
+        Login
+      </Button>
     </Link>
   );
 }
