@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import ROPoll, { ROPollType } from "@/components/ui/ROPoll";
 import Pagination from "@/types/pagination";
 import { getROLivePolls, getROClosedPolls } from "@/utils/getROPolls"; // Assuming you have getROClosedPolls
@@ -39,7 +40,7 @@ export default function Home() {
       {/* Live Polls Section */}
       <div className="flex flex-col items-center justify-start gap-2 w-4/5">
         <h2 className="text-lg font-semibold mb-2">Live Polls</h2>
-        <div className="flex items-center justify-center flex-wrap w-full gap-1">
+        <div className="flex items-center justify-center flex-wrap w-full gap-2 space-x-2">
           {roLivePolls.length > 0 ? (
             roLivePolls.map((pollData: ROPollType, i: number) => (
               <ROPoll key={i} {...pollData} />
@@ -49,20 +50,20 @@ export default function Home() {
           )}
         </div>
         <div className="w-full flex items-center justify-around">
-          <button
+          <Button
             className="bg-brand-3 text-black w-20 rounded-lg disabled:opacity-40"
             onClick={()=>{setLivePollPagination({page:livePollPagination.page-1,per_page:livePollPagination.per_page})}}
             disabled={livePollPagination.page===1}
           >
             Prev
-          </button>
-          <button
+          </Button>
+          <Button
             className="bg-brand-3 text-black w-20 rounded-lg disabled:opacity-40"
             onClick={()=>{setLivePollPagination({page:livePollPagination.page+1,per_page:livePollPagination.per_page})}}
             disabled={livePollPagination.page>=livePollTotalPages}
           >
             Next
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -79,20 +80,20 @@ export default function Home() {
           )}
         </div>
         <div className="w-full flex items-center justify-around">
-          <button
+          <Button
             className="bg-brand-3 text-black w-20 rounded-lg disabled:opacity-40"
             onClick={()=>{setClosedPollPagination({page:closedPollPagination.page-1,per_page:closedPollPagination.per_page})}}
             disabled={closedPollPagination.page===1}
           >
             Prev
-          </button>
-          <button
+          </Button>
+          <Button
             className="bg-brand-3 text-black w-20 rounded-lg disabled:opacity-40"
             onClick={()=>{setClosedPollPagination({page:closedPollPagination.page+1,per_page:closedPollPagination.per_page})}}
             disabled={closedPollPagination.page>=closedPollTotalPages}
           >
             Next
-          </button>
+          </Button>
         </div>
       </div>
     </div>

@@ -24,6 +24,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./alert-dialog";
+import { VoteIcon } from "lucide-react";
+import { Badge } from "./badge";
+import Link from "next/link";
 
 export default function Poll({ pollId }: { pollId: string }) {
   const [pollData, setPollData] = useState<PollData | null>(null);
@@ -118,12 +121,16 @@ export default function Poll({ pollId }: { pollId: string }) {
   };
 
   return (
-    <Card className="w-80 h-fit">
+    <Card className="w-80 h-fit relative">
+      <Badge variant={"outline"} className="absolute -top-2 -right-2 z-20 bg-brand-3">
+        <p className="text-lg">{pollData?.voters?.length??0}</p>
+        <VoteIcon size={24} />
+      </Badge>
       <CardHeader>
         <CardTitle className="text-center">{pollData.title}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <ScrollArea className="h-fit max-h-72 pr-4">
+      <CardContent className="gap-2 flex flex-wrap flex-col">
+        <ScrollArea className="h-fit max-h-72">
           {hasVoted ? (
             <div className="space-y-2">
               {pollData.options.map((option: PollOption, i) => (
@@ -194,6 +201,7 @@ export default function Poll({ pollId }: { pollId: string }) {
             </AlertDialog>
           </Button>
         )}
+        {hasVoted && <Link className="w-full" href={`/polls/results/${pollData.id}`}><Button className="px-2 w-full">Result</Button></Link>}
       </CardContent>
     </Card>
   );
