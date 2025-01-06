@@ -14,13 +14,13 @@ export default function Register() {
     e.preventDefault();
     const hasRegistered = await registrar(username);
     if (hasRegistered) {
-      router.push("/auth/login");
+      router.push("/login");
     }
   };
 
   return (
     <form
-      className="w-80 h-fit m-auto flex flex-col items-center justify-center rounded-lg p-6 shadow-lg space-y-6"
+      className="w-80 lg:w-[35dvw] h-fit lg:h-[40dvh] m-auto flex flex-col items-center justify-center rounded-lg p-6 shadow-lg space-y-6"
       onSubmit={handleRegistration}
     >
       <h6 className="text-3xl font-bold">Sign Up</h6>
@@ -35,7 +35,7 @@ export default function Register() {
       <div className="flex items-center justify-between w-full text-sm">
         <p>Already have an account?</p>
         <Link
-          href={"/auth/login"}
+          href={"/login"}
           className="font-semibold transition-all"
         >
           Sign In

@@ -24,7 +24,7 @@ export default function Login() {
 
   return (
     <form
-      className="w-80 h-fit m-auto flex flex-col items-center justify-center rounded-lg p-6 shadow-lg space-y-6"
+      className="w-80 lg:w-[35dvw] h-fit lg:h-[40dvh] m-auto flex flex-col items-center justify-center rounded-lg p-6 shadow-lg space-y-6"
       onSubmit={handleLogin}
     >
       <h6 className="text-3xl font-bold">Sign In</h6>
@@ -39,7 +39,7 @@ export default function Login() {
       <div className="flex items-center justify-between w-full text-sm">
         <h4>Don't have an account?</h4>
         <Link
-          href={"/auth/register"}
+          href={"/register"}
           className="font-semibold transition-all"
         >
           Sign Up

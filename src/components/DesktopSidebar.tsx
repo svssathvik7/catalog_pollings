@@ -8,7 +8,6 @@ import { Home, Vote } from "lucide-react"; // Import the necessary icons
 import Link from "next/link";
 import toaster from "@/utils/toaster"; // Assuming this is where you handle notifications
 import { useAuthStore } from "@/store/authStore";
-import api from "@/utils/axios";
 import LogButton from "./auth/LoginButton";
 
 export default function DesktopSidebar() {
@@ -20,8 +19,8 @@ export default function DesktopSidebar() {
   const router = useRouter();
   const location = usePathname();
   useEffect(() => {
-      if (!isLoading && !isAuthenticated && location !== "/auth/login" && location !== "/") {
-        router.push("/auth/login"); // Redirect unauthenticated users
+      if (!isLoading && !isAuthenticated && location !== "/" && location !== "/login" && location !== "/register") {
+        router.push("/login"); // Redirect unauthenticated users
       }
   }, [isLoading, location]);
 

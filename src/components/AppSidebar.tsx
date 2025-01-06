@@ -30,8 +30,8 @@ export default function AppSidebar() {
       setIsLoading(true); // Authentication state still loading
     } else {
       setIsLoading(false); // Authentication state resolved
-      if (!isAuthenticated && location !== "/auth/login" && location !== "/") {
-        router.push("/auth/login"); // Redirect unauthenticated users
+      if (!isAuthenticated && location !== "/login" && location !== "/" && location!="/register") {
+        router.push("/login"); // Redirect unauthenticated users
       }
     }
   }, [isAuthenticated, location]);
@@ -127,7 +127,7 @@ export default function AppSidebar() {
             Logout
           </Button>
         ) : (
-          <Link href="/auth/login">
+          <Link href="/login">
             <Button className="w-full">Login</Button>
           </Link>
         )}

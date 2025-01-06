@@ -29,7 +29,7 @@ export default function LogButton() {
     </Button>
   ) : (
     <Link
-      href={"/auth/login"}
+      href={"/login"}
     >
       <Button className="w-full">
         Login

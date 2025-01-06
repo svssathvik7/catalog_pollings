@@ -45,7 +45,7 @@ export default function Poll({ pollId }: { pollId: string }) {
       try {
         const data = await getPoll(pollId, logout, username);
         if (data === "noauth") {
-          router.push("/auth/login");
+          router.push("/login");
           return;
         }
         setPollData(data.poll);
