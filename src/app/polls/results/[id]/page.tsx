@@ -18,9 +18,8 @@ export default function PollResults() {
     title: "",
     options: [],
     is_open: false,
-    total_votes: 0,
     voters: [],
-    owner_username: "",
+    owner_id: "",
   });
 
   useEffect(() => {
@@ -76,7 +75,7 @@ export default function PollResults() {
       <h1 className="text-3xl">
         Poll title: <strong>{pollData.title}</strong>
       </h1>
-      <PollChart key={pollData.total_votes} {...pollData} />
+      <PollChart key={pollData?.voters?.length??0} {...pollData} />
     </div>
   );
 }

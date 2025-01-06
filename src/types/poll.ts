@@ -12,7 +12,6 @@ export type PollData = {
   title: string;
   options: PollOption[];
   is_open: boolean;
-  total_votes: number;
   voters: string[];
   owner_id: string;
 };
