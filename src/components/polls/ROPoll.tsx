@@ -17,7 +17,6 @@ export type ROPollType = {
     title: string,
     options: ROOptionType[],
     is_open: boolean,
-    total_votes: number,
     owner_username: string,
     voters: string[]
 }
@@ -48,6 +47,21 @@ export default function ROPoll(pollData: PollData) {
       return;
     }
   }
+  const handlePollReset = async()=>{
+    try {
+      const response = (await api.post(`/polls/${pollData.id}/reset`,{
+        username
+      })).data;
+      console.log(response);
+      toaster("success","poll reset successfully!");
+      return;
+    } catch (error:any) {
+      console.log(error);
+      const errorText = error?.response?.data;
+      toaster("error",errorText);
+      return;
+    }
+  }
   useEffect(
     ()=>{
       const isOwner = pollData.owner_id === username;
@@ -58,7 +72,7 @@ export default function ROPoll(pollData: PollData) {
     <Link href={`/polls/${pollData.id}`} className="relative">
     <Card className="w-fit min-w-64 h-fit max-h-96 overflow-y-scroll relative">
       <Badge variant={"outline"} className="absolute top-0 right-0 z-20 bg-brand-3">
-        <p>{pollData.total_votes}</p>
+        <p>{pollData?.voters?.length??0}</p>
         <VoteIcon size={24} />
       </Badge>
       <CardHeader>
@@ -88,7 +102,7 @@ export default function ROPoll(pollData: PollData) {
         {
           (pollData.owner_id === username) && <>
             {pollData.is_open && <Button onClick={handlePollClose}>Close</Button>}
-            <Button>Reset</Button>
+            <Button onClick={handlePollReset}>Reset</Button>
           </>
         }
       </CardFooter>
