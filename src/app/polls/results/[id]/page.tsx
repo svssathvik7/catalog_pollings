@@ -43,7 +43,7 @@ export default function PollResults() {
     return () => {
       es.close();
     };
-  }, [pollData.id]);
+  }, [pollData?.id]);
 
   const logout = useAuthStore((state) => state.logout);
   const username = useAuthStore((state) => state.username);

@@ -183,7 +183,9 @@ export default function Poll({ pollId }: { pollId: string }) {
             variant={selectedOption ? "default" : "secondary"}
           >
             <AlertDialog>
-              <AlertDialogTrigger>Vote</AlertDialogTrigger>
+              <AlertDialogTrigger className="w-full h-full">
+                <p className="w-full h-full">Vote</p>
+              </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle>

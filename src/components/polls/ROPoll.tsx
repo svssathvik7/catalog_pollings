@@ -1,5 +1,4 @@
 "use client";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { PollData, PollOption } from "@/types/poll";
 import Link from "next/link";
@@ -10,6 +9,7 @@ import { useAuthStore } from "@/store/authStore";
 import { useEffect, useState } from "react";
 import api from "@/utils/axios";
 import toaster from "@/utils/toaster";
+import { ScrollArea } from "../ui/scroll-area";
 
 export type ROPollType = {
     _id: any,
