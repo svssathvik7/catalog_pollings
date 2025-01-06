@@ -62,6 +62,21 @@ export default function ROPoll(pollData: PollData) {
       return;
     }
   }
+  const handlePollDelete = async()=>{
+    try {
+      const response = (await api.post(`/polls/${pollData.id}/delete`,{
+        username
+      })).data;
+      console.log(response);
+      toaster("success","poll deleted successfully!");
+      return;
+    } catch (error:any) {
+      console.log(error);
+      const errorText = error?.response?.data;
+      toaster("error",errorText);
+      return;
+    }
+  }
   useEffect(
     ()=>{
       const isOwner = pollData.owner_id === username;
@@ -69,8 +84,8 @@ export default function ROPoll(pollData: PollData) {
     }
   ,[username,pollData.owner_id]);
   return (
-    <Link href={`/polls/${pollData.id}`} className="relative">
     <Card className="w-fit min-w-64 h-fit max-h-96 overflow-y-scroll relative">
+      <Link href={`/polls/${pollData.id}`} className="relative">
       <Badge variant={"outline"} className="absolute top-0 right-0 z-20 bg-brand-3">
         <p>{pollData?.voters?.length??0}</p>
         <VoteIcon size={24} />
@@ -98,15 +113,16 @@ export default function ROPoll(pollData: PollData) {
           )}
         </ScrollArea>
       </CardContent>
-      <CardFooter className="w-full flex items-center justify-around">
+      </Link>
+      <CardFooter className="w-full flex items-center justify-around gap-1">
         {
           (pollData.owner_id === username) && <>
             {pollData.is_open && <Button onClick={handlePollClose}>Close</Button>}
             <Button onClick={handlePollReset}>Reset</Button>
+            <Button onClick={handlePollDelete} variant={"destructive"}>Delete</Button>
           </>
         }
       </CardFooter>
     </Card>
-    </Link>
   );
 }
