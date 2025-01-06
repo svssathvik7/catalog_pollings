@@ -10,7 +10,7 @@ import { getUserPolls } from "@/utils/getUserPolls";
 import { useAuthStore } from "@/store/authStore";
 
 export default function UserPollsContainer() {
-    const [pagination, setPagination] = useState({ page: 1, per_page: 5 });
+    const [pagination, setPagination] = useState({ page: 1, per_page: 3 });
     const [polls, setPolls] = useState<PollData[]>([]);
     const [totalPages, setTotalPages] = useState(0);
     const [isMounted, setIsMounted] = useState(false);
@@ -52,7 +52,7 @@ export default function UserPollsContainer() {
             {loading ? (
                 <div className="w-full flex items-center justify-around p-2">
                     {/* Skeleton loader for each poll */}
-                    {[...Array(5)].map((_, index) => (
+                    {[...Array(pagination.per_page)].map((_, index) => (
                         <div key={index} className="w-fit min-w-64 h-64 max-h-96 overflow-y-scroll relative justify-around p-1 gap-1 flex flex-col">
                             <Skeleton className="h-20 rounded-md" />
                             <Skeleton className="h-10 rounded-md" />
@@ -65,7 +65,7 @@ export default function UserPollsContainer() {
                 <p>No live polls available.</p>
             ) : (
                 <div className="w-full flex items-center justify-around p-2 flex-wrap gap-2">
-                    {polls.slice(-5).map((poll, index) => (
+                    {polls.slice(-1*(pagination.per_page)).map((poll, index) => (
                         <ROPoll key={poll.id || index} {...poll} />
                     ))}
                 </div>

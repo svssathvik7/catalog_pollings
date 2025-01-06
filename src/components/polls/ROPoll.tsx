@@ -1,3 +1,4 @@
+"use client";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { PollData, PollOption } from "@/types/poll";
@@ -5,6 +6,10 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { VoteIcon } from "lucide-react";
 import { Button } from "../ui/button";
+import { useAuthStore } from "@/store/authStore";
+import { useEffect, useState } from "react";
+import api from "@/utils/axios";
+import toaster from "@/utils/toaster";
 
 export type ROPollType = {
     _id: any,
@@ -26,6 +31,29 @@ type ROOptionType = {
 
 
 export default function ROPoll(pollData: PollData) {
+  const username = useAuthStore((state)=>state.username);
+  const [isOwner,setIsOwner] = useState(false);
+  const handlePollClose = async()=>{
+    try {
+      const response = (await api.post(`/polls/${pollData.id}/close`,{
+        username
+      })).data;
+      console.log(response);
+      toaster("success","poll closed successfully!");
+      return;
+    } catch (error:any) {
+      console.log(error);
+      const errorText = error.response.data;
+      toaster("error",errorText);
+      return;
+    }
+  }
+  useEffect(
+    ()=>{
+      const isOwner = pollData.owner_id === username;
+      setIsOwner(isOwner);
+    }
+  ,[username,pollData.owner_id]);
   return (
     <Link href={`/polls/${pollData.id}`} className="relative">
     <Card className="w-fit min-w-64 h-fit max-h-96 overflow-y-scroll relative">
@@ -56,10 +84,13 @@ export default function ROPoll(pollData: PollData) {
           )}
         </ScrollArea>
       </CardContent>
-      <CardFooter>
-        <Link href={`/polls/results/${pollData.id}`}>
-          <Button>Results</Button>
-        </Link>
+      <CardFooter className="w-full flex items-center justify-around">
+        {
+          (pollData.owner_id === username) && <>
+            <Button onClick={handlePollClose}>Close</Button>
+            <Button>Reset</Button>
+          </>
+        }
       </CardFooter>
     </Card>
     </Link>

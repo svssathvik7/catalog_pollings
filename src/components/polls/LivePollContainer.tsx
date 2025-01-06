@@ -45,7 +45,7 @@ export default function LivePollContainer() {
     return (
         <div className="w-full flex items-center justify-around flex-col">
             {loading ? (
-                <div className="w-full flex items-center justify-around p-2">
+                <div className="w-full flex items-center justify-around p-2 flex-wrap">
                     {/* Skeleton loader for each poll */}
                     {[...Array(3)].map((_, index) => (
                         <div key={index} className="w-fit min-w-64 h-64 max-h-96 overflow-y-scroll relative justify-around p-1 gap-1 flex flex-col">
@@ -59,7 +59,7 @@ export default function LivePollContainer() {
             ) : polls.length === 0 ? (
                 <p>No live polls available.</p>
             ) : (
-                <div className="w-full flex items-center justify-around p-2">
+                <div className="w-full flex items-center justify-around p-2 flex-wrap overflow-y-scroll h-96 gap-1">
                     {polls.slice(-3).map((poll, index) => (
                         <ROPoll key={poll.id || index} {...poll} />
                     ))}

@@ -15,6 +15,7 @@ export async function getROLivePolls(pagination:Pagination){
 export async function getROClosedPolls(pagination:Pagination){
     try {
         const closedReadOnlyPolls = (await api.get(`/api/closed?per_page=${pagination.per_page}&page=${pagination.page}`)).data;
+        console.log(closedReadOnlyPolls);
         return closedReadOnlyPolls;
     } catch (error:any) {
         const errorText = error.response.data;
