@@ -43,7 +43,7 @@ export default function ClosedPollContainer() {
     }, [pagination, isMounted]);
 
     return (
-        <div className="w-full flex items-center justify-around flex-col">
+        <div className="w-full flex items-center justify-around flex-col h-full">
             {loading ? (
                 <div className="w-full flex items-center justify-around p-2 flex-wrap">
                     {/* Skeleton loader for each poll */}
@@ -59,13 +59,13 @@ export default function ClosedPollContainer() {
             ) : polls.length === 0 ? (
                 <p>No closed polls available.</p>
             ) : (
-                <div className="w-full flex items-center justify-around p-2 gap-1 flex-wrap overflow-y-scroll h-96">
+                <div className="w-full flex items-center justify-around p-2 gap-1 flex-wrap overflow-y-scroll h-full">
                     {polls.slice(-3).map((poll, index) => (
                         <ROPoll key={poll.id || index} {...poll} />
                     ))}
                 </div>
             )}
-            {polls.length > 0 && <div className="w-full items-center flex justify-around m-2">
+            <div className="w-full items-center flex justify-around m-2">
                 <Button
                     disabled={pagination.page <= 1}
                     onClick={() => setPagination((curr) => ({ ...curr, page: curr.page - 1 }))}
@@ -86,7 +86,7 @@ export default function ClosedPollContainer() {
                     Next
                     <ArrowBigRight className="ml-2" />
                 </Button>
-            </div>}
+            </div>
         </div>
     );
 }

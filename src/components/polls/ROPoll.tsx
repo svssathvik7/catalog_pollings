@@ -87,7 +87,7 @@ export default function ROPoll(pollData: PollData) {
       <CardFooter className="w-full flex items-center justify-around">
         {
           (pollData.owner_id === username) && <>
-            <Button onClick={handlePollClose}>Close</Button>
+            {pollData.is_open && <Button onClick={handlePollClose}>Close</Button>}
             <Button>Reset</Button>
           </>
         }

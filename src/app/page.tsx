@@ -9,10 +9,10 @@ export default function Home() {
         <TabsTrigger className="w-1/2" value="live-polls">Top Live Polls</TabsTrigger>
         <TabsTrigger className="w-1/2" value="closed-polls">Top Closed Polls</TabsTrigger>
       </TabsList>
-      <TabsContent value="live-polls" className="h-96">
+      <TabsContent value="live-polls" className="h-[80dvh]">
         <LivePollContainer/>
       </TabsContent>
-      <TabsContent value="closed-polls" className="h-96">
+      <TabsContent value="closed-polls" className="h-[80dvh]">
         <ClosedPollContainer/>
       </TabsContent>
     </Tabs>
