@@ -16,15 +16,19 @@ export default function UserPollsContainer() {
     const [isMounted, setIsMounted] = useState(false);
     const [loading, setLoading] = useState(true);
     const username = useAuthStore((state) => state.username);
+    const logout = useAuthStore((state)=>state.logout);
     const fetchData = useCallback(async () => {
         if(!username) return;
         try {
             setLoading(true); // Start loading
-            const response = await getUserPolls(pagination,username);
+            const response = await getUserPolls(pagination,username,logout);
             console.log(response);
             const totalPages = response.total_pages;
             const newPolls = response.polls;
-            if (!newPolls) return;
+            if (!newPolls) {
+                setLoading(false);
+                return;
+            };
 
             setPolls((prevPolls) => [...prevPolls, ...newPolls]);
             setTotalPages(totalPages);
