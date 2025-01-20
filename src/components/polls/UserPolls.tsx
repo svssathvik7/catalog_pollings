@@ -48,7 +48,7 @@ export default function UserPollsContainer() {
     }, [pagination, isMounted, username]);
 
     return (
-        <div className="w-full flex items-center justify-around flex-col h-full">
+        <div className="w-full flex items-center justify-around flex-col h-[75dvh]">
             {loading ? (
                 <div className="w-full flex items-center justify-around p-2 h-full">
                     {/* Skeleton loader for each poll */}
@@ -64,7 +64,7 @@ export default function UserPollsContainer() {
             ) : polls.length === 0 ? (
                 <p>No live polls available.</p>
             ) : (
-                <div className="w-full flex items-center justify-around p-2 flex-wrap gap-2 h-full">
+                <div className="w-full flex items-center justify-around p-2 flex-wrap gap-2 h-full overflow-y-scroll">
                     {polls.slice(-1*(pagination.per_page)).map((poll, index) => (
                         <ROPoll key={poll.id || index} {...poll} />
                     ))}

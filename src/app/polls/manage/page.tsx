@@ -3,13 +3,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function PollDashBoard() {
   return (
-    <Tabs defaultValue="my-polls" className="w-full text-center">
+    <Tabs defaultValue="my-polls" className="w-full text-center m-auto">
       <TabsList className="w-full lg:w-3/4">
         <TabsTrigger className="w-full" value="my-polls">
           My Polls
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="my-polls" className="h-[80dvh] overflow-y-scroll">
+      <TabsContent value="my-polls" className="h-[80dvh]">
         <UserPollsContainer/>
       </TabsContent>
     </Tabs>
