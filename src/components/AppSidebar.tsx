@@ -1,5 +1,5 @@
 "use client";
-import { Home, Vote, Menu, Search, X } from "lucide-react";
+import { Home, Vote, Menu, Search, X, PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import {
@@ -39,6 +39,7 @@ export default function AppSidebar() {
   const items = [
     { title: "Home", url: "/", icon: Home },
     { title: "Polls", url: "/polls", icon: Vote },
+    { title: "Create Poll", url: "/polls/new", icon: PlusIcon },
   ];
 
   return (

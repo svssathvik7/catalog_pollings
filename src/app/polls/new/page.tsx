@@ -47,6 +47,12 @@ export default function NewPoll() {
             toaster("error", "Options cannot be empty!");
             return;
         }
+        const trimmedOptions = options.map((option) => option.text.trim());
+        console.log(trimmedOptions);
+        if (new Set(trimmedOptions.map((o) => o.toLowerCase())).size !== trimmedOptions.length) {
+            toaster("error", "Duplicate options are not allowed!");
+            return;
+        }
         const pollData = {
             title,
             options: options.map((option) => ({ text: option.text.trim() })),

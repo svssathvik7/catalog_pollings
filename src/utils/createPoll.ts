@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 export default async function createPoll(pollData:any,logout:()=>void){
     try {
-        const response = (await api.post("/polls/new",pollData)).data;
+        const _response = (await api.post("/polls/new",pollData)).data;
         toaster("success","poll created!");
         return true;
     } catch (error:any) {
