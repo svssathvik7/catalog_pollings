@@ -68,8 +68,8 @@ export default function NewPoll() {
     };
 
     return (
-        <div className="flex-grow h-screen flex items-center justify-center">
-            <form onSubmit={handleSubmit} className="w-96">
+        <div className="w-[80dvw] md:flex-grow h-screen flex items-center justify-center">
+            <form onSubmit={handleSubmit} className="w-full md:w-[30dvw]">
                 <Input
                     type="text"
                     placeholder="Poll Title"
