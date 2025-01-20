@@ -53,7 +53,7 @@ export function PollChart(pollData: PollData) {
               fontSize={18}
               fontWeight="bold"
             >
-              {pollData.total_votes}
+              {pollData.voters.length}
             </text>
             
             <ChartTooltip
