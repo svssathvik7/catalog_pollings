@@ -11,15 +11,18 @@ export default function Login() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const authStore = useAuthStore();
-
+  const [loading,setLoading] = useState(false);
   const handleLogin = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
     const hasLoggedIn = await authenticator(username);
     if (hasLoggedIn) {
         router.back();
         authStore.login(username);
         setUsername("");
     }
+    setLoading(false);
+    return;
   };
 
   return (
@@ -47,9 +50,9 @@ export default function Login() {
       </div>
       <Button
         type="submit"
-        className="w-full px-4 py-2 rounded-lg font-bold text-white transition-all"
+        className={`${loading ? " cursor-wait pointer-events-none " : " cursor-pointer "} w-full px-4 py-2 rounded-lg font-bold text-white transition-all`}
       >
-        Sign In
+        {loading ? "Signing In..." : "Sign In"}
       </Button>
     </form>
   );

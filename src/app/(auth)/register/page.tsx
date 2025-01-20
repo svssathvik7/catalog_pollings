@@ -9,13 +9,17 @@ import { Input } from "@/components/ui/input";
 export default function Register() {
   const router = useRouter();
   const [username, setUsername] = useState("");
+  const [loading,setLoading] = useState(false);
 
   const handleRegistration = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
     const hasRegistered = await registrar(username);
     if (hasRegistered) {
       router.push("/login");
     }
+    setLoading(false);
+    return;
   };
 
   return (
@@ -43,9 +47,9 @@ export default function Register() {
       </div>
       <Button
         type="submit"
-        className="w-full px-4 py-2 rounded-lg font-bold text-white transition-all"
+        className={`${loading ? " cursor-wait pointer-events-none " : " cursor-pointer "}w-full px-4 py-2 rounded-lg font-bold text-white transition-all`}
       >
-        Sign Up
+        {loading ? "Signing Up..." : "Sign Up"}
       </Button>
     </form>
   );
