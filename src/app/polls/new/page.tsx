@@ -14,6 +14,7 @@ export default function NewPoll() {
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
     const username = useAuthStore((state) => state.username);
     const logout = useAuthStore((state) => state.logout);
+    const [loading,setLoading] = useState(false);
 
     const handleOptionChange = (index: number, value: string) => {
         const updatedOptions = [...options];
@@ -69,7 +70,11 @@ export default function NewPoll() {
 
     return (
         <div className="w-[80dvw] md:flex-grow h-screen flex items-center justify-center">
-            <form onSubmit={handleSubmit} className="w-full md:w-[30dvw]">
+            <form onSubmit={async(e)=>{
+                setLoading(true);
+                await handleSubmit(e);
+                setLoading(false);
+            }} className="w-full md:w-[30dvw]">
                 <Input
                     type="text"
                     placeholder="Poll Title"
@@ -110,7 +115,7 @@ export default function NewPoll() {
                     type="submit"
                     className="w-full"
                 >
-                    Create Poll
+                    {loading ? "Creating Poll..." : "Create Poll"}
                 </Button>
             </form>
         </div>

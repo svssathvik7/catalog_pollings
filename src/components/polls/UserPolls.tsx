@@ -66,7 +66,7 @@ export default function UserPollsContainer() {
                     ))}
                 </div>
             ) : polls.length === 0 ? (
-                <p>No live polls available.</p>
+                <p>No polls created yet!</p>
             ) : (
                 <div className="w-full flex items-center justify-around p-2 flex-wrap gap-2 h-full overflow-y-scroll">
                     {polls.slice(-1*(pagination.per_page)).map((poll, index) => (
@@ -86,7 +86,7 @@ export default function UserPollsContainer() {
                     Prev
                 </Button>
                 <Button
-                    disabled={pagination.page === totalPages}
+                    disabled={pagination.page >= totalPages}
                     onClick={() => setPagination((curr) => ({ ...curr, page: curr.page + 1 }))}
                     className={`${
                         pagination.page === totalPages ? "bg-gray-300 text-gray-600 cursor-not-allowed" : "bg-[#facc15] text-black hover:bg-[#f9a826]"

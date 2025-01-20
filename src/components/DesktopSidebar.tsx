@@ -84,7 +84,7 @@ export default function DesktopSidebar() {
           </Link>
         )}
 
-        <LogButton />
+        <LogButton/>
       </nav>
     </div>
   );

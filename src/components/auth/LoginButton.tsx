@@ -4,7 +4,7 @@ import { useAuthStore } from "@/store/authStore";
 import api from "@/utils/axios";
 import toaster from "@/utils/toaster";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 export default function LogButton() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -17,6 +17,7 @@ export default function LogButton() {
       await api.get("/auth/logout");
       logout();
       toaster("success","user logged out!");
+      setLoading(false);
       return;
     } catch (error) {
       console.error("Logout failed:", error);
@@ -38,7 +39,7 @@ export default function LogButton() {
       href={"/login"}
     >
       <Button className="w-full">
-        {loading ? "Login" : "Logging in..."}
+        {loading ? "Loggin in..." : "Log In"}
       </Button>
     </Link>
   );
