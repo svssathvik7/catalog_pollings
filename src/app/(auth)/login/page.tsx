@@ -16,9 +16,9 @@ export default function Login() {
     e.preventDefault();
     const hasLoggedIn = await authenticator(username);
     if (hasLoggedIn) {
-      router.back();
-      authStore.login(username);
-      setUsername("");
+        router.back();
+        authStore.login(username);
+        setUsername("");
     }
   };
 

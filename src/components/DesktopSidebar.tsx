@@ -6,29 +6,22 @@ import { Input } from "@/components/ui/input";
 import { PlusIcon, Search, X } from "lucide-react";
 import { Home, Vote } from "lucide-react"; // Import the necessary icons
 import Link from "next/link";
-import toaster from "@/utils/toaster"; // Assuming this is where you handle notifications
 import { useAuthStore } from "@/store/authStore";
 import LogButton from "./auth/LoginButton";
+import { handlePollSearch } from "@/utils/navbarUtils";
 
 export default function DesktopSidebar() {
   const isLoading = useAuthStore((state) => state.isLoading);
   const isAuthenticated = useAuthStore((state)=>state.isAuthenticated);
-  const logout = useAuthStore((state) => state.logout);
   const [pollId, setPollId] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const router = useRouter();
   const location = usePathname();
   useEffect(() => {
       if (!isLoading && !isAuthenticated && location !== "/" && location !== "/login" && location !== "/register") {
-        router.push("/login"); // Redirect unauthenticated users
+        router.push("/login");
       }
   }, [isLoading, location]);
-
-  const handlePollSearch = (e: any) => {
-    e.preventDefault();
-    router.push(`/polls/${pollId}`);
-    setPollId("");
-  };
 
   const items = [
     { title: "Home", url: "/", icon: Home },
@@ -56,7 +49,9 @@ export default function DesktopSidebar() {
         ))}
 
         {showSearch ? (
-          <form className="flex items-center justify-center gap-2 rounded-lg" onSubmit={handlePollSearch}>
+          <form className="flex items-center justify-center gap-2 rounded-lg" onSubmit={(e)=>{
+            handlePollSearch(e,pollId);
+          }}>
             <Input
               type="text"
               placeholder="Type Poll ID"

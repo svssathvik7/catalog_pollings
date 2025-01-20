@@ -140,9 +140,9 @@ export default function Poll({ pollId }: { pollId: string }) {
                 >
                   <span className="font-bold">{i + 1}.</span>
                   <span className="flex-1 ml-2">{option.text}</span>
-                  <span className="text-sm text-muted-foreground">
+                  {/* <span className="text-sm text-muted-foreground">
                     ({option.votes_count} votes)
-                  </span>
+                  </span> */}
                 </div>
               ))}
             </div>
@@ -167,9 +167,9 @@ export default function Poll({ pollId }: { pollId: string }) {
                     className="flex flex-1 justify-between cursor-pointer p-3"
                   >
                     <span>{option.text}</span>
-                    <span className="text-sm text-muted-foreground">
+                    {/* <span className="text-sm text-muted-foreground">
                       ({option.votes_count} votes)
-                    </span>
+                    </span> */}
                   </Label>
                 </div>
               ))}
