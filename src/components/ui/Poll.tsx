@@ -29,6 +29,7 @@ import { Badge } from "./badge";
 import Link from "next/link";
 
 export default function Poll({ pollId }: { pollId: string }) {
+  const isAuthenticated = useAuthStore((state)=>state.isAuthenticated);
   const [pollData, setPollData] = useState<PollData | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [loading, setLoading] = useState(true); // Added loading state
@@ -39,11 +40,9 @@ export default function Poll({ pollId }: { pollId: string }) {
 
   useEffect(() => {
     const fetchPoll = async () => {
-      // Wait until username is available before making the API call
-      if (!username) return;
 
       try {
-        const data = await getPoll(pollId, logout, username);
+        const data = await getPoll(pollId, logout, username ? username : "");
         if (data === "noauth") {
           router.push("/login");
           return;
@@ -131,7 +130,7 @@ export default function Poll({ pollId }: { pollId: string }) {
       </CardHeader>
       <CardContent className="gap-2 flex flex-wrap flex-col">
         <ScrollArea className="h-fit max-h-72">
-          {hasVoted ? (
+          {(hasVoted || !isAuthenticated) ? (
             <div className="space-y-2">
               {pollData.options.map((option: PollOption, i) => (
                 <div

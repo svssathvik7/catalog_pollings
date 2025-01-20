@@ -13,7 +13,6 @@ import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Input } from "./ui/input";
 import { useAuthStore } from "@/store/authStore";
-import { handlePollSearch } from "@/utils/navbarUtils";
 import LogButton from "./auth/LoginButton";
 
 export default function AppSidebar() {
@@ -38,9 +37,16 @@ export default function AppSidebar() {
 
   const items = [
     { title: "Home", url: "/", icon: Home },
-    { title: "Polls", url: "/polls", icon: Vote },
+    { title: "Polls", url: "/polls/manage", icon: Vote },
     { title: "Create Poll", url: "/polls/new", icon: PlusIcon },
   ];
+
+  const handlePollSearch = (e:any) => {
+    e.preventDefault();
+    router.push(`/polls/${pollId}`);
+    setPollId("");
+    return;
+  }
 
   return (
     <Sheet>
@@ -67,10 +73,8 @@ export default function AppSidebar() {
         </nav>
         {showSearch ? (
           <form
-            className="flex items-center justify-center gap-2 rounded-lg"
-            onSubmit={(e) => {
-              handlePollSearch(e, pollId);
-            }}
+            className="flex items-center justify-center gap-2 rounded-lg my-2"
+            onSubmit={handlePollSearch}
           >
             <Input
               type="text"
@@ -99,7 +103,7 @@ export default function AppSidebar() {
           <Link
             href="#"
             onClick={() => setShowSearch(true)}
-            className="flex items-center gap-2 px-4 py-2 text-sm rounded-md hover:bg-accent transition-colors duration-200"
+            className="flex items-center gap-2 px-4 py-2 text-sm rounded-md hover:bg-accent transition-colors duration-200 my-2"
           >
             <Search className="h-4 w-4" />
             Search
