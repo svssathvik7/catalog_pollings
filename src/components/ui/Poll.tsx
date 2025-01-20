@@ -114,7 +114,7 @@ export default function Poll({ pollId }: { pollId: string }) {
       toaster("error", "Failed to cast vote. Please try again later.");
       if (error?.response?.data?.isAuthenticated === false) {
         logout();
-        toaster("error", "login to view poll!");
+        toaster("error", "Session expired! Pleaselogin to view poll!");
       }
       return;
     }

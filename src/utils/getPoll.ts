@@ -12,7 +12,7 @@ export default async function getPoll(id:string,logout: ()=>void,username: strin
         console.log(error);
         if(error?.response?.data?.isAuthenticated === false){
             logout();
-            toaster("error","login to view poll!");
+            toaster("error","Session expired! Please login to view poll!");
             return "noauth";
         }
         return false;
