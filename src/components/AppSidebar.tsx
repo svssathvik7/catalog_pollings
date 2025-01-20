@@ -19,6 +19,7 @@ export default function AppSidebar() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const [pollId, setPollId] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);  // Track sidebar state
   const router = useRouter();
   const location = usePathname();
   const isLoading = useAuthStore((state) => state.isLoading);
@@ -41,17 +42,24 @@ export default function AppSidebar() {
     { title: "Create Poll", url: "/polls/new", icon: PlusIcon },
   ];
 
-  const handlePollSearch = (e:any) => {
+  const handlePollSearch = (e: any) => {
     e.preventDefault();
     router.push(`/polls/${pollId}`);
     setPollId("");
-    return;
-  }
+  };
+
+  // Function to close the sidebar
+  const closeSidebar = () => setIsSidebarOpen(false);
 
   return (
-    <Sheet>
+    <Sheet open={isSidebarOpen} onOpenChange={setIsSidebarOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="md:hidden">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          onClick={() => setIsSidebarOpen(true)} // Open sidebar on trigger
+        >
           <Menu className="h-6 w-6" />
         </Button>
       </SheetTrigger>
@@ -65,6 +73,7 @@ export default function AppSidebar() {
               key={item.title}
               href={item.url}
               className="flex items-center px-4 py-2 text-sm rounded-md hover:bg-accent transition-colors duration-200"
+              onClick={closeSidebar} // Close sidebar when any link is clicked
             >
               <item.icon className="h-4 w-4" />
               {item.title}
@@ -102,7 +111,10 @@ export default function AppSidebar() {
         ) : (
           <Link
             href="#"
-            onClick={() => setShowSearch(true)}
+            onClick={() => {
+              setShowSearch(true);
+              closeSidebar(); // Close sidebar when search is triggered
+            }}
             className="flex items-center gap-2 px-4 py-2 text-sm rounded-md hover:bg-accent transition-colors duration-200 my-2"
           >
             <Search className="h-4 w-4" />

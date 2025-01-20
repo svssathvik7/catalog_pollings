@@ -43,11 +43,11 @@ export default function ClosedPollContainer() {
     }, [pagination, isMounted]);
 
     return (
-        <div className="w-full flex items-center justify-around flex-col h-full">
+        <div className="w-full flex items-center justify-around flex-col h-[75dvh]">
             {loading ? (
                 <div className="w-full flex items-center justify-around p-2 flex-wrap">
                     {/* Skeleton loader for each poll */}
-                    {[...Array(3)].map((_, index) => (
+                    {[...Array(1)].map((_, index) => (
                         <div key={index} className="w-fit min-w-64 h-64 max-h-96 overflow-y-scroll relative justify-around p-1 gap-1 flex flex-col">
                             <Skeleton className="h-20 rounded-md" />
                             <Skeleton className="h-10 rounded-md" />
