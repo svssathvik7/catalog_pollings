@@ -63,7 +63,7 @@ export default function AppSidebar() {
           <Menu className="h-6 w-6" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-64">
+      <SheetContent side="left" className="w-64 bg-[#fff]">
         <SheetHeader>
           <SheetTitle>Catalog Polling</SheetTitle>
         </SheetHeader>

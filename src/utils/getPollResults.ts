@@ -10,7 +10,7 @@ export default async function getPollResults(id:string,logout: ()=>void,username
         console.log(error);
         if(error?.response?.data?.isAuthenticated === false){
             logout();
-            toaster("error","Session expired! Please login to view poll result!");
+            toaster("error","Please login to view poll result!");
             return "noauth";
         }
         return false;
