@@ -75,7 +75,7 @@ export default function AppSidebar() {
               className="flex items-center px-4 py-2 text-sm rounded-md hover:bg-accent transition-colors duration-200"
               onClick={closeSidebar} // Close sidebar when any link is clicked
             >
-              <item.icon className="h-4 w-4" />
+              <item.icon className="h-4 w-4 mr-2" />
               {item.title}
             </Link>
           ))}

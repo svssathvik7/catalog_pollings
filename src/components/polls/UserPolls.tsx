@@ -51,7 +51,7 @@ export default function UserPollsContainer() {
     }, [pagination, isMounted, username]);
 
     return (
-        <div className="w-full flex items-center justify-around flex-col h-[75dvh]">
+        <div className="w-full flex items-center justify-center flex-col h-[90dvh] overflow-y-scroll">
             {loading ? (
                 <div className="w-full flex items-center justify-around p-2 flex-wrap gap-2 h-full overflow-y-scroll">
                     {/* Skeleton loader for each poll */}
@@ -73,7 +73,7 @@ export default function UserPollsContainer() {
                     ))}
                 </div>
             )}
-            <div className="w-full items-center flex justify-around m-2">
+            <div className="w-full items-center flex justify-around">
                 <Button
                     disabled={pagination.page <= 1}
                     onClick={() => setPagination((curr) => ({ ...curr, page: curr.page - 1 }))}

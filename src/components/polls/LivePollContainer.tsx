@@ -43,7 +43,7 @@ export default function LivePollContainer() {
     }, [pagination, isMounted]);
 
     return (
-        <div className="w-full flex items-center justify-around flex-col h-[80dvh]">
+        <div className="w-full flex items-center justify-start flex-col md:h-[80dvh] p-2">
             {loading ? (
                 <div className="w-full flex items-center justify-around p-2 flex-wrap">
                     {/* Skeleton loader for each poll */}

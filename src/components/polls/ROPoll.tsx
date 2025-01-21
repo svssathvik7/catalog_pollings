@@ -80,7 +80,7 @@ export default function ROPoll(pollData: PollData) {
 
   return (
     <TooltipProvider>
-      <Card className="w-full md:w-80 bg-[#ffffff76] shadow-lg hover:shadow-xl transition-all duration-300 relative rounded-xl overflow-hidden border border-gray-200">
+      <Card className="w-full md:w-72 bg-[#ffffff76] shadow-lg hover:shadow-xl transition-all duration-300 relative rounded-xl overflow-hidden border border-gray-200">
         <Link href={`/polls/${pollData.id}`} className="block">
           <Badge
             variant="outline"
@@ -97,18 +97,18 @@ export default function ROPoll(pollData: PollData) {
           </CardHeader>
 
           <CardContent>
-            <ScrollArea className="max-h-36 px-4">
+            <ScrollArea className="max-h-36 px-4 overflow-y-scroll">
               {pollData.options?.length ? (
                 <div className="space-y-2">
                   {pollData.options.slice(-2).map((option: PollOption, i: number) => (
                     <div
                       key={option._id.$oid + i}
-                      className="p-3 rounded-lg bg-gray-50 border border-gray-200 hover:border-blue-200 hover:bg-blue-50 transition-colors"
+                      className="p-1 text-left rounded-lg bg-gray-50 border border-gray-200 hover:border-blue-200 hover:bg-blue-50 transition-colors"
                     >
                       <span className="text-gray-700 text-sm font-medium">{option.text}</span>
                     </div>
                   ))}
-                  <div className="pt-2 flex items-center justify-center text-blue-600 hover:text-blue-700 transition-colors gap-1 text-sm font-medium">
+                  <div className="mx-1 flex items-center justify-start text-blue-600 hover:text-blue-700 transition-colors gap-1 text-sm font-medium">
                     View full poll
                     <ChevronRight size={14} />
                   </div>
@@ -120,7 +120,7 @@ export default function ROPoll(pollData: PollData) {
           </CardContent>
         </Link>
 
-        <CardFooter className="pt-4 pb-5 border-t bg-[#ffffff76]">
+        <CardFooter className="bg-[#ffffff76]">
           {isOwner ? (
             <div className="w-full flex items-center justify-center gap-4">
               {pollData.is_open && (
@@ -129,7 +129,7 @@ export default function ROPoll(pollData: PollData) {
                     <Button
                       onClick={handlePollClose}
                       size="sm"
-                      className="h-9 w-9 p-0 bg-blue-600 hover:bg-blue-700 rounded-full shadow-md"
+                      className="h-9 w-9 bg-blue-600 hover:bg-blue-700 rounded-full shadow-md"
                     >
                       <Lock />
                     </Button>
@@ -175,7 +175,7 @@ export default function ROPoll(pollData: PollData) {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <AlertDialogTrigger asChild>
-                      <Button variant="destructive" size="sm" className="h-9 w-9 p-0 rounded-full shadow-md">
+                      <Button variant="destructive" size="sm" className="h-9 w-9 rounded-full shadow-md">
                         <Trash />
                       </Button>
                     </AlertDialogTrigger>
