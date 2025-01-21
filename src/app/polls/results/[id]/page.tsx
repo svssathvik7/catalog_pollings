@@ -1,11 +1,9 @@
 "use client";
 
 import PollVisualization from "@/components/PollVisualization";
-import { PollChart } from "@/components/ui/pie-chart";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuthStore } from "@/store/authStore";
 import { PollData } from "@/types/pollResult";
-import getPoll from "@/utils/getPoll";
 import getPollResults from "@/utils/getPollResults";
 import { useParams } from "next/navigation";
 import { Key, useEffect, useState } from "react";
@@ -28,13 +26,14 @@ export default function PollResults() {
     };
 
     es.addEventListener("poll_results", (event) => {
-      console.log("Poll results event received", event.data);
       const response = JSON.parse(event.data);
-      const jsonResponse = JSON.parse(response);
-      const poll = jsonResponse.poll;
-      console.log("emit poll : ", poll);
-      if (poll.id === pollData.id) {
-        setPollData(poll);
+      console.log("Poll results event received", response);
+      const poll_result = JSON.parse(response);
+      console.log("emit poll : ", poll_result?.id);
+      console.log(pollData);
+      if (poll_result.id === pollData.id) {
+        setPollData(poll_result);
+        console.log("Updated poll result",pollData);
       }
     });
 
@@ -71,10 +70,10 @@ export default function PollResults() {
 
   return (
     <div className="flex items-center justify-center flex-wrap">
-      <h1 className="text-xl">
+      {pollData?.total_votes === 0 ? <p>NO poll data available</p> : <><h1 className="text-xl">
         Poll title: <strong>{pollData?.title}</strong>
       </h1>
-      <PollVisualization key={pollData?.total_votes as Key} {...pollData}/>
+      <PollVisualization {...pollData}/></>}
     </div>
   );
 }

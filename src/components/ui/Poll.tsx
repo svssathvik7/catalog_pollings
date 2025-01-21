@@ -129,7 +129,7 @@ export default function Poll({ pollId }: { pollId: string }) {
         <CardTitle className="text-center">{pollData.title}</CardTitle>
       </CardHeader>
       <CardContent className="gap-2 flex flex-wrap flex-col">
-        <ScrollArea className="h-fit max-h-72">
+        <ScrollArea className="h-fit max-h-72 overflow-y-scroll">
           {(hasVoted || !isAuthenticated) ? (
             <div className="space-y-2">
               {pollData.options.map((option: PollOption, i) => (
