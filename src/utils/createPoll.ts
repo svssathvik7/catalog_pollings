@@ -12,7 +12,7 @@ export default async function createPoll(pollData:any,logout:()=>void){
         console.log(error);
         if(error?.response?.data?.isAuthenticated === false){
             logout();
-            toaster("error","Session expired! Pleaselogin to view poll!");
+            toaster("error","Pleaselogin to view poll!");
             return;
         }
         toaster("error",(errorText||"error creating poll!"));

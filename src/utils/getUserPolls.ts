@@ -13,7 +13,7 @@ export async function getUserPolls(pagination:Pagination,username:string,logout:
         console.log(errorText);
         if (error?.response?.data?.isAuthenticated === false) {
             logout();
-            toaster("error", "Session expired! Pleaselogin to view poll!");
+            toaster("error", "Pleaselogin to view poll!");
         }
         return null;
     }
