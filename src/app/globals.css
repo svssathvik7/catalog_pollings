@@ -94,3 +94,15 @@ body {
     @apply bg-background text-foreground;
     }
 }
+
+
+body{
+  background: linear-gradient(180deg, #c1e6d7 0%, #d3e5f3 100%);
+}
+
+
+
+button[data-state="active"]{
+  background-color: #ec7ea6!important;
+  color: white!important;
+}

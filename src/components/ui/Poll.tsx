@@ -121,7 +121,7 @@ export default function Poll({ pollId }: { pollId: string }) {
 
   return (
     <Card className="w-80 h-fit relative">
-      <Badge variant={"outline"} className="absolute -top-2 -right-2 z-20 bg-brand-3">
+      <Badge variant={"outline"} className="absolute -top-2 -right-2 z-2 bg[#80b1d3]">
         <p className="text-lg">{pollData?.voters?.length??0}</p>
         <VoteIcon size={24} />
       </Badge>

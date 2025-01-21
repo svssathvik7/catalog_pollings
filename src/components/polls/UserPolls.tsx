@@ -79,7 +79,7 @@ export default function UserPollsContainer() {
                     disabled={pagination.page <= 1}
                     onClick={() => setPagination((curr) => ({ ...curr, page: curr.page - 1 }))}
                     className={`${
-                        pagination.page <= 1 ? "bg-gray-300 text-gray-600 cursor-not-allowed" : "bg-[#facc15] text-black hover:bg-[#f9a826]"
+                        pagination.page <= 1 ? "bg-gray-300 text-gray-600 cursor-not-allowed" : "bg-[#80b1d3] text-black hover:bg-[#80b1d3]"
                     } transition duration-200 p-2 rounded-lg flex items-center`}
                 >
                     <ArrowBigLeft className="mr-2" />
@@ -89,7 +89,7 @@ export default function UserPollsContainer() {
                     disabled={pagination.page >= totalPages}
                     onClick={() => setPagination((curr) => ({ ...curr, page: curr.page + 1 }))}
                     className={`${
-                        pagination.page === totalPages ? "bg-gray-300 text-gray-600 cursor-not-allowed" : "bg-[#facc15] text-black hover:bg-[#f9a826]"
+                        pagination.page === totalPages ? "bg-gray-300 text-gray-600 cursor-not-allowed" : "bg-[#80b1d3] text-black hover:bg-[#8ac8f5]"
                     } transition duration-200 p-2 rounded-lg flex items-center`}
                 >
                     Next

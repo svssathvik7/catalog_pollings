@@ -4,8 +4,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Home() {
   return (
-    <Tabs defaultValue="live-polls" className="w-full text-center">
-      <TabsList className="w-3/4">
+    <Tabs defaultValue="live-polls" className="w-full text-center flex items-center justify-center flex-col">
+      <TabsList className="w-3/4 bg-[#ddaabc] text-white">
         <TabsTrigger className="w-1/2" value="live-polls">Top Live Polls</TabsTrigger>
         <TabsTrigger className="w-1/2" value="closed-polls">Top Closed Polls</TabsTrigger>
       </TabsList>

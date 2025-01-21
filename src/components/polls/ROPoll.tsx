@@ -86,7 +86,7 @@ export default function ROPoll(pollData: PollData) {
   return (
     <Card className="w-fit min-w-64 h-fit max-h-[40dvh] overflow-y-scroll relative">
       <Link href={`/polls/${pollData.id}`} className="relative">
-      <Badge variant={"outline"} className="absolute top-0 right-0 z-20 bg-brand-3">
+      <Badge variant={"outline"} className="absolute top-0 right-0 z-20 bg-[#80b1d3]">
         <p>{pollData?.voters?.length??0}</p>
         <VoteIcon size={24} />
       </Badge>
