@@ -9,7 +9,7 @@ import { getUserPolls } from "@/utils/getUserPolls";
 import { useAuthStore } from "@/store/authStore";
 
 export default function UserPollsContainer() {
-    const [pagination, setPagination] = useState({ page: 1, per_page: 3 });
+    const [pagination, setPagination] = useState({ page: 1, per_page: 4 });
     const [polls, setPolls] = useState<PollData[]>([]);
     const [totalPages, setTotalPages] = useState(0);
     const [isMounted, setIsMounted] = useState(false);
@@ -53,9 +53,9 @@ export default function UserPollsContainer() {
     return (
         <div className="w-full flex items-center justify-around flex-col h-[75dvh]">
             {loading ? (
-                <div className="w-full flex items-center justify-around p-2 h-full">
+                <div className="w-full flex items-center justify-around p-2 flex-wrap gap-2 h-full overflow-y-scroll">
                     {/* Skeleton loader for each poll */}
-                    {[...Array(pagination.per_page)].map((_, index) => (
+                    {[1,2].map((_, index) => (
                         <div key={index} className="w-fit min-w-64 h-64 max-h-96 overflow-y-scroll relative justify-around p-1 gap-1 flex flex-col">
                             <Skeleton className="h-20 rounded-md" />
                             <Skeleton className="h-10 rounded-md" />

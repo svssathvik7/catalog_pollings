@@ -80,7 +80,7 @@ export default function ROPoll(pollData: PollData) {
 
   return (
     <TooltipProvider>
-      <Card className="w-80 bg-[#ffffff76] shadow-lg hover:shadow-xl transition-all duration-300 relative rounded-xl overflow-hidden border border-gray-200">
+      <Card className="w-full md:w-80 bg-[#ffffff76] shadow-lg hover:shadow-xl transition-all duration-300 relative rounded-xl overflow-hidden border border-gray-200">
         <Link href={`/polls/${pollData.id}`} className="block">
           <Badge
             variant="outline"
