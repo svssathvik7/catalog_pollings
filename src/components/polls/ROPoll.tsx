@@ -22,6 +22,7 @@ import {
 } from "../ui/alert-dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { AxiosError } from "axios";
+import { formatText } from "@/utils/formatUtils"
 
 export default function ROPoll(pollData: PollData) {
   const username = useAuthStore((state) => state.username)
@@ -79,7 +80,7 @@ export default function ROPoll(pollData: PollData) {
 
   return (
     <TooltipProvider>
-      <Card className="w-80 bg-white shadow-lg hover:shadow-xl transition-all duration-300 relative rounded-xl overflow-hidden border border-gray-200">
+      <Card className="w-80 bg-[#ffffff76] shadow-lg hover:shadow-xl transition-all duration-300 relative rounded-xl overflow-hidden border border-gray-200">
         <Link href={`/polls/${pollData.id}`} className="block">
           <Badge
             variant="outline"
@@ -91,12 +92,12 @@ export default function ROPoll(pollData: PollData) {
 
           <CardHeader className="pb-2 pt-6">
             <CardTitle className="text-xl font-bold text-gray-800 text-center line-clamp-2 px-4">
-              {pollData.title}
+              {formatText(pollData.title)}
             </CardTitle>
           </CardHeader>
 
           <CardContent>
-            <ScrollArea className="max-h-48 px-4">
+            <ScrollArea className="max-h-36 px-4">
               {pollData.options?.length ? (
                 <div className="space-y-2">
                   {pollData.options.slice(-2).map((option: PollOption, i: number) => (
@@ -119,7 +120,7 @@ export default function ROPoll(pollData: PollData) {
           </CardContent>
         </Link>
 
-        <CardFooter className="pt-4 pb-5 border-t bg-gray-50">
+        <CardFooter className="pt-4 pb-5 border-t bg-[#ffffff76]">
           {isOwner ? (
             <div className="w-full flex items-center justify-center gap-4">
               {pollData.is_open && (
@@ -146,7 +147,7 @@ export default function ROPoll(pollData: PollData) {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="h-9 w-9 p-0 border-blue-300 bg-white text-blue-700 hover:bg-blue-50 rounded-full shadow-md"
+                        className="h-9 w-9 p-0 border-blue-300 bg-[#fff] text-blue-700 hover:bg-blue-50 rounded-full shadow-md"
                       >
                         <RefreshCcw />
                       </Button>
@@ -203,7 +204,7 @@ export default function ROPoll(pollData: PollData) {
               </AlertDialog>
             </div>
           ) : (
-            <p className="w-full text-center text-gray-600 text-sm font-medium">by {pollData.owner_id}</p>
+            <p className="w-full text-center text-gray-600 text-sm font-medium">Created by {pollData.owner_id}</p>
           )}
         </CardFooter>
       </Card>

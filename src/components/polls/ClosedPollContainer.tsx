@@ -8,7 +8,7 @@ import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 
 export default function ClosedPollContainer() {
-    const [pagination, setPagination] = useState({ page: 1, per_page: 3 });
+    const [pagination, setPagination] = useState({ page: 1, per_page: 4 });
     const [polls, setPolls] = useState<PollData[]>([]);
     const [totalPages, setTotalPages] = useState(0);
     const [isMounted, setIsMounted] = useState(false);
@@ -60,7 +60,7 @@ export default function ClosedPollContainer() {
                 <p>No closed polls available.</p>
             ) : (
                 <div className="w-full flex items-center justify-around p-2 gap-1 flex-wrap overflow-y-scroll h-full">
-                    {polls.slice(-3).map((poll, index) => (
+                    {polls.slice(-4).map((poll, index) => (
                         <ROPoll key={poll.id || index} {...poll} />
                     ))}
                 </div>
