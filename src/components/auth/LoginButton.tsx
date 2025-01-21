@@ -4,7 +4,7 @@ import { useAuthStore } from "@/store/authStore";
 import api from "@/utils/axios";
 import toaster from "@/utils/toaster";
 import { Button } from "../ui/button";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 
 export default function LogButton() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);

@@ -11,7 +11,7 @@ export default function Register() {
   const [username, setUsername] = useState("");
   const [loading,setLoading] = useState(false);
 
-  const handleRegistration = async (e: any) => {
+  const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     const hasRegistered = await registrar(username);

@@ -15,3 +15,13 @@ export type PollData = {
   voters: string[];
   owner_id: string;
 };
+
+export type CreatePollOptionType = {
+  text: string;
+}
+
+export type CreatePollType = {
+  ownername: string;
+  title: string;
+  options: CreatePollOptionType[];
+}

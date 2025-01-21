@@ -6,7 +6,7 @@ import { useAuthStore } from "@/store/authStore";
 import { PollData } from "@/types/pollResult";
 import getPollResults from "@/utils/getPollResults";
 import { useParams } from "next/navigation";
-import { Key, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function PollResults() {
   const params = useParams();

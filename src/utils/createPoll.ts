@@ -1,21 +1,28 @@
-import { useAuthStore } from "@/store/authStore";
+import { CreatePollType } from "@/types/poll";
 import api from "./axios";
 import toaster from "./toaster";
-import { useRouter } from "next/navigation";
+import { AxiosError } from "axios";
 
-export default async function createPoll(pollData:any,logout:()=>void){
+export default async function createPoll(pollData:CreatePollType,logout:()=>void){
     try {
-        const _response = (await api.post("/polls/new",pollData)).data;
+        console.log(pollData);
+        const response = (await api.post("/polls/new",pollData)).data;
+        console.log(response);
         return true;
-    } catch (error:any) {
-        const errorText = error.response.data;
-        console.log(error);
-        if(error?.response?.data?.isAuthenticated === false){
-            logout();
-            toaster("error","Pleaselogin to view poll!");
-            return;
+    } catch (error:unknown) {
+        if(error instanceof AxiosError){
+            const errorText = error?.response?.data;
+            if (error?.response?.data?.isAuthenticated === false) {
+                logout();
+                toaster("error", "Please login to view poll!");
+            }
+            else{
+                toaster("error",errorText);
+            }
         }
-        toaster("error",(errorText||"error creating poll!"));
+        else{
+            toaster("error","Something went wrong!");
+        }
         return false;
     }
 }

@@ -12,7 +12,7 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const authStore = useAuthStore();
   const [loading,setLoading] = useState(false);
-  const handleLogin = async (e: any) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     const hasLoggedIn = await authenticator(username);
@@ -40,7 +40,7 @@ export default function Login() {
         className="w-full font-semibold outline-none bg-transparent border-b-2 transition-all p-2"
       />
       <div className="flex items-center justify-between w-full text-sm">
-        <h4>Don't have an account?</h4>
+        <h4>Don &apos; t have an account?</h4>
         <Link
           href={"/register"}
           className="font-semibold transition-all"

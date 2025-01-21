@@ -28,8 +28,9 @@ import { VoteIcon, ChevronRight, Users, Lock, Unlock } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { Progress } from "@/components/ui/progress"
+import { AxiosError } from "axios"
 
-export default function Poll({ pollId }: any) {
+export default function Poll({ pollId }: {pollId: string}) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   const [pollData, setPollData] = useState<PollData | null>(null)
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
@@ -78,13 +79,18 @@ export default function Poll({ pollId }: any) {
       if (updatedData !== "noauth") {
         setPollData(updatedData.poll)
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error casting vote:", error)
-      toaster("error", "Failed to cast vote. Please try again later.")
-      if (error?.response?.data?.isAuthenticated === false) {
-        logout()
-        toaster("error", "Please login to view poll!")
+      if(error instanceof AxiosError){
+        if (error?.response?.data?.isAuthenticated === false) {
+          logout()
+          toaster("error", "Please login to view poll!")
+        }
       }
+      else{
+        toaster("error", "Failed to cast vote. Please try again later.");
+      }
+      return false;
     }
   }
 

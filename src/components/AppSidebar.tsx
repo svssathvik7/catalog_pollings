@@ -42,7 +42,7 @@ export default function AppSidebar() {
     { title: "Create Poll", url: "/polls/new", icon: PlusIcon },
   ];
 
-  const handlePollSearch = (e: any) => {
+  const handlePollSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push(`/polls/${pollId}`);
     setPollId("");

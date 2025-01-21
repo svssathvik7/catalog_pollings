@@ -11,7 +11,6 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  Label,
 } from "recharts";
 import { PollData, PollOption } from "@/types/pollResult";
 
@@ -69,12 +68,10 @@ const PollVisualization = (data: PollData) => {
     cx,
     cy,
     midAngle,
-    innerRadius,
     outerRadius,
     percent,
-    index,
     name,
-  }: any) => {
+  }: {cx: number, cy: number, midAngle: number, outerRadius: number, percent: number, name: string}) => {
     // Calculate the position for the label using trigonometry
     const RADIAN = Math.PI / 180;
     const radius = outerRadius + 30; // Position labels further from the pie
@@ -136,7 +133,6 @@ const PollVisualization = (data: PollData) => {
                 <PieChart className="w-full">
                   {/* Add Tooltip for the PieChart */}
                   <Tooltip content={<CustomTooltip />} />
-
                   <Pie
                     data={data.options}
                     dataKey="votes_percentage"

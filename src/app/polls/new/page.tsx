@@ -10,7 +10,7 @@ import { PlusCircle, MinusCircle, Loader2 } from "lucide-react";
 
 export default function NewPoll() {
     const [title, setTitle] = useState("");
-    const [options, setOptions] = useState([{ text: "" }, { text: "" }]); // Start with 2 options
+    const [options, setOptions] = useState([{ text: "" }, { text: "" }]);
     const [loading, setLoading] = useState(false);
     
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -68,7 +68,7 @@ export default function NewPoll() {
             const pollData = {
                 title: title.trim(),
                 options: options.map((option) => ({ text: option.text.trim() })),
-                ownername: username,
+                ownername: username ? username : "",
             };
 
             const isPollCreated = await createPoll(pollData, logout);
@@ -77,7 +77,8 @@ export default function NewPoll() {
                 setOptions([{ text: "" }, { text: "" }]);
                 toaster("success", "Poll created successfully!");
             }
-        } catch (error) {
+        } catch (error: unknown) {
+            console.log(error);
             toaster("error", "Failed to create poll");
         } finally {
             setLoading(false);

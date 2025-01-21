@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import api from "./axios";
 import toaster from "./toaster";
 
@@ -8,12 +9,20 @@ export default async function getPoll(id:string,logout: ()=>void,username: strin
         })).data;
         console.log(pollData);
         return pollData;
-    } catch (error:any) {
+    } catch (error:unknown) {
         console.log(error);
-        if(error?.response?.data?.isAuthenticated === false){
-            logout();
-            toaster("error","Please login to view poll!");
-            return "noauth";
+        if(error instanceof AxiosError){
+            const errorText = error?.response?.data;
+            if (error?.response?.data?.isAuthenticated === false) {
+                logout();
+                toaster("error", "Please login to view poll!");
+            }
+            else{
+                toaster("error",errorText);
+            }
+        }
+        else{
+            toaster("error","Something went wrong!");
         }
         return false;
     }

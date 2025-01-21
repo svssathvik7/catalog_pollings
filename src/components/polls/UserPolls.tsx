@@ -1,6 +1,5 @@
 "use client";
 import { PollData } from "@/types/poll";
-import { getROLivePolls } from "@/utils/getROPolls";
 import { useCallback, useEffect, useState } from "react";
 import ROPoll from "./ROPoll";
 import { Button } from "../ui/button";

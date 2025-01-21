@@ -3,12 +3,12 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card
 import type { PollData, PollOption } from "@/types/poll"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
-import { Users, ChevronRight, AlertTriangle, Lock, RefreshCcw, Trash } from "lucide-react"
-import { Button } from "../ui/button"
-import { useAuthStore } from "@/store/authStore"
-import api from "@/utils/axios"
-import toaster from "@/utils/toaster"
-import { ScrollArea } from "../ui/scroll-area"
+import { Users, ChevronRight, AlertTriangle, Lock, RefreshCcw, Trash } from "lucide-react";
+import { Button } from "../ui/button";
+import { useAuthStore } from "@/store/authStore";
+import api from "@/utils/axios";
+import toaster from "@/utils/toaster";
+import { ScrollArea } from "../ui/scroll-area";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,8 +19,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../ui/alert-dialog"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+} from "../ui/alert-dialog";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { AxiosError } from "axios";
 
 export default function ROPoll(pollData: PollData) {
   const username = useAuthStore((state) => state.username)
@@ -30,8 +31,14 @@ export default function ROPoll(pollData: PollData) {
     try {
       await api.post(`/polls/${pollData.id}/close`, { username })
       toaster("success", "Poll closed successfully!")
-    } catch (error: any) {
-      toaster("error", error?.response?.data || "Failed to close poll")
+    } catch (error: unknown) {
+      if(error instanceof AxiosError){
+        toaster("error", error?.response?.data || "Failed to close poll");
+      }
+      else{
+        toaster("error","Failed to close poll");
+      }
+      return false;
     }
   }
 
@@ -39,8 +46,15 @@ export default function ROPoll(pollData: PollData) {
     try {
       await api.post(`/polls/${pollData.id}/reset`, { username })
       toaster("success", "Poll reset successfully!")
-    } catch (error: any) {
-      toaster("error", error?.response?.data || "Failed to reset poll")
+    } catch (error: unknown) {
+      console.log(error);
+      if(error instanceof AxiosError){
+        toaster("error", error?.response?.data || "Failed to reset poll")
+      }
+      else{
+        toaster("error","Failed to reset poll");
+      }
+      return false;
     }
   }
 
@@ -48,8 +62,14 @@ export default function ROPoll(pollData: PollData) {
     try {
       await api.post(`/polls/${pollData.id}/delete`, { username })
       toaster("success", "Poll deleted successfully!")
-    } catch (error: any) {
-      toaster("error", error?.response?.data || "Failed to delete poll")
+    } catch (error: unknown) {
+      console.log(error);
+      if(error instanceof AxiosError){
+        toaster("error", error?.response?.data || "Failed to delete poll")
+      }
+      else{
+        toaster("error","Failed to delete poll");
+      }
     }
   }
 

@@ -8,5 +8,5 @@ export interface PollData {
   id: string;
   title: string;
   options: PollOption[];
-  total_votes: Number;
+  total_votes: number;
 }
