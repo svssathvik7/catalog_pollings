@@ -84,7 +84,7 @@ export default function ROPoll(pollData: PollData) {
     }
   ,[username,pollData.owner_id]);
   return (
-    <Card className="w-fit min-w-64 h-fit max-h-96 overflow-y-scroll relative">
+    <Card className="w-fit min-w-64 h-fit max-h-[40dvh] overflow-y-scroll relative">
       <Link href={`/polls/${pollData.id}`} className="relative">
       <Badge variant={"outline"} className="absolute top-0 right-0 z-20 bg-brand-3">
         <p>{pollData?.voters?.length??0}</p>
@@ -97,7 +97,7 @@ export default function ROPoll(pollData: PollData) {
         <ScrollArea className="h-fit overflow-y-scroll">
           {pollData.options?.length ? (
             <div className="space-y-2">
-              {pollData.options.map((option: PollOption, i:number) => (
+              {pollData.options.slice(-2).map((option: PollOption, i:number) => (
                 <div
                   key={option._id.$oid + i}
                   className="flex justify-between items-center py-2 border-b last:border-0"
@@ -105,6 +105,7 @@ export default function ROPoll(pollData: PollData) {
                   <span className="text-sm">{option.text}</span>
                 </div>
               ))}
+              <Link href={`/polls/${pollData.id}`} className="text-slate-500 text-xs">Click to view full poll</Link>
             </div>
           ) : (
             <p className="text-center text-muted-foreground">
@@ -116,11 +117,11 @@ export default function ROPoll(pollData: PollData) {
       </Link>
       <CardFooter className="w-full flex items-center justify-around gap-1">
         {
-          (pollData.owner_id === username) && <>
+          (pollData.owner_id === username) ? <>
             {pollData.is_open && <Button onClick={handlePollClose}>Close</Button>}
             <Button onClick={handlePollReset}>Reset</Button>
             <Button onClick={handlePollDelete} variant={"destructive"}>Delete</Button>
-          </>
+          </> : <p>Poll created by {pollData.owner_id}</p>
         }
       </CardFooter>
     </Card>
