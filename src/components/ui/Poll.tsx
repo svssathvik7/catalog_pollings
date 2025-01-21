@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/authStore";
 import getPoll from "@/utils/getPoll";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,15 +23,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./alert-dialog";
-import { VoteIcon } from "lucide-react";
+import { VoteIcon, ChevronRight, Users } from "lucide-react";
 import { Badge } from "./badge";
 import Link from "next/link";
 
 export default function Poll({ pollId }: { pollId: string }) {
-  const isAuthenticated = useAuthStore((state)=>state.isAuthenticated);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const [pollData, setPollData] = useState<PollData | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true); // Added loading state
+  const [loading, setLoading] = useState(true);
   const logout = useAuthStore((state) => state.logout);
   const [hasVoted, setHasVoted] = useState(true);
   const username = useAuthStore((state) => state.username);
@@ -40,7 +39,6 @@ export default function Poll({ pollId }: { pollId: string }) {
 
   useEffect(() => {
     const fetchPoll = async () => {
-
       try {
         const data = await getPoll(pollId, logout, username ? username : "");
         if (data === "noauth") {
@@ -52,42 +50,12 @@ export default function Poll({ pollId }: { pollId: string }) {
       } catch (error) {
         console.error("Error fetching poll data:", error);
       } finally {
-        setLoading(false); // Update loading state
+        setLoading(false);
       }
     };
 
     fetchPoll();
   }, [pollId, logout, username, router]);
-
-  if (loading) {
-    return (
-      <Card className="w-80">
-        <CardHeader>
-          <Skeleton className="h-8 w-3/4" />
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2">
-            <Skeleton className="h-12 w-full" />
-            <Skeleton className="h-12 w-full" />
-            <Skeleton className="h-12 w-full" />
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  if (!pollData) {
-    return (
-      <Card className="w-80">
-        <CardHeader>
-          <CardTitle>Error</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p>Failed to load poll. Please try again later.</p>
-        </CardContent>
-      </Card>
-    );
-  }
 
   const handleVote = async () => {
     if (!selectedOption || !username) {
@@ -95,114 +63,162 @@ export default function Poll({ pollId }: { pollId: string }) {
       return;
     }
 
-    const voteData = {
-      optionId: selectedOption,
-      pollId,
-      username,
-    };
-    console.log("Voting for option:", voteData);
-
     try {
-      // Add your vote handling logic here
-      const response = (await api.post(`/polls/${pollId}/vote`, voteData)).data;
+      await api.post(`/polls/${pollId}/vote`, {
+        optionId: selectedOption,
+        pollId,
+        username,
+      });
       setHasVoted(true);
       toaster("success", "Vote cast successfully!");
-      return;
-    } catch (error:any) {
+    } catch (error: any) {
       console.error("Error casting vote:", error);
       toaster("error", "Failed to cast vote. Please try again later.");
       if (error?.response?.data?.isAuthenticated === false) {
         logout();
-        toaster("error", "Pleaselogin to view poll!");
+        toaster("error", "Please login to view poll!");
       }
-      return;
     }
   };
 
+  if (loading) {
+    return (
+      <Card className="w-full max-w-md mx-auto shadow-lg">
+        <CardHeader className="pb-4">
+          <Skeleton className="h-8 w-3/4 mx-auto" />
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <Skeleton className="h-14 w-full" />
+          <Skeleton className="h-14 w-full" />
+          <Skeleton className="h-14 w-full" />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (!pollData) {
+    return (
+      <Card className="w-full max-w-md mx-auto shadow-lg">
+        <CardHeader>
+          <CardTitle className="text-red-500">Error Loading Poll</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-center text-gray-600">
+            Failed to load poll. Please try again later.
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
-    <Card className="w-80 h-fit relative">
-      <Badge variant={"outline"} className="absolute -top-2 -right-2 z-2 bg[#80b1d3]">
-        <p className="text-lg">{pollData?.voters?.length??0}</p>
-        <VoteIcon size={24} />
+    <Card className="w-[90dvw] md:w-[60dvw] lg:w-[30dvw] mx-auto shadow-lg relative">
+      <Badge 
+        variant="outline" 
+        className="absolute -top-3 -right-3 bg-blue-100 border-blue-200 shadow-sm flex items-center gap-1 px-3 py-1"
+      >
+        <span className="text-lg font-semibold text-blue-700">
+          {pollData?.voters?.length ?? 0}
+        </span>
+        <Users size={20} className="text-blue-600" />
       </Badge>
-      <CardHeader>
-        <CardTitle className="text-center">{pollData.title}</CardTitle>
+      
+      <CardHeader className="pb-4 border-b">
+        <CardTitle className="text-xl font-bold text-center">
+          {pollData.title}
+        </CardTitle>
       </CardHeader>
-      <CardContent className="gap-2 flex flex-wrap flex-col">
-        <ScrollArea className="h-fit max-h-72 overflow-y-scroll">
+      
+      <CardContent className="pt-6">
+        <ScrollArea className="max-h-[40dvh] pr-4 -mr-4 overflow-y-scroll">
           {(hasVoted || !isAuthenticated || !pollData.is_open) ? (
-            <div className="space-y-2">
+            <div className="space-y-3">
               {pollData.options.map((option: PollOption, i) => (
                 <div
                   key={i}
-                  className="flex items-center justify-between p-3 rounded-md border bg-muted/50"
+                  className="flex items-center p-4 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
                 >
-                  <span className="font-bold">{i + 1}.</span>
-                  <span className="flex-1 ml-2">{option.text}</span>
-                  <span className="text-sm text-muted-foreground">
-                    ({option.votes_count} votes)
+                  <span className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-100 text-blue-700 font-semibold">
+                    {i + 1}
+                  </span>
+                  <span className="flex-1 ml-4 font-medium">{option.text}</span>
+                  <span className="text-sm text-gray-500 font-medium">
+                    {option.votes_count} votes
                   </span>
                 </div>
               ))}
             </div>
           ) : (
             <RadioGroup
-              onValueChange={(value) => setSelectedOption(value)}
+              onValueChange={setSelectedOption}
               value={selectedOption ?? undefined}
-              className="space-y-2"
+              className="space-y-3"
             >
               {pollData.options.map((option: PollOption, i) => (
                 <div
                   key={i}
-                  className="flex items-center space-x-2 rounded-md border hover:bg-accent"
+                  className="flex items-center rounded-lg border border-gray-200 hover:border-blue-200 hover:bg-blue-50 transition-all"
                 >
                   <RadioGroupItem
                     value={option._id.$oid}
                     id={option._id.$oid}
-                    className="ml-2"
+                    className="ml-4"
                   />
                   <Label
                     htmlFor={option._id.$oid}
-                    className="flex flex-1 justify-between cursor-pointer p-3"
+                    className="flex-1 p-4 cursor-pointer"
                   >
-                    <span>{option.text}</span>
-                    {/* <span className="text-sm text-muted-foreground">
-                      ({option.votes_count} votes)
-                    </span> */}
+                    {option.text}
                   </Label>
                 </div>
               ))}
             </RadioGroup>
           )}
         </ScrollArea>
-        {!hasVoted && pollData.is_open && (
-          <Button
-            className="w-full mt-4"
-            disabled={!selectedOption}
-            variant={selectedOption ? "default" : "secondary"}
-          >
+
+        <div className="mt-6 pt-6 border-t">
+          {!hasVoted && pollData.is_open && (
             <AlertDialog>
-              <AlertDialogTrigger className="w-full h-full">
-                <p className="w-full h-full">Vote</p>
+              <AlertDialogTrigger asChild>
+                <Button 
+                  className="w-full py-6 text-lg font-semibold"
+                  disabled={!selectedOption}
+                  variant={selectedOption ? "default" : "secondary"}
+                >
+                  Cast Your Vote
+                </Button>
               </AlertDialogTrigger>
-              <AlertDialogContent>
+              <AlertDialogContent className="max-w-md">
                 <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    Are you sure to vote?
+                  <AlertDialogTitle className="text-xl">
+                    Confirm Your Vote
                   </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Once the vote is cast, it cannot be changed.
+                  <AlertDialogDescription className="text-gray-600">
+                    Please note that your vote cannot be changed once cast.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleVote}>Cast</AlertDialogAction>
+                <AlertDialogFooter className="gap-2">
+                  <AlertDialogCancel className="flex-1">Cancel</AlertDialogCancel>
+                  <AlertDialogAction 
+                    onClick={handleVote}
+                    className="flex-1 bg-blue-600 hover:bg-blue-700"
+                  >
+                    Confirm Vote
+                  </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
-          </Button>
-        )}
-        {hasVoted && <Link className="w-full" href={`/polls/results/${pollData.id}`}><Button className="px-2 w-full">Result</Button></Link>}
+          )}
+          
+          {hasVoted && (
+            <Link href={`/polls/results/${pollData.id}`} className="block">
+              <Button className="w-full py-6 text-lg font-semibold">
+                View Results
+                <ChevronRight className="ml-2" size={20} />
+              </Button>
+            </Link>
+          )}
+        </div>
       </CardContent>
     </Card>
   );
