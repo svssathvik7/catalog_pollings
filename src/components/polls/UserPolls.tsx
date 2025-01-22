@@ -56,7 +56,7 @@ export default function UserPollsContainer() {
     <div className="flex flex-col items-center w-full p-4 space-y-4 h-[75dvh] md:h-[85dvh]">
       <div className="w-full flex-grow overflow-y-auto mb-4">
         {loading ? (
-          <div className="grid grid-cols-1 gap-4">
+          <div className="flex flex-wrap items-center justify-center h-4/5 gap-2 w-full">
             {[1, 2, 3, 4].map((_, index) => (
               <div key={index} className="bg-[#ffffff76] rounded-lg shadow-md p-4 space-y-4 w-full md:w-72">
                 <Skeleton className="h-8 w-3/4" />
