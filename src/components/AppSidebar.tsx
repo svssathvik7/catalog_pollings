@@ -30,11 +30,12 @@ export default function AppSidebar() {
       !isAuthenticated &&
       location !== "/" &&
       location !== "/login" &&
-      location !== "/register"
+      location !== "/register" &&
+      location !== "/docs"
     ) {
       router.push("/login");
     }
-  }, [isLoading, location]);
+  }, [isLoading, location, isAuthenticated]);
 
   const items = [
     { title: "Home", url: "/", icon: Home },

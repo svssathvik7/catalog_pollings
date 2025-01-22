@@ -1,0 +1,161 @@
+{
+    "post": {
+        "operationId": "registerUser",
+        "summary": "Start registration",
+        "description": "Some description i will write later",
+        "security": [],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "username": {
+                                "type": "string",
+                                "description": "The username for starting the registration process",
+                                "example": "sathvik"
+                            }
+                        },
+                        "required": [
+                            "username"
+                        ]
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Returns a challange on success",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "Ok",
+                                    "description": "Enum representing the success of the request",
+                                    "enum": [
+                                        "Ok",
+                                        "Error"
+                                    ]
+                                },
+                                "result": {
+                                    "type": "object",
+                                    "description": "Contains the public key credential creation options",
+                                    "properties": {
+                                        "publicKey": {
+                                            "type": "object",
+                                            "properties": {
+                                                "rp": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Sathvik Polling Technologies!"
+                                                        },
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "localhost"
+                                                        }
+                                                    }
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "NWmwwcrQSHictLoiebcRmA"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "test"
+                                                        },
+                                                        "displayName": {
+                                                            "type": "string",
+                                                            "example": "test"
+                                                        }
+                                                    }
+                                                },
+                                                "challenge": {
+                                                    "type": "string",
+                                                    "example": "fuPay77Ra5h4MqmwNDiD68xj7w0TJDTY8lcRAyns2jk"
+                                                },
+                                                "pubKeyCredParams": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "type": "string",
+                                                                "example": "public-key"
+                                                            },
+                                                            "alg": {
+                                                                "type": "integer",
+                                                                "example": -7
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "timeout": {
+                                                    "type": "integer",
+                                                    "example": 300000
+                                                },
+                                                "authenticatorSelection": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "residentKey": {
+                                                            "type": "string",
+                                                            "example": "discouraged"
+                                                        },
+                                                        "requireResidentKey": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "userVerification": {
+                                                            "type": "string",
+                                                            "example": "required"
+                                                        }
+                                                    }
+                                                },
+                                                "attestation": {
+                                                    "type": "string",
+                                                    "example": "none"
+                                                },
+                                                "extensions": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "credentialProtectionPolicy": {
+                                                            "type": "string",
+                                                            "example": "userVerificationRequired"
+                                                        },
+                                                        "enforceCredentialProtectionPolicy": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "uvm": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        },
+                                                        "credProps": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "tags": [
+            "Auth"
+        ]
+    }
+}

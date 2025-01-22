@@ -8,7 +8,9 @@ import { AxiosError } from "axios";
 
 export default async function registrar(username:string){
     try {
-        const regStartResponse = (await api.post(`/auth/register/start/${username}`)).data;
+        const regStartResponse = (await api.post(`/auth/register/start`,{
+            username
+        })).data;
         const attResponse = await startRegistration({optionsJSON: regStartResponse.publicKey});
         const regFinishResponse = (await api.post(`/auth/register/finish/${username}`,attResponse)).data;
         console.log(regFinishResponse);

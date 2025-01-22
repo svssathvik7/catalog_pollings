@@ -29,8 +29,8 @@
         }
     ],
     "paths": {
-        "/auth": {
-            "$ref": "./auth.json"
+        "/auth/register/start": {
+            "$ref": "./auth/registerStart.json"
         },
         "/polls": {
             "$ref": "./polls.json"
