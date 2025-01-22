@@ -5,7 +5,7 @@ export default function PollDashBoard() {
   return (
     <div className="flex items-center flex-col justify-center h-4/5">
       <Tabs defaultValue="my-polls">
-        <TabsList className="w-full lg:w-full">
+        <TabsList className="w-[75dvw] md:w-[30dvw]">
           <TabsTrigger className="w-full" value="my-polls">
             My Polls
           </TabsTrigger>
