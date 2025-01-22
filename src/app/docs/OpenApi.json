@@ -1,0 +1,42 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Catalog Pollings API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://polling-app-backend-kskr.onrender.com/api",
+            "description": "The catalog pollings backend server url"
+        }
+    ],
+    "security": [],
+    "tags": [
+        {
+            "name": "Auth",
+            "x-displayName": "Auth",
+            "description": "Authentication"
+        },
+        {
+            "name": "Polls",
+            "x-displayName": "Polls",
+            "description": "Polls"
+        },
+        {
+            "name": "General",
+            "x-displayName": "General",
+            "description": "General"
+        }
+    ],
+    "paths": {
+        "/auth": {
+            "$ref": "./auth.json"
+        },
+        "/polls": {
+            "$ref": "./polls.json"
+        },
+        "/general": {
+            "$ref": "./general.json"
+        }
+    }
+}
