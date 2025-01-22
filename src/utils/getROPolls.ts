@@ -12,7 +12,7 @@ export async function getROLivePolls(pagination:Pagination){
         console.log(error);
         if(error instanceof AxiosError){
             const errorText = error?.response?.data;
-            toaster("error",errorText);
+            toaster("error",(errorText||"Error fetching live polls"));
         }
         else{
             toaster("error","Something went wrong!");
@@ -29,7 +29,7 @@ export async function getROClosedPolls(pagination:Pagination){
         console.log(error);
         if(error instanceof AxiosError){
             const errorText = error?.response?.data;
-            toaster("error",errorText);
+            toaster("error",(errorText || "Error fetching closed polls"));
         }
         else{
             toaster("error","Something went wrong!");
