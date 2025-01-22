@@ -53,12 +53,12 @@ export default function UserPollsContainer() {
   }, [pagination, isMounted, username, fetchData])
 
   return (
-    <div className="flex flex-col items-center justify-between w-full h-[calc(100vh-4rem)] p-4 space-y-4">
-      <div className="w-full h-full overflow-y-auto">
+    <div className="flex flex-col items-center w-full p-4 space-y-4 h-[calc(100vh-200px)] max-h-[600px]">
+      <div className="w-full flex-grow overflow-y-auto mb-4">
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             {[1, 2, 3, 4].map((_, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-md p-4 space-y-4">
+              <div key={index} className="bg-[#ffffff76] rounded-lg shadow-md p-4 space-y-4 w-full md:w-72">
                 <Skeleton className="h-8 w-3/4" />
                 <Skeleton className="h-24" />
                 <div className="space-y-2">
@@ -72,42 +72,44 @@ export default function UserPollsContainer() {
         ) : polls.length === 0 ? (
           <p className="text-center text-gray-500 text-lg">No polls created yet!</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex flex-col items-center justify-center gap-2 w-full">
             {polls.slice(-1 * pagination.per_page).map((poll, index) => (
               <ROPoll key={poll.id || index} {...poll} />
             ))}
           </div>
         )}
       </div>
-      {polls.length > 0 && <div className="flex justify-between items-center w-full max-w-md mt-4">
-        <Button
-          disabled={pagination.page <= 1}
-          onClick={() => setPagination((curr) => ({ ...curr, page: curr.page - 1 }))}
-          className={`${
-            pagination.page <= 1
-              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-              : "bg-[#80b1d3] text-black hover:bg-[#8ac8f5]"
-          } transition duration-200 px-4 py-2 rounded-lg flex items-center`}
-        >
-          <ArrowBigLeft className="mr-2" />
-          Prev
-        </Button>
-        <span className="text-sm text-gray-500">
-          Page {pagination.page} of {totalPages}
-        </span>
-        <Button
-          disabled={pagination.page >= totalPages}
-          onClick={() => setPagination((curr) => ({ ...curr, page: curr.page + 1 }))}
-          className={`${
-            pagination.page === totalPages
-              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-              : "bg-[#80b1d3] text-black hover:bg-[#8ac8f5]"
-          } transition duration-200 px-4 py-2 rounded-lg flex items-center`}
-        >
-          Next
-          <ArrowBigRight className="ml-2" />
-        </Button>
-      </div>}
+      {polls.length > 0 && (
+        <div className="flex justify-between items-center w-full max-w-md mt-auto">
+          <Button
+            disabled={pagination.page <= 1}
+            onClick={() => setPagination((curr) => ({ ...curr, page: curr.page - 1 }))}
+            className={`${
+              pagination.page <= 1
+                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                : "bg-[#80b1d3] text-black hover:bg-[#8ac8f5]"
+            } transition duration-200 px-4 py-2 rounded-lg flex items-center`}
+          >
+            <ArrowBigLeft className="mr-2" />
+            Prev
+          </Button>
+          <span className="text-sm text-gray-500 mx-2">
+            Page {pagination.page} of {totalPages}
+          </span>
+          <Button
+            disabled={pagination.page >= totalPages}
+            onClick={() => setPagination((curr) => ({ ...curr, page: curr.page + 1 }))}
+            className={`${
+              pagination.page === totalPages
+                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                : "bg-[#80b1d3] text-black hover:bg-[#8ac8f5]"
+            } transition duration-200 px-4 py-2 rounded-lg flex items-center`}
+          >
+            Next
+            <ArrowBigRight className="ml-2" />
+          </Button>
+        </div>
+      )}
     </div>
   )
 }

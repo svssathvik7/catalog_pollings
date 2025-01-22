@@ -129,7 +129,7 @@ export default function ROPoll(pollData: PollData) {
                     <Button
                       onClick={handlePollClose}
                       size="sm"
-                      className="h-9 w-9 bg-blue-600 hover:bg-blue-700 rounded-full shadow-md"
+                      className="h-9 w-9 bg-blue-500 hover:bg-blue-700 rounded-full shadow-md"
                     >
                       <Lock />
                     </Button>
