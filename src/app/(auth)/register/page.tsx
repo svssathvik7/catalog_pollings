@@ -56,7 +56,7 @@ export default function Register() {
               {loading ? "Signing up..." : "Sign up"}
             </Button>
             <div className="text-sm text-center">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link href="/login" className="font-medium text-primary hover:text-primary/80 transition-colors">
                 Sign in
               </Link>
