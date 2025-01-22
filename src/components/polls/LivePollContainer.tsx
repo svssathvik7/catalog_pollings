@@ -43,7 +43,7 @@ export default function LivePollContainer() {
     }, [pagination, isMounted]);
 
     return (
-        <div className="w-full flex items-center justify-start flex-col md:h-[80dvh] p-2">
+        <div className="w-full flex items-center justify-around flex-col h-[80dvh]">
             {loading ? (
                 <div className="w-full flex items-center justify-around p-2 flex-wrap">
                     {/* Skeleton loader for each poll */}
@@ -59,13 +59,13 @@ export default function LivePollContainer() {
             ) : polls.length === 0 ? (
                 <p>No live polls available.</p>
             ) : (
-                <div className="w-full flex items-center justify-around p-2 gap-2 flex-wrap overflow-y-scroll h-full">
+                <div className="w-full flex items-center justify-around p-2 gap-1 flex-wrap overflow-y-scroll h-full">
                     {polls.slice(-4).map((poll, index) => (
                         <ROPoll key={poll.id || index} {...poll} />
                     ))}
                 </div>
             )}
-            <div className="w-full items-center flex justify-around m-2">
+            {polls.length > 0 && <div className="w-full items-center flex justify-around m-2">
                 <Button
                     disabled={pagination.page <= 1}
                     onClick={() => setPagination((curr) => ({ ...curr, page: curr.page - 1 }))}
@@ -86,7 +86,7 @@ export default function LivePollContainer() {
                     Next
                     <ArrowBigRight className="ml-2" />
                 </Button>
-            </div>
+            </div>}
         </div>
     );
 }

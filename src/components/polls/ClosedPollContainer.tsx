@@ -65,7 +65,7 @@ export default function ClosedPollContainer() {
                     ))}
                 </div>
             )}
-            <div className="w-full items-center flex justify-around m-2">
+            {polls.length > 0 && <div className="w-full items-center flex justify-around m-2">
                 <Button
                     disabled={pagination.page <= 1}
                     onClick={() => setPagination((curr) => ({ ...curr, page: curr.page - 1 }))}
@@ -86,7 +86,7 @@ export default function ClosedPollContainer() {
                     Next
                     <ArrowBigRight className="ml-2" />
                 </Button>
-            </div>
+            </div>}
         </div>
     );
 }
