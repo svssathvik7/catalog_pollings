@@ -17,7 +17,7 @@ export default function DesktopSidebar() {
   const router = useRouter();
   const location = usePathname();
   useEffect(() => {
-      if (!isLoading && !isAuthenticated && location !== "/" && location !== "/login" && location !== "/register" && !location.includes("/polls/")) {
+      if (!isLoading && !isAuthenticated && location !== "/" && location !== "/login" && location !== "/register") {
         router.push("/login");
       }
   }, [isLoading, location]);
