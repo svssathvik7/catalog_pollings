@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
+import {motion} from "framer-motion"
 
 export default function Login() {
   const router = useRouter()
@@ -29,7 +30,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-cente py-12 px-4 sm:px-6 lg:px-8">
+    <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="min-h-screen flex items-center justify-cente py-12 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">Sign in to your account</CardTitle>
@@ -65,7 +66,7 @@ export default function Login() {
           </CardFooter>
         </form>
       </Card>
-    </div>
+    </motion.div>
   )
 }
 

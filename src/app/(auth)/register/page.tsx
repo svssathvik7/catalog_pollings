@@ -1,56 +1,71 @@
-"use client";
-import registrar from "@/utils/registrar";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+"use client"
+
+import registrar from "@/utils/registrar"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { motion } from "framer-motion"
 
 export default function Register() {
-  const router = useRouter();
-  const [username, setUsername] = useState("");
-  const [loading,setLoading] = useState(false);
+  const router = useRouter()
+  const [username, setUsername] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    const hasRegistered = await registrar(username);
+    e.preventDefault()
+    setLoading(true)
+    const hasRegistered = await registrar(username)
     if (hasRegistered) {
-      router.push("/login");
+      router.push("/login")
     }
-    setLoading(false);
-    return;
-  };
+    setLoading(false)
+  }
 
   return (
-    <form
-      className="w-80 lg:w-[35dvw] h-fit lg:h-[40dvh] m-auto flex flex-col items-center justify-center rounded-lg p-6 shadow-lg space-y-6"
-      onSubmit={handleRegistration}
-    >
-      <h6 className="text-3xl font-bold">Sign Up</h6>
-      <Input
-        type="text"
-        placeholder="Enter your username"
-        required
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className="w-full font-semibold outline-none bg-transparent border-b-2 transition-all p-2"
-      />
-      <div className="flex items-center justify-between w-full text-sm">
-        <p>Already have an account?</p>
-        <Link
-          href={"/login"}
-          className="font-semibold transition-all"
-        >
-          Sign In
-        </Link>
-      </div>
-      <Button
-        type="submit"
-        className={`${loading ? " cursor-wait pointer-events-none " : " cursor-pointer "}w-full px-4 py-2 rounded-lg font-bold text-white transition-all`}
-      >
-        {loading ? "Signing Up..." : "Sign Up"}
-      </Button>
-    </form>
-  );
+    <div className="min-h-screen flex items-center justify-cente py-12 px-4 sm:px-6 lg:px-8">
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold text-center">Sign up to Catalog polls</CardTitle>
+            <CardDescription>Register to create, vote, manage your polls...
+            </CardDescription>
+          </CardHeader>
+            <form onSubmit={handleRegistration}>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="username">
+                  Username
+                </Label>
+                <Input
+                  id="username"
+                  type="text"
+                  placeholder="Enter your username"
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full"
+                />
+              </div>
+              </CardContent>
+          <CardFooter className="flex flex-col space-y-4">
+          <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Signing up..." : "Sign up"}
+            </Button>
+            <div className="text-sm text-center">
+              Don't have an account?{" "}
+              <Link href="/login" className="font-medium text-primary hover:text-primary/80 transition-colors">
+                Sign in
+              </Link>
+            </div>
+          </CardFooter>
+          </form>
+        </Card>
+      </motion.div>
+    </div>
+  )
 }
+
