@@ -3,11 +3,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function PollDashBoard() {
   return (
-    <div className="flex items-center flex-col justify-center h-4/5">
-      <Tabs defaultValue="my-polls" className="w-full max-w-2xl">
-        <TabsList className="w-full">
+    <div className="flex items-center flex-col justify-center h-4/5 w-full">
+      <Tabs defaultValue="my-polls" className="w-full flex flex-col items-center justify-center">
+        <TabsList className="w-full md:w-1/3 mx-auto">
           <TabsTrigger className="w-full" value="my-polls">
-            My Polls
+            Manage Polls
           </TabsTrigger>
         </TabsList>
         <TabsContent value="my-polls">

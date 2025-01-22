@@ -53,7 +53,7 @@ export default function UserPollsContainer() {
   }, [pagination, isMounted, username, fetchData])
 
   return (
-    <div className="flex flex-col items-center w-full p-4 space-y-4 h-[calc(100vh-200px)] max-h-[600px]">
+    <div className="flex flex-col items-center w-full p-4 space-y-4 h-[75dvh] md:h-[85dvh]">
       <div className="w-full flex-grow overflow-y-auto mb-4">
         {loading ? (
           <div className="grid grid-cols-1 gap-4">
@@ -72,7 +72,7 @@ export default function UserPollsContainer() {
         ) : polls.length === 0 ? (
           <p className="text-center text-gray-500 text-lg">No polls created yet!</p>
         ) : (
-          <div className="flex flex-col items-center justify-center gap-2 w-full">
+          <div className="flex flex-wrap items-center justify-center h-4/5 gap-2 w-full">
             {polls.slice(-1 * pagination.per_page).map((poll, index) => (
               <ROPoll key={poll.id || index} {...poll} />
             ))}
