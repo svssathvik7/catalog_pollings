@@ -10,6 +10,7 @@ export default function LogButton() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const logout = useAuthStore((state) => state.logout);
   const [loading,setLoading] = useState(false);
+  const isLoading = useAuthStore((state)=>state.isLoading);
 
   const handleLogout = async () => {
     setLoading(true);
@@ -27,7 +28,7 @@ export default function LogButton() {
     }
   };
 
-  return isAuthenticated ? (
+  return (isAuthenticated && !isLoading) ? (
     <Button
       onClick={handleLogout}
       className="w-full"

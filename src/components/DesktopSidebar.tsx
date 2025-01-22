@@ -20,7 +20,7 @@ export default function DesktopSidebar() {
       if (!isLoading && !isAuthenticated && location !== "/" && location !== "/login" && location !== "/register") {
         router.push("/login");
       }
-  }, [isLoading, location]);
+  }, [isLoading, location, isAuthenticated]);
 
   const items = [
     { title: "Home", url: "/", icon: Home },

@@ -39,7 +39,8 @@ export default function Poll({ pollId }: { pollId: string }) {
   const logout = useAuthStore((state) => state.logout)
   const [hasVoted, setHasVoted] = useState(false)
   const username = useAuthStore((state) => state.username)
-  const router = useRouter()
+  const router = useRouter();
+  const [castingVote,setCastingVote] = useState(false);
 
   useEffect(() => {
     const fetchPoll = async () => {
@@ -66,7 +67,7 @@ export default function Poll({ pollId }: { pollId: string }) {
       toaster("error", "Please select an option to vote.")
       return
     }
-
+    setCastingVote(true);
     try {
       await api.post(`/polls/${pollId}/vote`, {
         optionId: selectedOption,
@@ -80,16 +81,18 @@ export default function Poll({ pollId }: { pollId: string }) {
       if (updatedData !== "noauth") {
         setPollData(updatedData.poll)
       }
+      setCastingVote(false);
     } catch (error: unknown) {
       console.error("Error casting vote:", error)
       if (error instanceof AxiosError) {
         if (error?.response?.data?.isAuthenticated === false) {
-          logout()
-          toaster("error", "Please login to view poll!")
+          logout();
+          toaster("error", "Please login to view poll!");
         }
       } else {
         toaster("error", "Failed to cast vote. Please try again later.")
       }
+      setCastingVote(false);
       return false
     }
   }
@@ -201,11 +204,11 @@ export default function Poll({ pollId }: { pollId: string }) {
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button
-                    className="w-full py-6 text-lg font-semibold bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white transition-all duration-300 ease-in-out transform hover:scale-105"
+                    className={`${castingVote ? " disabled opacity-50 pointer-events-none " : " cursor-pointer opacity-100 "} w-full py-6 text-lg font-semibold bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white transition-all duration-300 ease-in-out transform hover:scale-105`}
                     disabled={!selectedOption}
                   >
                     <VoteIcon className="mr-2" size={20} />
-                    Cast Your Vote
+                    {castingVote ? "Casting your vote..." : "Cast your vote"}
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="max-w-md bg-gradient-to-br from-blue-50 to-indigo-50">
