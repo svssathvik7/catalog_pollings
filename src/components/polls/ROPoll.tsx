@@ -105,7 +105,7 @@ export default function ROPoll(pollData: PollData) {
                       key={option._id.$oid + i}
                       className="p-1 text-left rounded-lg bg-gray-50 border border-gray-200 hover:border-blue-200 hover:bg-blue-50 transition-colors"
                     >
-                      <span className="text-gray-700 text-sm font-medium">{option.text}</span>
+                      <span className="text-gray-700 text-sm font-medium pl-2">{option.text}</span>
                     </div>
                   ))}
                   <div className="mx-1 flex items-center justify-start text-blue-600 hover:text-blue-700 transition-colors gap-1 text-sm font-medium">
@@ -120,9 +120,9 @@ export default function ROPoll(pollData: PollData) {
           </CardContent>
         </Link>
 
-        <CardFooter className="bg-white absolute bottom-0 w-full">
+        <CardFooter className="h-fit absolute bottom-0 w-full flex items-center justify-center">
           {isOwner ? (
-            <div className="w-full flex items-center justify-center gap-4">
+            <div className="w-full flex items-center justify-center gap-4 m-auto">
               {pollData.is_open && (
                 <AlertDialog>
                   <Tooltip>
@@ -219,7 +219,7 @@ export default function ROPoll(pollData: PollData) {
               </AlertDialog>
             </div>
           ) : (
-            <p className="w-full h-full pb-4 text-center text-gray-600 text-sm font-medium">Created by {pollData.owner_id}</p>
+            <p className="w-full h-full text-center text-gray-600 text-sm font-medium m-auto">Created by {pollData.owner_id}</p>
           )}
         </CardFooter>
       </Card>

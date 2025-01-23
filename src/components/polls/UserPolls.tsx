@@ -23,15 +23,14 @@ export default function UserPollsContainer() {
     try {
       setLoading(true)
       const response = await getUserPolls(pagination, username, logout)
-      console.log(response)
       const totalPages = response.total_pages
       const newPolls = response.polls
       if (!newPolls) {
         setLoading(false)
         return
       }
-
-      setPolls((prevPolls) => [...prevPolls, ...newPolls])
+  
+      setPolls(newPolls)  // Replace polls instead of spreading
       setTotalPages(totalPages)
     } catch (error) {
       console.error("Error fetching polls:", error)
@@ -58,10 +57,10 @@ export default function UserPollsContainer() {
         {loading ? (
           <div className="flex flex-wrap items-center justify-center h-4/5 gap-2 w-full">
             {[1, 2, 3, 4].map((_, index) => (
-              <div key={index} className="bg-[#ffffff76] rounded-lg shadow-md p-4 space-y-4 w-full">
-                <Skeleton className="h-8 w-[20dvw] md:w-[10dvw]" />
-                <Skeleton className="h-24" />
-                <div className="space-y-2">
+              <div key={index} className="w-full md:w-72 bg-[#ffffff76] shadow-lg hover:shadow-xl transition-all duration-300 relative rounded-xl overflow-hidden border border-gray-200 h-[35dvh] p-2 gap-2 flex flex-col">
+                <Skeleton className="h-8" />
+                <Skeleton className="h-16" />
+                <div className="space-y-2 gap-2">
                   <Skeleton className="h-6" />
                   <Skeleton className="h-6" />
                   <Skeleton className="h-6" />
@@ -73,7 +72,7 @@ export default function UserPollsContainer() {
           <p className="text-center text-gray-500 text-lg">No polls created yet!</p>
         ) : (
           <div className="flex flex-wrap items-center justify-center h-4/5 gap-2 w-full">
-            {polls.slice(-1 * pagination.per_page).map((poll, index) => (
+            {polls.slice((pagination.page - 1) * pagination.per_page, pagination.page * pagination.per_page).map((poll, index) => (
               <ROPoll key={poll.id || index} {...poll} />
             ))}
           </div>
