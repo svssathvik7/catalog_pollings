@@ -1,0 +1,65 @@
+{
+    "post": {
+        "operationId": "closePoll",
+        "summary": "Close poll",
+        "description": "Closes the poll!",
+        "security": [],
+        "parameters": [
+            {
+                "name": "pollId",
+                "in": "path",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "example": "gB3kQ84XrA33LR7cSF1-D"
+                },
+                "description": "The unique id of the poll."
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "username": {
+                                "type": "string",
+                                "description": "The owner username for closing the poll.",
+                                "example": "sathvik"
+                            }
+                        },
+                        "required": ["username"]
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Returns a challange on success",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "Ok",
+                                    "description": "Enum representing the success of the request",
+                                    "enum": [
+                                        "Ok",
+                                        "Error"
+                                    ]
+                                },
+                                "result": {
+                                    "type": "string",
+                                    "example": "Poll closed!"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
