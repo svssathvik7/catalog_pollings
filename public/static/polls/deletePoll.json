@@ -1,8 +1,8 @@
 {
     "post": {
-        "operationId": "resetPoll",
-        "summary": "Reset poll",
-        "description": "Resets the poll!",
+        "operationId": "deletePoll",
+        "summary": "Delete poll",
+        "description": "Deletes the poll!",
         "security": [],
         "parameters": [
             {
@@ -25,7 +25,7 @@
                         "properties": {
                             "username": {
                                 "type": "string",
-                                "description": "The owner username for resetting the poll.",
+                                "description": "The owner username for deleting the poll.",
                                 "example": "sathvik"
                             }
                         },
@@ -53,7 +53,7 @@
                                 },
                                 "result": {
                                     "type": "string",
-                                    "example": "Poll reset successfully!"
+                                    "example": "Poll deleted!"
                                 }
                             }
                         }

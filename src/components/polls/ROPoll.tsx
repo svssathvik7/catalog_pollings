@@ -34,7 +34,7 @@ export default function ROPoll(pollData: PollData) {
       toaster("success", "Poll closed successfully!")
     } catch (error: unknown) {
       if(error instanceof AxiosError){
-        toaster("error", error?.response?.data || "Failed to close poll");
+        toaster("error", error?.response?.data?.error || "Failed to close poll");
       }
       else{
         toaster("error","Failed to close poll");
@@ -50,7 +50,7 @@ export default function ROPoll(pollData: PollData) {
     } catch (error: unknown) {
       console.log(error);
       if(error instanceof AxiosError){
-        toaster("error", error?.response?.data || "Failed to reset poll")
+        toaster("error", error?.response?.data?.reset || "Failed to reset poll")
       }
       else{
         toaster("error","Failed to reset poll");
@@ -66,7 +66,7 @@ export default function ROPoll(pollData: PollData) {
     } catch (error: unknown) {
       console.log(error);
       if(error instanceof AxiosError){
-        toaster("error", error?.response?.data || "Failed to delete poll")
+        toaster("error", error?.response?.data?.error || "Failed to delete poll")
       }
       else{
         toaster("error","Failed to delete poll");
