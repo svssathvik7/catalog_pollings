@@ -58,7 +58,7 @@ export default function AppSidebar() {
         <Button
           variant="ghost"
           size="icon"
-          className="md:hidden"
+          className="md:hidden absolute"
           onClick={() => setIsSidebarOpen(true)} // Open sidebar on trigger
         >
           <Menu className="h-6 w-6" />

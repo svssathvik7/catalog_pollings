@@ -58,8 +58,8 @@ export default function UserPollsContainer() {
         {loading ? (
           <div className="flex flex-wrap items-center justify-center h-4/5 gap-2 w-full">
             {[1, 2, 3, 4].map((_, index) => (
-              <div key={index} className="bg-[#ffffff76] rounded-lg shadow-md p-4 space-y-4 w-full md:w-72">
-                <Skeleton className="h-8 w-3/4" />
+              <div key={index} className="bg-[#ffffff76] rounded-lg shadow-md p-4 space-y-4 w-full">
+                <Skeleton className="h-8 w-[20dvw] md:w-[10dvw]" />
                 <Skeleton className="h-24" />
                 <div className="space-y-2">
                   <Skeleton className="h-6" />

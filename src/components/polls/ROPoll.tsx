@@ -80,7 +80,7 @@ export default function ROPoll(pollData: PollData) {
 
   return (
     <TooltipProvider>
-      <Card className="w-full md:w-72 bg-[#ffffff76] shadow-lg hover:shadow-xl transition-all duration-300 relative rounded-xl overflow-hidden border border-gray-200">
+      <Card className="w-full md:w-72 bg-[#ffffff76] shadow-lg hover:shadow-xl transition-all duration-300 relative rounded-xl overflow-hidden border border-gray-200 h-[35dvh]">
         <Link href={`/polls/${pollData.id}`} className="block">
           <Badge
             variant="outline"
@@ -120,7 +120,7 @@ export default function ROPoll(pollData: PollData) {
           </CardContent>
         </Link>
 
-        <CardFooter className="bg-[#ffffff76]">
+        <CardFooter className="bg-white">
           {isOwner ? (
             <div className="w-full flex items-center justify-center gap-4">
               {pollData.is_open && (
@@ -220,7 +220,7 @@ export default function ROPoll(pollData: PollData) {
               </AlertDialog>
             </div>
           ) : (
-            <p className="w-full text-center text-gray-600 text-sm font-medium">Created by {pollData.owner_id}</p>
+            <p className="w-full h-full pb-4 text-center text-gray-600 text-sm font-medium">Created by {pollData.owner_id}</p>
           )}
         </CardFooter>
       </Card>
