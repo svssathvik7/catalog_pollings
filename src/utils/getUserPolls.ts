@@ -6,8 +6,7 @@ import { AxiosError } from "axios";
 export async function getUserPolls(pagination:Pagination,username:string,logout:()=>void){
     try {
         const userPolls = (await api.get(`/polls/user/${username}?per_page=${pagination.per_page}&page=${pagination.page}`)).data;
-        console.log(userPolls);
-        return userPolls;
+        return userPolls?.result;
     } catch (error:unknown) {
         console.log(error);
         if(error instanceof AxiosError){
