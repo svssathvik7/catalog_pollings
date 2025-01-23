@@ -1,8 +1,8 @@
 {
     "post": {
-        "operationId": "closePoll",
-        "summary": "Close poll",
-        "description": "Closes the poll!",
+        "operationId": "resetPoll",
+        "summary": "Reset poll",
+        "description": "Resets the poll!",
         "security": [],
         "parameters": [
             {
@@ -53,7 +53,7 @@
                                 },
                                 "result": {
                                     "type": "string",
-                                    "example": "Poll closed!"
+                                    "example": "Poll reset successfully!"
                                 }
                             }
                         }
