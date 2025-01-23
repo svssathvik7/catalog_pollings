@@ -33,7 +33,7 @@ export default function RootLayout({
         <div className="flex min-h-screen">
           <DesktopSidebar />
           <div className="flex-1">
-            <div className="p-4 md:hidden z-50">
+            <div className="p-4 md:hidden z-50 absolute">
               <AppSidebar />
             </div>
             <main className="container mx-auto p-4 flex-grow h-screen flex items-center justify-center">{children}</main>
