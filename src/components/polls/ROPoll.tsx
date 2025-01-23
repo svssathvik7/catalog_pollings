@@ -120,7 +120,7 @@ export default function ROPoll(pollData: PollData) {
           </CardContent>
         </Link>
 
-        <CardFooter className="bg-white">
+        <CardFooter className="bg-white absolute bottom-0 w-full">
           {isOwner ? (
             <div className="w-full flex items-center justify-center gap-4">
               {pollData.is_open && (

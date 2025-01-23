@@ -106,3 +106,7 @@ button[data-state="active"]{
   background-color: #ec7ea6!important;
   color: white!important;
 }
+
+*::-webkit-scrollbar {
+  display: none;
+}
