@@ -87,7 +87,7 @@ export default function ROPoll(pollData: PollData) {
             className="absolute top-3 right-3 bg-blue-500 text-white shadow-md flex items-center gap-1.5 px-2 py-1 z-10 rounded-full"
           >
             <Users size={14} className="text-white" />
-            <span className="font-semibold text-white">{pollData?.voters?.length ?? 0}</span>
+            <span className="font-semibold text-white">{pollData?.total_votes??0}</span>
           </Badge>
 
           <CardHeader className="pb-2 pt-6">
@@ -124,20 +124,36 @@ export default function ROPoll(pollData: PollData) {
           {isOwner ? (
             <div className="w-full flex items-center justify-center gap-4">
               {pollData.is_open && (
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      onClick={handlePollClose}
-                      size="sm"
-                      className="h-9 w-9 bg-blue-500 hover:bg-blue-700 rounded-full shadow-md"
-                    >
-                      <Lock />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Close Poll</p>
-                  </TooltipContent>
-                </Tooltip>
+                <AlertDialog>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          onClick={handlePollClose}
+                          size="sm"
+                          className="h-9 w-9 bg-blue-500 hover:bg-blue-700 rounded-full shadow-md"
+                        >
+                          <Lock />
+                        </Button>
+                      </AlertDialogTrigger>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Close Poll</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Close Poll?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This will close the poll, preventing any further votes. This action cannot be undone.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={handlePollClose}>Close Poll</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               )}
 
               <AlertDialog>
@@ -211,4 +227,3 @@ export default function ROPoll(pollData: PollData) {
     </TooltipProvider>
   )
 }
-
