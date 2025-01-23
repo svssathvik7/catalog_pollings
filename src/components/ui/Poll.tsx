@@ -74,7 +74,7 @@ export default function Poll({ pollId }: { pollId: string }) {
         optionId: selectedOption,
         pollId,
         username,
-      })
+      });
       setHasVoted(true)
       toaster("success", "Vote cast successfully!")
       // Refresh poll data after voting
@@ -89,6 +89,8 @@ export default function Poll({ pollId }: { pollId: string }) {
         if (error?.response?.data?.isAuthenticated === false) {
           logout()
           toaster("error", "Please login to view poll!")
+        }else{
+          toaster("error", "Failed to cast vote. Please try again later.")
         }
       } else {
         toaster("error", "Failed to cast vote. Please try again later.")

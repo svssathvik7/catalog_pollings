@@ -1,0 +1,77 @@
+{
+    "post": {
+        "operationId": "votePoll",
+        "summary": "Vote a poll",
+        "description": "Allows a user to vote on a specific option in a poll.",
+        "security": [],
+        "parameters": [
+            {
+                "name": "pollId",
+                "in": "path",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "example": "sathvik"
+                },
+                "description": "The username for starting the registration process"
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "optionId": {
+                                "type": "string",
+                                "description": "The unique identifier of the poll option being voted for."
+                            },
+                            "pollId": {
+                                "type": "string",
+                                "description": "The unique identifier of the poll."
+                            },
+                            "username": {
+                                "type": "string",
+                                "description": "The username of the voter."
+                            }
+                        },
+                        "required": [
+                            "optionId",
+                            "pollId",
+                            "username"
+                        ]
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Returns a challange on success",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "Ok",
+                                    "description": "Enum representing the success of the request",
+                                    "enum": [
+                                        "Ok",
+                                        "Error"
+                                    ]
+                                },
+                                "result": {
+                                    "type": "string",
+                                    "example": "Vote recorded succesfully!"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "tags": ["Polls"]
+    }
+}

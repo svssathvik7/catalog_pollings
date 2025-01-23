@@ -18,7 +18,7 @@ export default async function authenticator(username:string){
     } catch (error:unknown) {
         console.log(error);
         if(error instanceof AxiosError){
-            const errorText = error?.response?.data?.error;
+            const errorText = error?.response?.data?.error??"Failed logging in...";
             toaster("error",errorText);
         }
         else{

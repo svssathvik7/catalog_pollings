@@ -52,6 +52,9 @@
         },
         "/polls/{pollId}": {
             "$ref": "./polls/getPoll.json"
+        },
+        "/polls/{pollId}/vote": {
+            "$ref": "./polls/votePoll.json"
         }
     }
 }
