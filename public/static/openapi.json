@@ -32,11 +32,23 @@
         "/auth/register/start": {
             "$ref": "./auth/registerStart.json"
         },
+        "/auth/register/finish/{username}": {
+            "$ref": "./auth/registerFinish.json"
+        },
+        "/auth/login/start": {
+            "$ref": "./auth/authStart.json"
+        },
+        "/auth/login/finish/{username}": {
+            "$ref": "./auth/authFinish.json"
+        },
+        "/live": {
+            "$ref": "./general/livePolls.json"
+        },
+        "/closed": {
+            "$ref": "./general/closedPolls.json"
+        },
         "/polls": {
             "$ref": "./polls.json"
-        },
-        "/general": {
-            "$ref": "./general.json"
         }
     }
 }

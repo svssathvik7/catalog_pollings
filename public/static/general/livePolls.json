@@ -1,0 +1,129 @@
+{
+    "get": {
+        "operationId": "getLivePolls",
+        "summary": "Get the live polls",
+        "description": "Retrieve live polls with pagination options using 'per_page' and 'page' query parameters.",
+        "security": [],
+        "parameters": [
+            {
+                "name": "per_page",
+                "in": "query",
+                "description": "Number of polls to retrieve per page.",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "example": 1
+            },
+            {
+                "name": "page",
+                "in": "query",
+                "description": "Page number to retrieve.",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "example": 1
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "Successfully retrieved live polls.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "Ok"
+                                },
+                                "result": {
+                                    "type": "object",
+                                    "properties": {
+                                        "polls": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "_id": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "$oid": {
+                                                                "type": "string",
+                                                                "example": "678e1da066df5d1aed87338f"
+                                                            }
+                                                        }
+                                                    },
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "JzENrHSDQJpfB-jdTpULi"
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Magnus plays"
+                                                    },
+                                                    "is_open": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "owner_id": {
+                                                        "type": "string",
+                                                        "example": "sathvik"
+                                                    },
+                                                    "options": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "_id": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "$oid": {
+                                                                            "type": "string",
+                                                                            "example": "678e1da066df5d1aed87338d"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "text": {
+                                                                    "type": "string",
+                                                                    "example": "Cricket"
+                                                                },
+                                                                "votes_count": {
+                                                                    "type": "integer",
+                                                                    "example": 0
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "page": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "per_page": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "total_polls": {
+                                            "type": "integer",
+                                            "example": 4
+                                        },
+                                        "total_pages": {
+                                            "type": "integer",
+                                            "example": 4
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

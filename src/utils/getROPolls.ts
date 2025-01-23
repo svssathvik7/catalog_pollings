@@ -6,8 +6,7 @@ import toaster from "./toaster";
 export async function getROLivePolls(pagination:Pagination){
     try {
         const liveReadOnlyPolls = (await api.get(`/p/live?per_page=${pagination.per_page}&page=${pagination.page}`)).data;
-        console.log(liveReadOnlyPolls);
-        return liveReadOnlyPolls;
+        return liveReadOnlyPolls?.result;
     } catch (error:unknown) {
         console.log(error);
         if(error instanceof AxiosError){
@@ -23,8 +22,7 @@ export async function getROLivePolls(pagination:Pagination){
 export async function getROClosedPolls(pagination:Pagination){
     try {
         const closedReadOnlyPolls = (await api.get(`/p/closed?per_page=${pagination.per_page}&page=${pagination.page}`)).data;
-        console.log(closedReadOnlyPolls);
-        return closedReadOnlyPolls;
+        return closedReadOnlyPolls?.result;
     } catch (error:unknown) {
         console.log(error);
         if(error instanceof AxiosError){

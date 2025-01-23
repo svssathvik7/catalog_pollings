@@ -11,7 +11,7 @@ export default async function registrar(username:string){
         const regStartResponse = (await api.post(`/auth/register/start`,{
             username
         })).data;
-        const attResponse = await startRegistration({optionsJSON: regStartResponse.publicKey});
+        const attResponse = await startRegistration({optionsJSON: regStartResponse?.result?.publicKey});
         const regFinishResponse = (await api.post(`/auth/register/finish/${username}`,attResponse)).data;
         console.log(regFinishResponse);
         toaster("success","User registration successfull!");
@@ -19,7 +19,7 @@ export default async function registrar(username:string){
     } catch (error: unknown) {
         console.log(error);
         if (error instanceof AxiosError) {
-            const errorText = error.response?.data || "Error registering";
+            const errorText = error.response?.data?.error || "Error registering";
             toaster("error", errorText);
         } else {
             toaster("error", "An unexpected error occurred");

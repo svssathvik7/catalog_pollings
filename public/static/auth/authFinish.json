@@ -1,0 +1,127 @@
+{
+    "post": {
+        "operationId": "authUserFinish",
+        "summary": "Finish authentication",
+        "description": "Completes the authentication process for a user by validating the provided credentials and device response.",
+        "security": [],
+        "parameters": [
+            {
+                "name": "username",
+                "in": "path",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "example": "sathvik"
+                },
+                "description": "The username of the user attempting to complete authentication."
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "description": "The ID of the authenticator device.",
+                                "example": "BPCH09XtVQgVAQW3r4CCcw"
+                            },
+                            "rawId": {
+                                "type": "string",
+                                "description": "The raw ID of the authenticator device, encoded as a string.",
+                                "example": "BPCH09XtVQgVAQW3r4CCcw"
+                            },
+                            "response": {
+                                "type": "object",
+                                "properties": {
+                                    "authenticatorData": {
+                                        "type": "string",
+                                        "description": "Base64-encoded authenticator data from the device.",
+                                        "example": "SZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2MdAAAAAA"
+                                    },
+                                    "clientDataJSON": {
+                                        "type": "string",
+                                        "description": "Base64-encoded client data JSON string.",
+                                        "example": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiV1puYmFWUnZNNENYdWk0QmRoZ0dieVk2MnI0T01CMFVWTGItS2FVNFBPYyIsIm9yaWdpbiI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImNyb3NzT3JpZ2luIjpmYWxzZX0"
+                                    },
+                                    "signature": {
+                                        "type": "string",
+                                        "description": "Base64-encoded signature from the authenticator.",
+                                        "example": "MEUCIQD_d5Nz6e9-GiMEXyEbWce7ZICmcXYHfWOnRV6TSeE0BAIgU0mxACjjqzfA75Vvc3kpxfeXQ22-gWPrv2p8sRep1OI"
+                                    },
+                                    "userHandle": {
+                                        "type": "string",
+                                        "description": "A user handle associated with the authenticator.",
+                                        "example": "hyurM7DURAaOV8lDzbACvw"
+                                    }
+                                },
+                                "required": [
+                                    "authenticatorData",
+                                    "clientDataJSON",
+                                    "signature",
+                                    "userHandle"
+                                ]
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "The type of public key credential.",
+                                "example": "public-key"
+                            },
+                            "clientExtensionResults": {
+                                "type": "object",
+                                "description": "Client extension results, usually empty.",
+                                "example": {}
+                            },
+                            "authenticatorAttachment": {
+                                "type": "string",
+                                "description": "The type of authenticator attachment, such as 'platform' or 'cross-platform'.",
+                                "example": "platform"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "rawId",
+                            "response",
+                            "type",
+                            "clientExtensionResults",
+                            "authenticatorAttachment"
+                        ]
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Returns a challange on success",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "Ok",
+                                    "description": "Enum representing the success of the request",
+                                    "enum": [
+                                        "Ok",
+                                        "Error"
+                                    ]
+                                },
+                                "result": {
+                                    "type": "string",
+                                    "description": "Contains the authenticated username",
+                                    "example": "test_acc"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "tags": [
+            "Auth"
+        ]
+    }
+}
