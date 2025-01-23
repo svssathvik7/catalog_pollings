@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import api from "./axios";
 import toaster from "./toaster";
 
-export default async function getPollResults(id:string,logout: ()=>void,username?: string){
+export default async function getPollResults(id:string,logout: ()=>void){
     try {
         const pollResult = (await api.get(`/polls/${id}/results`)).data;
         return pollResult?.result;

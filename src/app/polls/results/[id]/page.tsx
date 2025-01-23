@@ -51,7 +51,7 @@ export default function PollResults() {
       return;
     }
     const fetchPollResults = async () => {
-      const data = await getPollResults(id,logout,username);
+      const data = await getPollResults(id,logout);
       console.log(data);
       setPollData(data);
       setIsLoading(false);
