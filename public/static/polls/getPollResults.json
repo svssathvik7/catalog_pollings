@@ -1,0 +1,100 @@
+{
+    "post": {
+        "operationId": "getPollResults",
+        "summary": "Get poll result",
+        "description": "Fetches the poll result!",
+        "security": [],
+        "parameters": [
+            {
+                "name": "pollId",
+                "in": "path",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "example": "gB3kQ84XrA33LR7cSF1-D"
+                },
+                "description": "The unique id of the poll."
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "username": {
+                                "type": "string",
+                                "description": "The owner username for deleting the poll.",
+                                "example": "sathvik"
+                            }
+                        },
+                        "required": ["username"]
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Returns a challenge on success",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example": "Ok",
+                                    "description": "Enum representing the success of the request",
+                                    "enum": [
+                                        "Ok",
+                                        "Error"
+                                    ]
+                                },
+                                "result": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "example": "xK4vXYkSU7twATHkO1bjc"
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Sathvik's fav raga"
+                                        },
+                                        "total_votes": {
+                                            "type": "integer",
+                                            "example": 3
+                                        },
+                                        "options": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "text": {
+                                                        "type": "string",
+                                                        "example": "Hamsadhwani"
+                                                    },
+                                                    "votes_count": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "votes_percentage": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 33.33333333333333
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "tags": ["Polls"]
+    }
+}

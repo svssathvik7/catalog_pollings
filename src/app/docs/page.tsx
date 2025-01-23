@@ -1,5 +1,5 @@
 import { SwaggerDoc } from "@/components/SwaggerComponent";
-
+import "./swagger-ui.css"
 const url = "/static/openapi.json";
 export default function SwaggerGenerator(){
     return (

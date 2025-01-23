@@ -5,13 +5,11 @@ import toaster from "./toaster";
 export default async function getPollResults(id:string,logout: ()=>void,username?: string){
     try {
         const pollResult = (await api.get(`/polls/${id}/results`)).data;
-        console.log(username);
-        console.log(pollResult);
-        return pollResult;
+        return pollResult?.result;
     } catch (error:unknown) {
         console.log(error);
         if(error instanceof AxiosError){
-            const errorText = error?.response?.data;
+            const errorText = error?.response?.data?.error;
             if (error?.response?.data?.isAuthenticated === false) {
                 logout();
                 toaster("error", "Please login to view poll!");
