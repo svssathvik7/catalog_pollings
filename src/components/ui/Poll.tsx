@@ -1,5 +1,4 @@
 "use client"
-
 import React, { useEffect, useState } from "react"
 import { useAuthStore } from "@/store/authStore"
 import getPoll from "@/utils/getPoll"
@@ -39,11 +38,12 @@ export default function Poll({ pollId }: { pollId: string }) {
   const logout = useAuthStore((state) => state.logout)
   const [hasVoted, setHasVoted] = useState(false)
   const username = useAuthStore((state) => state.username)
-  const router = useRouter();
-  const [castingVote,setCastingVote] = useState(false);
+  const router = useRouter()
+  const [castingVote, setCastingVote] = useState(false)
 
   useEffect(() => {
     const fetchPoll = async () => {
+      setLoading(true)
       try {
         const data = await getPoll(pollId, logout, username ?? "")
         if (data === "noauth") {
@@ -54,6 +54,7 @@ export default function Poll({ pollId }: { pollId: string }) {
         setHasVoted(data.has_voted)
       } catch (error) {
         console.error("Error fetching poll data:", error)
+        toaster("error", "Failed to fetch poll!")
       } finally {
         setLoading(false)
       }
@@ -67,7 +68,7 @@ export default function Poll({ pollId }: { pollId: string }) {
       toaster("error", "Please select an option to vote.")
       return
     }
-    setCastingVote(true);
+    setCastingVote(true)
     try {
       await api.post(`/polls/${pollId}/vote`, {
         optionId: selectedOption,
@@ -81,25 +82,25 @@ export default function Poll({ pollId }: { pollId: string }) {
       if (updatedData !== "noauth") {
         setPollData(updatedData.poll)
       }
-      setCastingVote(false);
+      setCastingVote(false)
     } catch (error: unknown) {
       console.error("Error casting vote:", error)
       if (error instanceof AxiosError) {
         if (error?.response?.data?.isAuthenticated === false) {
-          logout();
-          toaster("error", "Please login to view poll!");
+          logout()
+          toaster("error", "Please login to view poll!")
         }
       } else {
         toaster("error", "Failed to cast vote. Please try again later.")
       }
-      setCastingVote(false);
-      return false
+      setCastingVote(false)
     }
   }
 
+  // Ensure that skeleton loader is shown while loading
   if (loading) {
     return (
-      <Card className="w-full max-w-2xl mx-auto shadow-lg bg-gradient-to-br from-blue-50 to-indigo-50">
+      <Card className="w-[90vw] md:w-[60vw] lg:w-[40vw] mx-auto shadow-2xl relative bg-gradient-to-br from-blue-50 to-indigo-50 overflow-hidden">
         <CardHeader className="pb-4">
           <Skeleton className="h-8 w-3/4 mx-auto bg-blue-200" />
         </CardHeader>
@@ -107,6 +108,7 @@ export default function Poll({ pollId }: { pollId: string }) {
           <Skeleton className="h-14 w-full bg-blue-100" />
           <Skeleton className="h-14 w-full bg-blue-100" />
           <Skeleton className="h-14 w-full bg-blue-100" />
+          <Skeleton className="h-10 w-1/2 mx-auto bg-blue-200" />
         </CardContent>
       </Card>
     )
@@ -126,6 +128,7 @@ export default function Poll({ pollId }: { pollId: string }) {
   }
 
   const totalVotes = pollData.options.reduce((sum, option) => sum + option.votes_count, 0)
+
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>

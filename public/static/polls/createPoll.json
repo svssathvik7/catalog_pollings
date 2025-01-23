@@ -1,0 +1,70 @@
+{
+    "post": {
+        "operationId": "createPoll",
+        "summary": "Create a new poll",
+        "description": "Create a new poll with a title, options, and an owner name.",
+        "security": [],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string",
+                                "example": "Sathvik is a"
+                            },
+                            "options": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "text": {
+                                            "type": "string",
+                                            "example": "Full stack dev"
+                                        }
+                                    },
+                                    "example": [
+                                        { "text": "Full stack dev" },
+                                        { "text": "Frontend dev" },
+                                        { "text": "Backend dev" },
+                                        { "text": "No dev" }
+                                    ]
+                                }
+                            },
+                            "ownername": {
+                                "type": "string",
+                                "example": "sathvik"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Poll created successfully.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "description": "Indicates the status of the request.",
+                                    "example": "Ok"
+                                },
+                                "result": {
+                                    "type": "string",
+                                    "example": "Poll created!"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "tags": ["Polls"]
+    }
+}
