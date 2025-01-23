@@ -50,8 +50,8 @@
         "/polls/new": {
             "$ref": "./polls/createPoll.json"
         },
-        "/polls": {
-            "$ref": "./polls.json"
+        "/polls/{pollId}": {
+            "$ref": "./polls/getPoll.json"
         }
     }
 }

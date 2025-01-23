@@ -1,0 +1,42 @@
+{
+    "post": {
+        "operationId": "getPoll",
+        "summary": "Get a poll",
+        "description": "Get poll.",
+        "security": [],
+        "parameters": [
+            {
+                "name": "pollId",
+                "in": "path",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "example": "gB3kQ84XrA33LR7cSF1-D"
+                },
+                "description": "The unique id of the poll."
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "username": {
+                                "type": "string",
+                                "description": "The username for starting the authentication process.",
+                                "example": "sathvik"
+                            }
+                        },
+                        "required": ["username"]
+                    }
+                }
+            }
+        },
+        "responses": {
+
+        },
+        "tags": ["Polls"]
+    }
+}

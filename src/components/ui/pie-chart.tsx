@@ -27,7 +27,7 @@ export function PollChart(pollData: PollData) {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardDescription>Total Votes: {pollData?.voters?.length}</CardDescription>
+        <CardDescription>Total Votes: {pollData?.total_votes??0}</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -52,7 +52,7 @@ export function PollChart(pollData: PollData) {
               fontSize={18}
               fontWeight="bold"
             >
-              {pollData.voters.length}
+              {pollData?.total_votes??100}
             </text>
             
             <ChartTooltip

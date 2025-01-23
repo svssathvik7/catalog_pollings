@@ -139,7 +139,7 @@ export default function Poll({ pollId }: { pollId: string }) {
           variant="secondary"
           className="absolute -top-0 -right-0 bg-blue-500 text-white shadow-lg flex items-center gap-1 px-3 py-1 rounded-full hover:text-blue-500"
         >
-          <span className="text-lg font-semibold">{pollData.voters.length}</span>
+          <span className="text-lg font-semibold">{pollData?.total_votes??0}</span>
           <Users size={20} />
         </Badge>
 
