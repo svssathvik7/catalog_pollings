@@ -11,45 +11,38 @@ export default function ClosedPollContainer() {
   const [pagination, setPagination] = useState({ page: 1, per_page: 4 });
   const [polls, setPolls] = useState<PollData[]>([]);
   const [totalPages, setTotalPages] = useState(0);
-  const [isMounted, setIsMounted] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const fetchData = useCallback(
     async ({ page, per_page }: { page: number; per_page: number }) => {
       try {
-        setLoading(true); // Start loading
+        setLoading(true);
         const response = await getROClosedPolls({ page, per_page });
         const totalPages = response.total_pages;
         const newPolls = response.polls;
+        
         if (!newPolls) return;
 
-        setPolls((prevPolls) => [...prevPolls, ...newPolls]);
+        // Replace polls instead of appending
+        setPolls(newPolls);
         setTotalPages(totalPages);
       } catch (error) {
         console.error("Error fetching polls:", error);
       } finally {
-        setLoading(false); // End loading
+        setLoading(false);
       }
     },
     []
   );
 
   useEffect(() => {
-    setIsMounted(true);
-    return () => setIsMounted(false);
-  }, []);
-
-  useEffect(() => {
-    if (isMounted) {
-      fetchData(pagination);
-    }
-  }, [pagination, isMounted]);
+    fetchData(pagination);
+  }, [pagination, fetchData]);
 
   return (
     <div className="w-full flex items-center justify-around flex-col h-[80dvh]">
       {loading ? (
         <div className="w-full flex items-center justify-around p-2 flex-wrap">
-          {/* Skeleton loader for each poll */}
           {[...Array(1)].map((_, index) => (
             <div
               key={index}
@@ -66,7 +59,7 @@ export default function ClosedPollContainer() {
         <p>No closed polls available.</p>
       ) : (
         <div className="w-full flex items-center justify-around p-2 gap-4 flex-wrap overflow-y-scroll h-full">
-          {polls.slice(-4).map((poll, index) => (
+          {polls.map((poll, index) => (
             <ROPoll key={poll.id || index} {...poll} />
           ))}
         </div>

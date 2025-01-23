@@ -129,7 +129,6 @@ export default function ROPoll(pollData: PollData) {
                     <TooltipTrigger asChild>
                       <AlertDialogTrigger asChild>
                         <Button
-                          onClick={handlePollClose}
                           size="sm"
                           className="h-9 w-9 bg-blue-500 hover:bg-blue-700 rounded-full shadow-md"
                         >
