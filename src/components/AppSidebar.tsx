@@ -66,7 +66,7 @@ export default function AppSidebar() {
       </SheetTrigger>
       <SheetContent side="left" className="w-64 bg-[#fff]">
         <SheetHeader>
-          <SheetTitle>Catalog Polling</SheetTitle>
+          <SheetTitle><Link href={"/docs"}>Catalog Pollings</Link></SheetTitle>
         </SheetHeader>
         <nav className="flex flex-col gap-2 mt-4">
           {items.map((item) => (

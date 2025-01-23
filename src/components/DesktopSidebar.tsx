@@ -39,7 +39,7 @@ export default function DesktopSidebar() {
     <div className="hidden md:flex my-auto h-[98dvh] w-64 border-r bg-[#ffffff41] m-2 rounded-xl">
       <nav className="flex flex-col gap-2 p-4 w-full">
         <div className="px-4 py-2">
-          <h2 className="text-lg font-semibold">Catalog Pollings</h2>
+          <Link href={"/docs"} className="text-lg font-semibold">Catalog Pollings</Link>
         </div>
 
         {/* Render Sidebar Items */}
