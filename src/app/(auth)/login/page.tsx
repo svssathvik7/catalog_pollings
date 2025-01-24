@@ -50,6 +50,7 @@ export default function Login() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full"
+                autoComplete="off"
               />
             </div>
           </CardContent>

@@ -48,6 +48,7 @@ export default function Register() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full"
+                  autoComplete="off"
                 />
               </div>
               </CardContent>
