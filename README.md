@@ -57,3 +57,12 @@ yarn run dev
 
 Once the server is running, visit the application in your browser at: `http://localhost:3000`
 
+### Application snaps:
+
+[Login](./public/assets/Login.png)
+
+[Home page](./public/assets/Home.png)
+
+[Create poll](./public/assets/CreatePoll.png)
+
+[Manage poll](./public/assets/ManagePoll.png)
