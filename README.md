@@ -65,4 +65,4 @@ Once the server is running, visit the application in your browser at: `http://lo
 
 [Create poll](./public/assets/CreatePoll.png)
 
-[Manage poll](./public/assets/ManagePoll.png)
+[Manage poll](./public/assets/ManagePoll.png)w

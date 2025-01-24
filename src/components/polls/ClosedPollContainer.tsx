@@ -42,19 +42,19 @@ export default function ClosedPollContainer() {
   return (
     <div className="w-full flex items-center justify-around flex-col h-[80dvh]">
       {loading ? (
-        <div className="w-full flex items-center justify-around p-2 flex-wrap">
-          {[...Array(6)].map((_, index) => (
-            <div
-              key={index}
-              className="w-fit min-w-64 h-64 max-h-96 overflow-y-scroll relative justify-around p-1 gap-1 flex flex-col"
-            >
-              <Skeleton className="h-20 rounded-md" />
-              <Skeleton className="h-10 rounded-md" />
-              <Skeleton className="h-10 rounded-md" />
-              <Skeleton className="h-10 rounded-md" />
-            </div>
-          ))}
-        </div>
+        <div className="w-full flex items-center justify-around gap-4 p-2 flex-wrap">
+        {[...Array(6)].map((_, index) => (
+          <div
+            key={index}
+            className="w-fit min-w-64 h-64 max-h-96 overflow-y-scroll relative justify-around p-2 gap-1 flex flex-col bg-[#ffffff76] rounded-lg"
+          >
+            <Skeleton className="h-20 rounded-md" />
+            <Skeleton className="h-10 rounded-md" />
+            <Skeleton className="h-10 rounded-md" />
+            <Skeleton className="h-10 rounded-md" />
+          </div>
+        ))}
+      </div>
       ) : polls.length === 0 ? (
         <p>No closed polls available.</p>
       ) : (
