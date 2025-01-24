@@ -43,7 +43,7 @@ export default function ClosedPollContainer() {
     <div className="w-full flex items-center justify-around flex-col h-[80dvh]">
       {loading ? (
         <div className="w-full flex items-center justify-around p-2 flex-wrap">
-          {[...Array(1)].map((_, index) => (
+          {[...Array(6)].map((_, index) => (
             <div
               key={index}
               className="w-fit min-w-64 h-64 max-h-96 overflow-y-scroll relative justify-around p-1 gap-1 flex flex-col"
@@ -58,7 +58,7 @@ export default function ClosedPollContainer() {
       ) : polls.length === 0 ? (
         <p>No closed polls available.</p>
       ) : (
-        <div className="w-full flex items-center justify-around p-2 gap-4 flex-wrap overflow-y-scroll h-full">
+        <div className="w-full flex items-center justify-around gap-4 flex-wrap overflow-y-scroll h-full">
           {polls.map((poll, index) => (
             <ROPoll key={poll.id || index} {...poll} />
           ))}

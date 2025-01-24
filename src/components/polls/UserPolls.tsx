@@ -71,7 +71,7 @@ export default function UserPollsContainer() {
         ) : polls.length === 0 ? (
           <p className="text-center text-gray-500 text-lg">No polls created yet!</p>
         ) : (
-          <div className="flex flex-wrap items-center justify-center h-4/5 gap-2 w-full">
+          <div className="flex flex-wrap items-center justify-around h-4/5 gap-4 w-full">
             {polls.slice((pagination.page - 1) * pagination.per_page, pagination.page * pagination.per_page).map((poll, index) => (
               <ROPoll key={poll.id || index} {...poll} />
             ))}
