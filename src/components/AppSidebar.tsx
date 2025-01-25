@@ -1,5 +1,5 @@
 "use client";
-import { Home, Vote, Menu, Search, X, PlusIcon } from "lucide-react";
+import { Home, Vote, Menu, Search, X, PlusIcon, File } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import {
@@ -41,6 +41,7 @@ export default function AppSidebar() {
     { title: "Home", url: "/", icon: Home },
     { title: "Polls", url: "/polls/manage", icon: Vote },
     { title: "Create Poll", url: "/polls/new", icon: PlusIcon },
+    { title: "API Docs", url: "/docs", icon: File}
   ];
 
   const handlePollSearch = (e: React.FormEvent<HTMLFormElement>) => {

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { PlusIcon, Search, X } from "lucide-react";
+import { File, PlusIcon, Search, X } from "lucide-react";
 import { Home, Vote } from "lucide-react"; // Import the necessary icons
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
@@ -28,6 +28,7 @@ export default function DesktopSidebar() {
     { title: "Home", url: "/", icon: Home },
     { title: "Polls", url: "/polls/manage", icon: Vote },
     { title: "Create Poll", url: "/polls/new", icon: PlusIcon },
+    { title: "API Docs", url: "/docs", icon: File}
   ];
 
   const handlePollSearch = (e:React.FormEvent<HTMLFormElement>) => {
