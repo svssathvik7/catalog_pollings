@@ -12,6 +12,7 @@ export default function ClosedPollContainer() {
   const [polls, setPolls] = useState<PollData[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [refresher,setRefresher] = useState(false);
 
   const fetchData = useCallback(
     async ({ page, per_page }: { page: number; per_page: number }) => {
@@ -37,7 +38,7 @@ export default function ClosedPollContainer() {
 
   useEffect(() => {
     fetchData(pagination);
-  }, [pagination, fetchData]);
+  }, [pagination, fetchData, refresher]);
 
   return (
     <div className="w-full flex items-center justify-around flex-col h-[80dvh]">
@@ -60,7 +61,7 @@ export default function ClosedPollContainer() {
       ) : (
         <div className="w-full flex items-center justify-around gap-4 flex-wrap overflow-y-scroll h-full">
           {polls.map((poll, index) => (
-            <ROPoll key={poll.id || index} {...poll} />
+            <ROPoll key={poll.id || index} pollData={poll} setRefresher={setRefresher}/>
           ))}
         </div>
       )}

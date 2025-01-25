@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, Dispatch, SetStateAction } from "react"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import type { PollData, PollOption } from "@/types/poll"
 import Link from "next/link"
@@ -24,14 +24,14 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { AxiosError } from "axios";
 import { formatText } from "@/utils/formatUtils"
 
-export default function ROPoll(pollData: PollData) {
+export default function ROPoll({pollData,setRefresher}:{pollData: PollData, setRefresher: Dispatch<SetStateAction<boolean>>}) {
   const username = useAuthStore((state) => state.username)
   const [isOwner, setIsOwner] = useState(false)
-
   const handlePollClose = async () => {
     try {
-      await api.post(`/polls/${pollData.id}/close`, { username })
-      toaster("success", "Poll closed successfully!")
+      await api.post(`/polls/${pollData.id}/close`, { username });
+      setRefresher((prev:boolean)=>!prev);
+      toaster("success", "Poll closed successfully!");
     } catch (error: unknown) {
       if(error instanceof AxiosError){
         toaster("error", error?.response?.data?.error || "Failed to close poll");
@@ -46,7 +46,8 @@ export default function ROPoll(pollData: PollData) {
   const handlePollReset = async () => {
     try {
       await api.post(`/polls/${pollData.id}/reset`, { username })
-      toaster("success", "Poll reset successfully!")
+      setRefresher((prev:boolean)=>!prev);
+      toaster("success", "Poll reset successfully!");
     } catch (error: unknown) {
       console.log(error);
       if(error instanceof AxiosError){
