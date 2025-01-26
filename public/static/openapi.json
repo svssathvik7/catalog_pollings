@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "Catalog Pollings API",
-        "version": "1.0.0"
+        "version": "2.0.0"
     },
     "servers": [
         {
@@ -41,10 +41,10 @@
         "/auth/login/finish/{username}": {
             "$ref": "./auth/authFinish.json"
         },
-        "/live": {
+        "/p/live": {
             "$ref": "./general/livePolls.json"
         },
-        "/closed": {
+        "/p/closed": {
             "$ref": "./general/closedPolls.json"
         },
         "/polls/new": {
