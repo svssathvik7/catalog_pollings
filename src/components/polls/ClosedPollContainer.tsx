@@ -4,6 +4,7 @@ import { getROClosedPolls } from "@/utils/getROPolls";
 import { useCallback, useEffect, useState } from "react";
 import ROPoll from "./ROPoll";
 import { Button } from "../ui/button";
+import { AnimatePresence } from "framer-motion";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 
@@ -60,9 +61,11 @@ export default function ClosedPollContainer() {
         <p>No closed polls available.</p>
       ) : (
         <div className="w-full flex items-center justify-around gap-4 flex-wrap overflow-y-scroll h-full">
-          {polls.map((poll, index) => (
-            <ROPoll key={poll.id || index} pollData={poll} setRefresher={setRefresher}/>
-          ))}
+          <AnimatePresence>
+            {polls.map((poll, index) => (
+              <ROPoll key={poll.id || index} pollData={poll} setRefresher={setRefresher}/>
+            ))}
+          </AnimatePresence>
         </div>
       )}
       {polls.length > 0 && (

@@ -6,6 +6,8 @@ import ROPoll from "./ROPoll";
 import { Button } from "../ui/button";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
+import { AnimatePresence } from "framer-motion"
+
 
 export default function LivePollContainer() {
   const [pagination, setPagination] = useState({ page: 1, per_page: 4 });
@@ -60,9 +62,11 @@ export default function LivePollContainer() {
         <p>No live polls available.</p>
       ) : (
         <div className="w-full flex items-center justify-around gap-4 flex-wrap overflow-y-scroll h-full">
-          {polls.map((poll, index) => (
-            <ROPoll key={poll.id || index} pollData={poll} setRefresher={setRefresher}/>
-          ))}
+          <AnimatePresence>
+            {polls.map((poll, index) => (
+              <ROPoll key={poll.id || index} pollData={poll} setRefresher={setRefresher}/>
+            ))}
+          </AnimatePresence>
         </div>
       )}
       {polls.length > 0 && (
