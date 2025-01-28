@@ -123,11 +123,11 @@ export default function NewPoll() {
             />
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-4 max-h-[300px] overflow-y-auto">
             <label className="text-sm font-medium">Options</label>
             {options.map((option, index) => (
               <div key={index} className="flex items-center gap-2 group">
-                <div className="w-8 h-8 flex items-center justify-center bg-muted rounded-l">
+                <div className="w-8 h-8 flex items-center justify-center bg-muted rounded-lg">
                   {index + 1}
                 </div>
                 <Input
