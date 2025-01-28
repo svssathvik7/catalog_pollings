@@ -41,7 +41,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { AxiosError } from "axios";
-import { formatText } from "@/utils/formatUtils";
+import { formatNumber, formatText } from "@/utils/formatUtils";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -147,7 +147,7 @@ export default function ROPoll({
             >
               <Users size={14} className="text-white" />
               <span className="font-semibold text-white">
-                {pollData?.total_votes ?? 0}
+                {formatNumber(pollData?.total_votes ?? 0)}
               </span>
             </Badge>
 

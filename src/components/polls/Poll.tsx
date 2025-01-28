@@ -42,6 +42,7 @@ import Link from "next/link";
 import { Progress } from "@/components/ui/progress";
 import { AxiosError } from "axios";
 import { motion } from "framer-motion";
+import { formatNumber } from "@/utils/formatUtils";
 
 export default function Poll({ pollId }: { pollId: string }) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -61,6 +62,7 @@ export default function Poll({ pollId }: { pollId: string }) {
         const data = await getPoll(pollId, logout, username ?? "");
         if (data === "noauth") {
           router.push("/login");
+          setLoading(false);
           return;
         }
         setPollData(data.poll);
@@ -161,7 +163,7 @@ export default function Poll({ pollId }: { pollId: string }) {
           className="absolute -top-0 -right-0 bg-blue-500 text-white shadow-lg flex items-center gap-1 px-3 py-1 rounded-full hover:text-blue-500"
         >
           <span className="text-lg font-semibold">
-            {pollData?.total_votes ?? 0}
+            {formatNumber(pollData?.total_votes ?? 0)}
           </span>
           <Users size={20} />
         </Badge>
@@ -208,7 +210,7 @@ export default function Poll({ pollId }: { pollId: string }) {
                         {option.text}
                       </span>
                       <span className="text-sm text-blue-600 font-medium">
-                        {option.votes_count} votes
+                        {formatNumber(option?.votes_count ?? 0)} votes
                       </span>
                     </div>
                     <Progress
