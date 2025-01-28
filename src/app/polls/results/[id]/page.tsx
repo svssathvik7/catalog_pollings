@@ -3,7 +3,7 @@
 import PollVisualization from "@/components/PollVisualization";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuthStore } from "@/store/authStore";
-import { PollData } from "@/types/pollResult";
+import { PollData } from "@/types/pollResultType";
 import getPollResults from "@/utils/getPollResults";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,14 +12,16 @@ export default function PollResults() {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const [isLoading, setIsLoading] = useState(true); // State to track loading status
-  const [pollData,setPollData] = useState<PollData>({
+  const [pollData, setPollData] = useState<PollData>({
     id: "",
     options: [],
     title: "",
-    total_votes: 0
+    total_votes: 0,
   });
   useEffect(() => {
-    const es = new EventSource(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/sse/create-client`);
+    const es = new EventSource(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/sse/create-client`
+    );
 
     es.onopen = () => {
       console.log("Connection opened");
@@ -33,7 +35,7 @@ export default function PollResults() {
       console.log(pollData);
       if (poll_result.id === pollData.id) {
         setPollData(poll_result);
-        console.log("Updated poll result",pollData);
+        console.log("Updated poll result", pollData);
       }
     });
 
@@ -47,17 +49,17 @@ export default function PollResults() {
 
   useEffect(() => {
     if (!id) return;
-    if(!username){
+    if (!username) {
       return;
     }
     const fetchPollResults = async () => {
-      const data = await getPollResults(id,logout);
+      const data = await getPollResults(id, logout);
       console.log(data);
       setPollData(data);
       setIsLoading(false);
     };
     fetchPollResults();
-  }, [id,username,logout]);
+  }, [id, username, logout]);
 
   if (isLoading) {
     return (
@@ -70,10 +72,16 @@ export default function PollResults() {
 
   return (
     <div className="flex items-center justify-center flex-wrap">
-      {pollData?.total_votes === 0 ? <p>NO poll data available</p> : <><h1 className="text-xl">
-        Poll title: <strong>{pollData?.title}</strong>
-      </h1>
-      <PollVisualization {...pollData}/></>}
+      {pollData?.total_votes === 0 ? (
+        <p>NO poll data available</p>
+      ) : (
+        <>
+          <h1 className="text-xl">
+            Poll title: <strong>{pollData?.title}</strong>
+          </h1>
+          <PollVisualization {...pollData} />
+        </>
+      )}
     </div>
   );
 }

@@ -12,7 +12,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { PollData, PollOption } from "@/types/pollResult";
+import { PollData, PollOption } from "@/types/pollResultType";
 
 interface CustomTooltipProps {
   active?: boolean;
@@ -71,7 +71,14 @@ const PollVisualization = (data: PollData) => {
     outerRadius,
     percent,
     name,
-  }: {cx: number, cy: number, midAngle: number, outerRadius: number, percent: number, name: string}) => {
+  }: {
+    cx: number;
+    cy: number;
+    midAngle: number;
+    outerRadius: number;
+    percent: number;
+    name: string;
+  }) => {
     // Calculate the position for the label using trigonometry
     const RADIAN = Math.PI / 180;
     const radius = outerRadius + 30; // Position labels further from the pie

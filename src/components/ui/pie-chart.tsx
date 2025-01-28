@@ -7,7 +7,7 @@ import {
   CardHeader,
 } from "./card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./chart";
-import { PollData } from "@/types/poll";
+import { PollData } from "@/types/pollType";
 
 export function PollChart(pollData: PollData) {
   const chartData = pollData.options.map((option, index) => ({
@@ -27,7 +27,9 @@ export function PollChart(pollData: PollData) {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardDescription>Total Votes: {pollData?.total_votes??0}</CardDescription>
+        <CardDescription>
+          Total Votes: {pollData?.total_votes ?? 0}
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -52,9 +54,9 @@ export function PollChart(pollData: PollData) {
               fontSize={18}
               fontWeight="bold"
             >
-              {pollData?.total_votes??100}
+              {pollData?.total_votes ?? 100}
             </text>
-            
+
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel nameKey="browser" />}

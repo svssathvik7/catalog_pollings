@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import type { PollData, PollOption } from "@/types/poll";
+import type { PollData, PollOption } from "@/types/pollType";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -54,7 +54,7 @@ export default function ROPoll({
   setRefresher,
 }: {
   pollData: PollData;
-  setRefresher: Dispatch<SetStateAction<boolean>>;
+  setRefresher?: Dispatch<SetStateAction<boolean>>;
 }) {
   const logout = useAuthStore((state) => state.logout);
   const username = useAuthStore((state) => state.username);
@@ -62,7 +62,9 @@ export default function ROPoll({
   const handlePollClose = async () => {
     try {
       await api.post(`/polls/${pollData.id}/close`, { username });
-      setRefresher((prev: boolean) => !prev);
+      if (setRefresher) {
+        setRefresher((prev: boolean) => !prev);
+      }
       toaster("success", "Poll closed successfully!");
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -83,7 +85,9 @@ export default function ROPoll({
   const handlePollReset = async () => {
     try {
       await api.post(`/polls/${pollData.id}/reset`, { username });
-      setRefresher((prev: boolean) => !prev);
+      if (setRefresher) {
+        setRefresher((prev: boolean) => !prev);
+      }
       toaster("success", "Poll reset successfully!");
     } catch (error) {
       console.log(error);

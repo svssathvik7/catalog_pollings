@@ -1,5 +1,5 @@
 "use client";
-import { PollData } from "@/types/poll";
+import { PollData } from "@/types/pollType";
 import { getROClosedPolls } from "@/utils/getROPolls";
 import { useCallback, useEffect, useState } from "react";
 import ROPoll from "./ROPoll";
@@ -13,7 +13,7 @@ export default function ClosedPollContainer() {
   const [polls, setPolls] = useState<PollData[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [refresher,setRefresher] = useState(false);
+  const [refresher, setRefresher] = useState(false);
 
   const fetchData = useCallback(
     async ({ page, per_page }: { page: number; per_page: number }) => {
@@ -22,7 +22,7 @@ export default function ClosedPollContainer() {
         const response = await getROClosedPolls({ page, per_page });
         const totalPages = response.total_pages;
         const newPolls = response.polls;
-        
+
         if (!newPolls) return;
 
         // Replace polls instead of appending
@@ -45,25 +45,29 @@ export default function ClosedPollContainer() {
     <div className="w-full flex items-center justify-around flex-col h-[80dvh]">
       {loading ? (
         <div className="w-full flex items-center justify-around gap-4 p-2 flex-wrap">
-        {[...Array(6)].map((_, index) => (
-          <div
-            key={index}
-            className="w-fit min-w-64 h-64 max-h-96 overflow-y-scroll relative justify-around p-2 gap-1 flex flex-col bg-[#ffffff76] rounded-lg"
-          >
-            <Skeleton className="h-20 rounded-md" />
-            <Skeleton className="h-10 rounded-md" />
-            <Skeleton className="h-10 rounded-md" />
-            <Skeleton className="h-10 rounded-md" />
-          </div>
-        ))}
-      </div>
+          {[...Array(6)].map((_, index) => (
+            <div
+              key={index}
+              className="w-fit min-w-64 h-64 max-h-96 overflow-y-scroll relative justify-around p-2 gap-1 flex flex-col bg-[#ffffff76] rounded-lg"
+            >
+              <Skeleton className="h-20 rounded-md" />
+              <Skeleton className="h-10 rounded-md" />
+              <Skeleton className="h-10 rounded-md" />
+              <Skeleton className="h-10 rounded-md" />
+            </div>
+          ))}
+        </div>
       ) : polls.length === 0 ? (
         <p>No closed polls available.</p>
       ) : (
         <div className="w-full flex items-center justify-around gap-4 flex-wrap overflow-y-scroll h-full">
           <AnimatePresence>
             {polls.map((poll, index) => (
-              <ROPoll key={poll.id || index} pollData={poll} setRefresher={setRefresher}/>
+              <ROPoll
+                key={poll.id || index}
+                pollData={poll}
+                setRefresher={setRefresher}
+              />
             ))}
           </AnimatePresence>
         </div>

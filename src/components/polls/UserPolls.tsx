@@ -1,55 +1,55 @@
-"use client"
+"use client";
 
-import type { PollData } from "@/types/poll"
-import { useCallback, useEffect, useState } from "react"
-import ROPoll from "./ROPoll"
-import { Button } from "../ui/button"
-import { ArrowBigLeft, ArrowBigRight } from "lucide-react"
-import { Skeleton } from "../ui/skeleton"
-import { getUserPolls } from "@/utils/getUserPolls"
-import { useAuthStore } from "@/store/authStore"
+import type { PollData } from "@/types/pollType";
+import { useCallback, useEffect, useState } from "react";
+import ROPoll from "./ROPoll";
+import { Button } from "../ui/button";
+import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
+import { Skeleton } from "../ui/skeleton";
+import { getUserPolls } from "@/utils/getUserPolls";
+import { useAuthStore } from "@/store/authStore";
 
 export default function UserPollsContainer() {
-  const [pagination, setPagination] = useState({ page: 1, per_page: 4 })
-  const [polls, setPolls] = useState<PollData[]>([])
-  const [totalPages, setTotalPages] = useState(0)
-  const [isMounted, setIsMounted] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const username = useAuthStore((state) => state.username)
-  const logout = useAuthStore((state) => state.logout)
+  const [pagination, setPagination] = useState({ page: 1, per_page: 4 });
+  const [polls, setPolls] = useState<PollData[]>([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const username = useAuthStore((state) => state.username);
+  const logout = useAuthStore((state) => state.logout);
 
   const fetchData = useCallback(async () => {
-    if (!username) return
+    if (!username) return;
     try {
-      setLoading(true)
-      const response = await getUserPolls(pagination, username, logout)
-      const totalPages = response.total_pages
-      const newPolls = response.polls
+      setLoading(true);
+      const response = await getUserPolls(pagination, username, logout);
+      const totalPages = response.total_pages;
+      const newPolls = response.polls;
       if (!newPolls) {
-        setLoading(false)
-        return
+        setLoading(false);
+        return;
       }
-  
-      setPolls(newPolls)  // Replace polls instead of spreading
-      setTotalPages(totalPages)
+
+      setPolls(newPolls); // Replace polls instead of spreading
+      setTotalPages(totalPages);
     } catch (error) {
-      console.error("Error fetching polls:", error)
+      console.error("Error fetching polls:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }, [username, pagination, logout])
+  }, [username, pagination, logout]);
 
   useEffect(() => {
-    setIsMounted(true)
-    return () => setIsMounted(false)
-  }, [])
+    setIsMounted(true);
+    return () => setIsMounted(false);
+  }, []);
 
   useEffect(() => {
-    if (!username) return
+    if (!username) return;
     if (isMounted) {
-      fetchData()
+      fetchData();
     }
-  }, [pagination, isMounted, username, fetchData])
+  }, [pagination, isMounted, username, fetchData]);
 
   return (
     <div className="flex flex-col items-center w-full p-4 space-y-4 h-[75dvh] md:h-[85dvh]">
@@ -57,7 +57,10 @@ export default function UserPollsContainer() {
         {loading ? (
           <div className="flex flex-wrap items-center justify-center h-4/5 gap-2 w-full">
             {[1, 2, 3, 4].map((_, index) => (
-              <div key={index} className="w-full md:w-72 bg-[#ffffff76] shadow-lg hover:shadow-xl transition-all duration-300 relative rounded-xl overflow-hidden border border-gray-200 h-[35dvh] p-2 gap-2 flex flex-col">
+              <div
+                key={index}
+                className="w-full md:w-72 bg-[#ffffff76] shadow-lg hover:shadow-xl transition-all duration-300 relative rounded-xl overflow-hidden border border-gray-200 h-[35dvh] p-2 gap-2 flex flex-col"
+              >
                 <Skeleton className="h-8" />
                 <Skeleton className="h-16" />
                 <div className="space-y-2 gap-2">
@@ -69,12 +72,19 @@ export default function UserPollsContainer() {
             ))}
           </div>
         ) : polls.length === 0 ? (
-          <p className="text-center text-gray-500 text-lg">No polls created yet!</p>
+          <p className="text-center text-gray-500 text-lg">
+            No polls created yet!
+          </p>
         ) : (
           <div className="flex flex-wrap items-center justify-around h-4/5 gap-4 w-full">
-            {polls.slice((pagination.page - 1) * pagination.per_page, pagination.page * pagination.per_page).map((poll, index) => (
-              <ROPoll key={poll.id || index} {...poll} />
-            ))}
+            {polls
+              .slice(
+                (pagination.page - 1) * pagination.per_page,
+                pagination.page * pagination.per_page
+              )
+              .map((poll, index) => (
+                <ROPoll key={poll.id || index} pollData={poll} />
+              ))}
           </div>
         )}
       </div>
@@ -82,7 +92,9 @@ export default function UserPollsContainer() {
         <div className="flex justify-between items-center w-full max-w-md mt-auto">
           <Button
             disabled={pagination.page <= 1}
-            onClick={() => setPagination((curr) => ({ ...curr, page: curr.page - 1 }))}
+            onClick={() =>
+              setPagination((curr) => ({ ...curr, page: curr.page - 1 }))
+            }
             className={`${
               pagination.page <= 1
                 ? "bg-gray-300 text-gray-600 cursor-not-allowed"
@@ -97,7 +109,9 @@ export default function UserPollsContainer() {
           </span>
           <Button
             disabled={pagination.page >= totalPages}
-            onClick={() => setPagination((curr) => ({ ...curr, page: curr.page + 1 }))}
+            onClick={() =>
+              setPagination((curr) => ({ ...curr, page: curr.page + 1 }))
+            }
             className={`${
               pagination.page === totalPages
                 ? "bg-gray-300 text-gray-600 cursor-not-allowed"
@@ -110,6 +124,5 @@ export default function UserPollsContainer() {
         </div>
       )}
     </div>
-  )
+  );
 }
-

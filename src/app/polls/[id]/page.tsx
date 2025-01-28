@@ -1,13 +1,17 @@
-import Poll from "@/components/ui/Poll";
+import Poll from "@/components/polls/Poll";
 
-export default async function VotePoll({ params }: { params: Promise<{
-    id: string,
-}> }) {
-    const pollId = (await params).id;
+export default async function VotePoll({
+  params,
+}: {
+  params: Promise<{
+    id: string;
+  }>;
+}) {
+  const pollId = (await params).id;
 
-    return (
-        <div className="flex items-center justify-center">
-            <Poll pollId={pollId} />
-        </div>
-    );
+  return (
+    <div className="flex items-center justify-center">
+      <Poll pollId={pollId} />
+    </div>
+  );
 }
