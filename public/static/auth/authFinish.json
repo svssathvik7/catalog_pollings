@@ -2,7 +2,7 @@
     "post": {
         "operationId": "authUserFinish",
         "summary": "Finish authentication",
-        "description": "Completes the authentication process for a user by validating the provided credentials and device response.",
+        "description": "This endpoint completes the user authentication process by `validating` the `credentials` and response from the authentication device. It checks the authenticity of the provided signature and other relevant data. Upon successful verification, it returns the `authenticated username`.",
         "security": [],
         "parameters": [
             {

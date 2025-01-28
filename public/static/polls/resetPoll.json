@@ -2,7 +2,7 @@
     "post": {
         "operationId": "resetPoll",
         "summary": "Reset poll",
-        "description": "Resets the poll!",
+        "description": "This endpoint resets a poll by its `unique ID`, allowing the owner to start the poll from scratch. It requires the owner's `username` for authentication. Upon success, it returns a confirmation message indicating the poll has been reset.",
         "security": [],
         "parameters": [
             {
@@ -29,7 +29,9 @@
                                 "example": "sathvik"
                             }
                         },
-                        "required": ["username"]
+                        "required": [
+                            "username"
+                        ]
                     }
                 }
             }
@@ -61,6 +63,8 @@
                 }
             }
         },
-        "tags": ["Polls"]
+        "tags": [
+            "Polls"
+        ]
     }
 }

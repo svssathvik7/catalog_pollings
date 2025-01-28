@@ -2,7 +2,7 @@
     "post": {
         "operationId": "votePoll",
         "summary": "Vote a poll",
-        "description": "Allows a user to vote on a specific option in a poll.",
+        "description": "This endpoint allows a user to cast a vote on a specific option in a poll. It requires the `poll ID`, `option ID`, and the voter's `username`. Upon success, it returns a confirmation message indicating the vote has been recorded.",
         "security": [],
         "parameters": [
             {
@@ -72,6 +72,8 @@
                 }
             }
         },
-        "tags": ["Polls"]
+        "tags": [
+            "Polls"
+        ]
     }
 }

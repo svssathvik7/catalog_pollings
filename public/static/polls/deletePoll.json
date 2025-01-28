@@ -2,7 +2,7 @@
     "post": {
         "operationId": "deletePoll",
         "summary": "Delete poll",
-        "description": "Deletes the poll!",
+        "description": "This endpoint allows the owner of a poll to `delete` it by providing the poll's `unique ID` and their `username`. Upon successful deletion, it returns a confirmation message. Only the poll owner is authorized to delete the poll.",
         "security": [],
         "parameters": [
             {
@@ -29,7 +29,9 @@
                                 "example": "sathvik"
                             }
                         },
-                        "required": ["username"]
+                        "required": [
+                            "username"
+                        ]
                     }
                 }
             }
@@ -61,6 +63,8 @@
                 }
             }
         },
-        "tags": ["Polls"]
+        "tags": [
+            "Polls"
+        ]
     }
 }

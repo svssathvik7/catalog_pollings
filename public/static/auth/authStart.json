@@ -2,7 +2,7 @@
     "post": {
         "operationId": "authUser",
         "summary": "Start authentication",
-        "description": "Initiates the user authentication process by providing a public key credential challenge.",
+        "description": "This endpoint starts the user authentication process by generating a `public key credential challenge` for the specified `username`. It provides the client with a unique challenge, a list of allowed credentials, and user verification requirements. The response is used to initiate the authentication flow securely.",
         "security": [],
         "requestBody": {
             "required": true,
@@ -17,7 +17,9 @@
                                 "example": "sathvik"
                             }
                         },
-                        "required": ["username"]
+                        "required": [
+                            "username"
+                        ]
                     }
                 }
             }
@@ -83,18 +85,31 @@
                                                     "example": "required"
                                                 }
                                             },
-                                            "required": ["challenge", "timeout", "rpId", "allowCredentials", "userVerification"]
+                                            "required": [
+                                                "challenge",
+                                                "timeout",
+                                                "rpId",
+                                                "allowCredentials",
+                                                "userVerification"
+                                            ]
                                         }
                                     },
-                                    "required": ["publicKey"]
+                                    "required": [
+                                        "publicKey"
+                                    ]
                                 }
                             },
-                            "required": ["status", "result"]
+                            "required": [
+                                "status",
+                                "result"
+                            ]
                         }
                     }
                 }
             }
         },
-        "tags": ["Auth"]
+        "tags": [
+            "Auth"
+        ]
     }
 }

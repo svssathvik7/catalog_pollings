@@ -2,7 +2,7 @@
     "post": {
         "operationId": "registerUser",
         "summary": "Start registration",
-        "description": "Some description i will write later",
+        "description": "This endpoint initiates the user registration process by accepting a `username` and returning `WebAuthn credential creation options`. It provides the client with a `challenge` and necessary parameters for generating a public key. The response supports secure user authentication setup following WebAuthn standards.",
         "security": [],
         "requestBody": {
             "required": true,

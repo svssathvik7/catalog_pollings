@@ -2,7 +2,7 @@
     "get": {
         "operationId": "getLivePolls",
         "summary": "Get the live polls",
-        "description": "Retrieve live polls with pagination options using 'per_page' and 'page' query parameters.",
+        "description": "Retrieve `live` polls with `pagination` options using `per_page` and `page` query parameters.",
         "security": [],
         "parameters": [
             {
@@ -125,6 +125,8 @@
                 }
             }
         },
-        "tags": ["General"]
+        "tags": [
+            "General"
+        ]
     }
 }

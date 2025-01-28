@@ -2,7 +2,7 @@
     "post": {
         "operationId": "getPollResults",
         "summary": "Get poll result",
-        "description": "Fetches the poll result!",
+        "description": "This endpoint fetches the results of a specific poll by its `unique ID`, including `total votes` and `vote distribution` across options. It also provides the percentage of votes for each option. The request requires the owner's `username` for authentication.",
         "security": [],
         "parameters": [
             {
@@ -29,7 +29,9 @@
                                 "example": "sathvik"
                             }
                         },
-                        "required": ["username"]
+                        "required": [
+                            "username"
+                        ]
                     }
                 }
             }
@@ -95,6 +97,8 @@
                 }
             }
         },
-        "tags": ["Polls"]
+        "tags": [
+            "Polls"
+        ]
     }
 }

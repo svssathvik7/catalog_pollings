@@ -1,93 +1,128 @@
 {
-    "post": {
-        "operationId": "registerUserFinish",
-        "summary": "Finish registration",
-        "description": "Some description i will write later",
-        "security": [],
-        "parameters": [
-            {
-                "name": "username",
-                "in": "path",
-                "required": true,
-                "schema": {
-                    "type": "string",
-                    "example": "sathvik"
-                },
-                "description": "The username for starting the registration process"
-            }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
+  "post": {
+    "operationId": "registerUserFinish",
+    "summary": "Finish registration",
+    "description": "This endpoint completes the user registration process by `verifying` the `WebAuthn attestation response` and binding the credential to the specified username. It ensures the provided data matches the previously issued `challenge`. Upon success, the endpoint confirms the registration and returns the registered username.",
+    "security": [],
+    "parameters": [
+      {
+        "name": "username",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "sathvik"
+        },
+        "description": "The username for starting the registration process"
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "BPCH09XtVQgVAQW3r4CCcw"
+              },
+              "rawId": {
+                "type": "string",
+                "example": "BPCH09XtVQgVAQW3r4CCcw"
+              },
+              "response": {
                 "type": "object",
                 "properties": {
-                  "id": { "type": "string", "example": "BPCH09XtVQgVAQW3r4CCcw" },
-                  "rawId": { "type": "string", "example": "BPCH09XtVQgVAQW3r4CCcw" },
-                  "response": {
-                    "type": "object",
-                    "properties": {
-                      "attestationObject": { "type": "string", "example": "o2Nmb..." },
-                      "clientDataJSON": { "type": "string", "example": "eyJ0eXBl..." },
-                      "transports": {
-                        "type": "array",
-                        "items": { "type": "string" },
-                        "example": ["hybrid", "internal"]
-                      },
-                      "publicKeyAlgorithm": { "type": "integer", "example": -7 },
-                      "publicKey": { "type": "string", "example": "MFkwEwYHKoZIzj0..." },
-                      "authenticatorData": { "type": "string", "example": "SZYN5Y..." }
-                    }
+                  "attestationObject": {
+                    "type": "string",
+                    "example": "o2Nmb..."
                   },
-                  "type": { "type": "string", "example": "public-key" },
-                  "clientExtensionResults": {
+                  "clientDataJSON": {
+                    "type": "string",
+                    "example": "eyJ0eXBl..."
+                  },
+                  "transports": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "hybrid",
+                      "internal"
+                    ]
+                  },
+                  "publicKeyAlgorithm": {
+                    "type": "integer",
+                    "example": -7
+                  },
+                  "publicKey": {
+                    "type": "string",
+                    "example": "MFkwEwYHKoZIzj0..."
+                  },
+                  "authenticatorData": {
+                    "type": "string",
+                    "example": "SZYN5Y..."
+                  }
+                }
+              },
+              "type": {
+                "type": "string",
+                "example": "public-key"
+              },
+              "clientExtensionResults": {
+                "type": "object",
+                "properties": {
+                  "credProps": {
                     "type": "object",
                     "properties": {
-                      "credProps": {
-                        "type": "object",
-                        "properties": {
-                          "rk": { "type": "boolean", "example": true }
-                        }
+                      "rk": {
+                        "type": "boolean",
+                        "example": true
                       }
                     }
-                  },
-                  "authenticatorAttachment": { "type": "string", "example": "platform" }
+                  }
+                }
+              },
+              "authenticatorAttachment": {
+                "type": "string",
+                "example": "platform"
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Returns a challange on success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "Ok",
+                  "description": "Enum representing the success of the request",
+                  "enum": [
+                    "Ok",
+                    "Error"
+                  ]
+                },
+                "result": {
+                  "type": "string",
+                  "description": "Contains the registered username",
+                  "example": "test_acc"
                 }
               }
             }
           }
-        },
-        "responses": {
-            "200": {
-                "description": "Returns a challange on success",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "status": {
-                                    "type": "string",
-                                    "example": "Ok",
-                                    "description": "Enum representing the success of the request",
-                                    "enum": [
-                                        "Ok",
-                                        "Error"
-                                    ]
-                                },
-                                "result": {
-                                    "type": "string",
-                                    "description": "Contains the registered username",
-                                    "example": "test_acc"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "tags": [
-            "Auth"
-        ]
-    }
+        }
+      }
+    },
+    "tags": [
+      "Auth"
+    ]
+  }
 }

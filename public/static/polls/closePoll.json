@@ -2,7 +2,7 @@
     "post": {
         "operationId": "closePoll",
         "summary": "Close poll",
-        "description": "Closes the poll!",
+        "description": "This endpoint allows the owner of a poll to `close` it by providing the poll's `unique ID` and their `username`. Upon successful closure, it returns a confirmation message. The request ensures that only the poll owner can close the poll.",
         "security": [],
         "parameters": [
             {
@@ -29,7 +29,9 @@
                                 "example": "sathvik"
                             }
                         },
-                        "required": ["username"]
+                        "required": [
+                            "username"
+                        ]
                     }
                 }
             }
@@ -61,6 +63,8 @@
                 }
             }
         },
-        "tags": ["Polls"]
+        "tags": [
+            "Polls"
+        ]
     }
 }

@@ -2,7 +2,7 @@
     "post": {
         "operationId": "createPoll",
         "summary": "Create a new poll",
-        "description": "Create a new poll with a title, options, and an owner name.",
+        "description": "This endpoint allows the creation of a `new poll` by providing a `title`, `options`, and the owner's `usernamename`. It returns a success message when the poll is created successfully. The poll includes multiple options for users to choose from.",
         "security": [],
         "requestBody": {
             "required": true,
@@ -26,10 +26,18 @@
                                         }
                                     },
                                     "example": [
-                                        { "text": "Full stack dev" },
-                                        { "text": "Frontend dev" },
-                                        { "text": "Backend dev" },
-                                        { "text": "No dev" }
+                                        {
+                                            "text": "Full stack dev"
+                                        },
+                                        {
+                                            "text": "Frontend dev"
+                                        },
+                                        {
+                                            "text": "Backend dev"
+                                        },
+                                        {
+                                            "text": "No dev"
+                                        }
                                     ]
                                 }
                             },
@@ -65,6 +73,8 @@
                 }
             }
         },
-        "tags": ["Polls"]
+        "tags": [
+            "Polls"
+        ]
     }
 }
