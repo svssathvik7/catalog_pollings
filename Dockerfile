@@ -1,5 +1,3 @@
-# syntax=docker.io/docker/dockerfile:1
-
 FROM node:18-alpine AS base
 
 ARG NEXT_PUBLIC_API_URL
