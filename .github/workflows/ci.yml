@@ -49,8 +49,6 @@ jobs:
           push: true
           tags: svssathvik7/catalog-pollings:latest
           platforms: linux/amd64
-          cache-from: type=registry,ref=svssathvik7/catalog-pollings:buildcache
-          cache-to: type=registry,ref=svssathvik7/catalog-pollings:buildcache,mode=max
           build-args: |
             NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
             NEXT_PUBLIC_BUILD_API_URL=${{ secrets.NEXT_PUBLIC_BUILD_API_URL }}
