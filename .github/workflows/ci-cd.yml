@@ -64,28 +64,3 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           title: "✅ Build Success"
           description: "Docker image built and pushed: `svssathvik/catalog-pollings:latest`"
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v0.1.9
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
-          script: |
-            docker pull svssathvik7/catalog-pollings:latest
-            docker stop frontend || true
-            docker rm frontend || true
-            docker run -d --name frontend -p 3000:3000 svssathvik7/catalog-pollings:latest
-
-      - name: Final Deployment Notification
-        if: success()
-        uses: sarisia/actions-status-discord@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          title: "🎉 Deployment Success"
-          description: "The polling app is now live on AWS EC2!"
-          
